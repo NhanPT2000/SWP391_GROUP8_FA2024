@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataObject
+{
+    public class Order
+    {
+        [Required]
+        [Key]
+        public Guid OrderId { get; set; }
+        /*Has 1 member*/
+        public Guid MemberId { get; set; }
+        public Member? Member { get; set; }
+        /**/
+        public DateTime OrderDate { get; set; }
+        public DateTime RequiredDate { get; set; }
+        public DateTime ShippedDate { get; set; }
+        public float Freight { get; set; }
+        public ICollection<OrderDetails>? OrderDetails { get;set; }
+        public ICollection<Voucher>? _Vouchers { get;set; }
+    }
+}
