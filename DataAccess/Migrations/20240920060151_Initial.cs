@@ -128,17 +128,16 @@ namespace DataAccess.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     PhoneNumber2 = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     Addess = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Members", x => x.MemberId);
                     table.ForeignKey(
-                        name: "FK_Members_Roles_MemberId",
-                        column: x => x.MemberId,
+                        name: "FK_Members_Roles_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "Roles",
-                        principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "RoleId");
                 });
 
             migrationBuilder.CreateTable(
@@ -390,6 +389,11 @@ namespace DataAccess.Migrations
                 name: "IX_Invoices_ServiceId",
                 table: "Invoices",
                 column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Members_RoleId",
+                table: "Members",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_MemberId",

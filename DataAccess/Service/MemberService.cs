@@ -33,7 +33,7 @@ namespace DataAccess.Service
                     MemberName = member.MemberName,
                     PhoneNumber = member.PhoneNumber,
                     PhoneNumber2 = member.PhoneNumber2,
-                    RoleId = member.RoleId
+                    RoleId = _memberContext.Roles.FirstOrDefault(m => m.RoleName == "Member")?.RoleId
                 };
 
                 await _memberContext.Members.AddAsync(newMember);
@@ -103,9 +103,9 @@ namespace DataAccess.Service
             _memberContext.Update(memberToUpdate);
             return await _memberContext.SaveChangesAsync() > 0;
         }
-        public async Task<Member> GetMemberByEmailAsync(string Email)
+        public async Task<Member> GetMemberByEmailAsync(string Email, string password)
         {
-            var member = await _memberContext.Members.FirstOrDefaultAsync(m => m.Email == Email);
+            var member = await _memberContext.Members.FirstOrDefaultAsync(m => m.Email == Email && m.Password == password);
 
             if (member == null)
             {
@@ -115,7 +115,7 @@ namespace DataAccess.Service
         }
         public async Task<bool> CheckPassword(string password)
         {
-            var memberToFind = await _memberContext.Members.FirstAsync(m => m.Password == password);
+            var memberToFind = await _memberContext.Members.FirstOrDefaultAsync(m => m.Password == password);
 
             if (memberToFind == null)
             {

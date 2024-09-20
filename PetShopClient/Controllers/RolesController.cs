@@ -10,23 +10,22 @@ using DataObject;
 
 namespace PetShopClient.Controllers
 {
-    public class MembersController : Controller
+    public class RolesController : Controller
     {
         private readonly PetShopContext _context;
 
-        public MembersController(PetShopContext context)
+        public RolesController(PetShopContext context)
         {
             _context = context;
         }
 
-        // GET: Members
+        // GET: Roles
         public async Task<IActionResult> Index()
         {
-            var petShopContext = _context.Members.Include(m => m._Role);
-            return View(await petShopContext.ToListAsync());
+            return View(await _context.Roles.ToListAsync());
         }
 
-        // GET: Members/Details/5
+        // GET: Roles/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -34,43 +33,40 @@ namespace PetShopClient.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Members
-                .Include(m => m._Role)
-                .FirstOrDefaultAsync(m => m.MemberId == id);
-            if (member == null)
+            var role = await _context.Roles
+                .FirstOrDefaultAsync(m => m.RoleId == id);
+            if (role == null)
             {
                 return NotFound();
             }
 
-            return View(member);
+            return View(role);
         }
 
-        // GET: Members/Create
+        // GET: Roles/Create
         public IActionResult Create()
         {
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
             return View();
         }
 
-        // POST: Members/Create
+        // POST: Roles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MemberId,MemberName,Password,Email,Gender,PhoneNumber,PhoneNumber2,Addess,RoleId")] Member member)
+        public async Task<IActionResult> Create([Bind("RoleId,RoleName,Status")] Role role)
         {
             if (ModelState.IsValid)
             {
-                member.MemberId = Guid.NewGuid();
-                _context.Add(member);
+                role.RoleId = Guid.NewGuid();
+                _context.Add(role);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", member.RoleId);
-            return View(member);
+            return View(role);
         }
 
-        // GET: Members/Edit/5
+        // GET: Roles/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -78,23 +74,22 @@ namespace PetShopClient.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Members.FindAsync(id);
-            if (member == null)
+            var role = await _context.Roles.FindAsync(id);
+            if (role == null)
             {
                 return NotFound();
             }
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", member.RoleId);
-            return View(member);
+            return View(role);
         }
 
-        // POST: Members/Edit/5
+        // POST: Roles/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MemberId,MemberName,Password,Email,Gender,PhoneNumber,PhoneNumber2,Addess,RoleId")] Member member)
+        public async Task<IActionResult> Edit(Guid id, [Bind("RoleId,RoleName,Status")] Role role)
         {
-            if (id != member.MemberId)
+            if (id != role.RoleId)
             {
                 return NotFound();
             }
@@ -103,12 +98,12 @@ namespace PetShopClient.Controllers
             {
                 try
                 {
-                    _context.Update(member);
+                    _context.Update(role);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MemberExists(member.MemberId))
+                    if (!RoleExists(role.RoleId))
                     {
                         return NotFound();
                     }
@@ -119,11 +114,10 @@ namespace PetShopClient.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", member.RoleId);
-            return View(member);
+            return View(role);
         }
 
-        // GET: Members/Delete/5
+        // GET: Roles/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -131,35 +125,34 @@ namespace PetShopClient.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Members
-                .Include(m => m._Role)
-                .FirstOrDefaultAsync(m => m.MemberId == id);
-            if (member == null)
+            var role = await _context.Roles
+                .FirstOrDefaultAsync(m => m.RoleId == id);
+            if (role == null)
             {
                 return NotFound();
             }
 
-            return View(member);
+            return View(role);
         }
 
-        // POST: Members/Delete/5
+        // POST: Roles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var member = await _context.Members.FindAsync(id);
-            if (member != null)
+            var role = await _context.Roles.FindAsync(id);
+            if (role != null)
             {
-                _context.Members.Remove(member);
+                _context.Roles.Remove(role);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MemberExists(Guid id)
+        private bool RoleExists(Guid id)
         {
-            return _context.Members.Any(e => e.MemberId == id);
+            return _context.Roles.Any(e => e.RoleId == id);
         }
     }
 }

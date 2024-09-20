@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PetShopContext))]
-    [Migration("20240919092749_Initial")]
+    [Migration("20240920060151_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -156,6 +156,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataObject.Member", b =>
                 {
                     b.Property<Guid>("MemberId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Addess")
@@ -184,10 +185,12 @@ namespace DataAccess.Migrations
                     b.Property<string>("PhoneNumber2")
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("RoleId")
+                    b.Property<Guid?>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("MemberId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Members");
                 });
@@ -520,9 +523,7 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("DataObject.Role", "_Role")
                         .WithMany("_Members")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoleId");
 
                     b.Navigation("_Role");
                 });

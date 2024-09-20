@@ -96,7 +96,7 @@ namespace DataAccess.Database
             modelBuilder.Entity<Member>()
                 .HasOne(p => p._Role)
                 .WithMany(m => m._Members)
-                .HasForeignKey(p => p.MemberId);
+                .HasForeignKey(p => p.RoleId);
             //
             /*Species-Pet*/
             //

@@ -24,7 +24,7 @@ namespace DataObject
         [EmailAddress]
         public string? Email { get; set; }
         [Column(TypeName = "nvarchar(50)")]
-        public bool? Gender { get; set; }
+        public string? Gender { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         [Required(ErrorMessage = "This field is required.")]
         [Phone]
@@ -39,7 +39,7 @@ namespace DataObject
         public ICollection<Order>? _Orders { get; set; }
 
         public Role? _Role { get; set; }
-        public Guid RoleId { get; set; }
+        public Guid? RoleId { get; set; }
 
         public Staff? _Staff { get; set; }
         public Admin? _Admin { get; set; }

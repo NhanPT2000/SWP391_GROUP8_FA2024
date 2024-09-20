@@ -1,6 +1,7 @@
 ﻿using DataObject;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace DataAccess.Repository
         Task<IEnumerable<Member>> GetMembersAsync();
         Task<bool> FindMemberAsync(Guid id);
 
-        Task<Member>GetMemberByEmailAsync(string Email);
+        Task<Member>GetMemberByEmailAsync(string Email, string Password);
         Task<bool> CheckPassword(string password);
     }
 
