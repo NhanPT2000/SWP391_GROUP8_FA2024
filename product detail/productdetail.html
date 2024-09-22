@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Pet Food</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <section class="flex">
+            <a href="#" class="logo"> <i class="fas fa-paw"></i> shop </a>
+            <nav class="navbar">
+                <a href="#home">home</a>
+                <a href="#about">about</a>
+                <a href="#shop">shop</a>
+                <a href="#services">services</a>
+                <a href="#contact">contact</a>
+            </nav>
+            <div class="icons">
+                <div class="fas fa-bars" id="menu-btn"></div>
+                <a href="#" class="fas fa-shopping-cart"></a>
+                <div class="fas fa-user" id="login-btn"></div>
+            </div>
+            <form action="" class="login-form">
+                <h3>sign in</h3>
+                <input type="email" name="" placeholder="enter your email" id="" class="box">
+                <input type="password" name="" placeholder="enter your password" id="" class="box">
+                <div class="remember">
+                    <input type="checkbox" name="" id="remember-me">
+                    <label for="remember-me">remember me</label>
+                </div>
+                <input type="submit" value="sign in" class="btn">
+                <div class="links">
+                    <a href="#">forget password</a>
+                    <a href="#">sign up</a>
+                </div>
+                <!-- user session -->
+                <div class="links">
+                    <a href="#">Profile</a>
+                </div>
+                <div class="links">
+                    <a href="#">Logout</a>
+                </div>
+            </form>
+        </section>
+    </header>
+
+    <section class="product-detail">
+        <div class="image-gallery">
+            <img src="image/product_01.jpg" alt="Product Image 1">
+
+        </div>
+        <div class="details">
+            <h1>DOGGY PUPPY DOG FOOD</h1>
+            <ul>
+                <li>High-quality ingredients</li>
+                <li>Rich in vitamins and minerals</li>
+                <li>Supports healthy growth</li>
+                <li>Suitable for all breeds</li>
+            </ul>
+            <p class="price"><del>$15.00</p>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1">
+            <button class="btn">Add to Cart</button>
+        </div>
+    </section>
+
+    <section class="reviews">
+        <h2>Reviews</h2>
+        <div class="review">
+            <p><strong>John Doe:</strong> Great product! My dog loves it.</p>
+            <button class="btn reply-btn">Reply</button>
+        </div>
+        <div class="review-form">
+            <h3>Leave a Review</h3>
+            <textarea id="review-text" placeholder="Write your review here..."></textarea>
+            <button class="btn" id="submit-review">Submit Review</button>
+        </div>
+    </section>
+
+    <section class="other-products">
+        <h2>Other Products</h2>
+        <div class="box-container">
+            <div class="box">
+                <img src="image/product_05.jpg" alt="Other Product 1">
+                <h3>Product Name 1</h3>
+                <p class="price">$19.99</p>
+                <button class="btn">Add to Cart</button>
+            </div>
+            <div class="box">
+                <img src="image/product_04.jpg" alt="Other Product 2">
+                <h3>Product Name 2</h3>
+                <p class="price">$24.99</p>
+                <button class="btn">Add to Cart</button>
+            </div>
+            <div class="box">
+                <img src="image/product_03.jpg" alt="Other Product 3">
+                <h3>Product Name 3</h3>
+                <p class="price">$34.99</p>
+                <button class="btn">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
