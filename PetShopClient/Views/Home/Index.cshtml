@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Responsive Pet Food Website Design Tutorial</title>
+    <title>Home Page</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -44,31 +44,30 @@
             <div class="fas fa-user" id="login-btn"></div>
         </div>
             @{
-                if (Context.Session.GetString("Id") == null)
+                @if (Context.Session.GetString("Id") == null)
                 {
-                        <form asp-action="Index" method="post" class="login-form">
-                            <h3>sign in</h3>
-                            <input asp-for="Email" type="email" placeholder="enter your email" id="" class="box">
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                            <input asp-for="Password "type="password" placeholder="enter your password" id="" class="box">
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                            <div class="remember">
-                                <div type="checkbox" name="" id="remember-me" />
-                                <label for="remember-me">remember me</label>
-                            </div>
-                            <button type="submit" value="sign in" class="btn"/>
-                            <div class="links">
-                                <a href="#">forget password</a>
-                                <a asp-controller="Access" asp-action="Register">sign up</a>
-                            </div>
-                        </form>
+                    <form asp-action="Index" method="post" class="login-form">
+                        <h3>Sign In</h3>
+                        <input asp-for="Email" type="email" placeholder="Enter your email" class="box">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <input asp-for="Password" type="password" placeholder="Enter your password" class="box">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+
+                        <button type="submit" class="btn">Sign In</button>
+                        <div class="links">
+                            <a href="#">Forget Password</a>
+                        </div>
+                        <div class="links">
+                            <a asp-controller="Access" asp-action="Register">Sign Up</a>
+                        </div>
+                    </form>
                 }
                 else
                 {
-                    <form asp-action="index" method="get" class="login-form">
+                    <form asp-action="Index" method="get" class="login-form">
                         <h3>Welcome @Context.Session.GetString("MemberName")</h3>
                         <a asp-controller="Home" asp-action="Profile">Profile</a>
-                        <a asp-controller="Access" asp-action="Logout">Log out</a>
+                        <a asp-controller="Access" asp-action="Logout">Log Out</a>
                     </form>
                 }
             }

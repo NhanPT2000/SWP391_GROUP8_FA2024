@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/css/IndexStyle.css">
 </head>
 <body>
-    <header>
+    @* <header>
         <section class="flex">
 
             <a href="#" class="logo"> <i class="fas fa-paw"></i> shop </a>
@@ -25,12 +25,12 @@
                 <a href="#services">services</a>
                 <a href="#contact">contact</a>
             </nav>
-            @* <div class="icons">
+            <div class="icons">
                 <div class="fas fa-bars" id="menu-btn"></div>
                 <a href="#" class="fas fa-shopping-cart"></a>
                 <div class="fas fa-user" id="login-btn"></div>
-            </div> *@
-            @* @{
+            </div>
+            @{
                 if (Context.Session.GetString("Id") == null)
                 {
                     <form asp-action="Index" method="post" class="login-form">
@@ -56,10 +56,10 @@
                         <h3>Welcome @Model.MemberName</h3>
                     </form>
                 }
-            } *@
+            }
 
         </section>
-    </header>
+    </header> *@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
