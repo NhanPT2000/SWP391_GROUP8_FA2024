@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Http
 @model DataObject.Member
 @using DataAccess.Repository
+@{
+    Layout = null;
+}
 
 @{
     ViewData["Title"] = "Home Page";
@@ -67,7 +70,7 @@
                 {
                     <form asp-action="index" method="get" class="login-form">
                         <h3>Welcome @Context.Session.GetString("MemberName")</h3>
-                        <a asp-controller="Home" asp-action="Profile">Profile</a>
+                        <a asp-controller="Home" asp-action="Profile" asp-route-id="@Context.Session.GetString("Id")">Profile</a>
                         <a asp-controller="Access" asp-action="Logout">Log out</a>
                     </form>
                 }

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
@@ -130,6 +132,7 @@ namespace DataAccess.Migrations
                     Addess = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Profile = table.Column<string>(type: "nvarchar(255)", nullable: true),
                     OnlineTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ConfirmedEmail = table.Column<bool>(type: "bit", nullable: true),
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -428,6 +431,16 @@ namespace DataAccess.Migrations
                         column: x => x.PlannedServiceId,
                         principalTable: "PlannedServices",
                         principalColumn: "PlannedServiceId");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "RoleId", "RoleName", "Status" },
+                values: new object[,]
+                {
+                    { new Guid("3e00afcc-36a6-44b6-97e3-d0d78ab4cf69"), "Guest", "None" },
+                    { new Guid("3ed6a78d-bc6d-470f-893f-1c47eb8e0b92"), "Staff", "None" },
+                    { new Guid("a32dae86-f273-464e-8036-10314c1a2694"), "Admin", "None" }
                 });
 
             migrationBuilder.CreateIndex(

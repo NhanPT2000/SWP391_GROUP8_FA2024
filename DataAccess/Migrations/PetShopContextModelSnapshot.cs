@@ -219,6 +219,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool?>("ConfirmedEmail")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
@@ -442,6 +445,26 @@ namespace DataAccess.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = new Guid("a32dae86-f273-464e-8036-10314c1a2694"),
+                            RoleName = "Admin",
+                            Status = "None"
+                        },
+                        new
+                        {
+                            RoleId = new Guid("3e00afcc-36a6-44b6-97e3-d0d78ab4cf69"),
+                            RoleName = "Guest",
+                            Status = "None"
+                        },
+                        new
+                        {
+                            RoleId = new Guid("3ed6a78d-bc6d-470f-893f-1c47eb8e0b92"),
+                            RoleName = "Staff",
+                            Status = "None"
+                        });
                 });
 
             modelBuilder.Entity("DataObject.Service", b =>

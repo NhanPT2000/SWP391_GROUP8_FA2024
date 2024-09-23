@@ -1,5 +1,7 @@
 using DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PetShopClient.Models;
 using System.Diagnostics;
 
@@ -48,6 +50,22 @@ namespace PetShopClient.Controllers
                 }
             }
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile(Guid? id) 
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var member = await _memberService.GetMemberDetailsAsync((Guid)id);
+            if (member == null)
+            {
+                return NotFound();
+            }
+            return View(member);
         }
     }
 }

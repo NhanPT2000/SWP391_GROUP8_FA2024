@@ -216,7 +216,13 @@ namespace DataAccess.Database
                 .HasOne(s => s.Service)
                 .WithMany(m => m._Feedbacks)
                 .HasForeignKey(s => s.ServiceId);
-
+            //
+            /*Role-Seeding*/
+            //
+            modelBuilder.Entity<Role>().HasData(
+                new { RoleId = Guid.NewGuid(), RoleName = "Admin", Status ="None" },
+                new { RoleId = Guid.NewGuid(), RoleName = "Guest", Status = "None" },
+                new { RoleId = Guid.NewGuid(), RoleName = "Staff", Status = "None" });
         }
 
     }

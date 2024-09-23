@@ -39,7 +39,7 @@ namespace DataObject
         public DateTime? OnlineTime { get; set; }
         public ICollection<Pet>? _Pets { get; set; }
         public ICollection<Order>? _Orders { get; set; }
-
+        public bool? ConfirmedEmail { get; set; }
         public Role? _Role { get; set; }
         public Guid? RoleId { get; set; }
 

@@ -30,6 +30,7 @@ namespace DataAccess.Service
                     MemberId = member.MemberId,
                     Email = member.Email,
                     Password = HashPassword(member.Password),
+                    ConfirmedEmail = false,
                     Addess = member.Addess,
                     Gender = member.Gender,
                     MemberName = member.MemberName,
