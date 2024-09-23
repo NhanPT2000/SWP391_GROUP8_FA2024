@@ -47,14 +47,16 @@ submitReviewBtn.onclick = () => {
 document.addEventListener('click', function (e) {
     if (e.target && e.target.classList.contains('reply-btn')) {
         const reviewDiv = e.target.closest('.review');
-        const replyForm = document.createElement('div');
-        replyForm.classList.add('reply-form');
-        replyForm.innerHTML = `
-            <textarea class="reply-text" placeholder="Write your reply here..."></textarea>
-            <button class="btn submit-reply">Submit Reply</button>
-        `;
-        reviewDiv.appendChild(replyForm);
-        e.target.remove(); // Remove the reply button after clicking
+        const existingReplyForm = reviewDiv.querySelector('.reply-form');
+        if (!existingReplyForm) {
+            const replyForm = document.createElement('div');
+            replyForm.classList.add('reply-form');
+            replyForm.innerHTML = `
+                <textarea class="reply-text" placeholder="Write your reply here..."></textarea>
+                <button class="btn submit-reply">Submit Reply</button>
+            `;
+            reviewDiv.appendChild(replyForm);
+        }
     }
 });
 
