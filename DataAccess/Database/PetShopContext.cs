@@ -31,6 +31,8 @@ namespace DataAccess.Database
         public DbSet<Species> _Species { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetails> _OrderDetails { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -179,6 +181,42 @@ namespace DataAccess.Database
                 .HasOne(s => s.Order)
                 .WithMany(m => m._Vouchers)
                 .HasForeignKey(s => s.OrderId);
+            //
+            /*Admin-Event*/
+            //
+            modelBuilder.Entity<Event>()
+                .HasOne(s => s.Admin)
+                .WithMany(m => m._Events)
+                .HasForeignKey(s => s.AdminId);
+            //
+            /*Member-PlannedService*/
+            //
+            modelBuilder.Entity<PlannedService>()
+                .HasOne(s => s._Member)
+                .WithMany(m => m._PlannedServices)
+                .HasForeignKey(s => s.MemberId);
+            //
+            /*Member-Feedback*/
+            //
+            modelBuilder.Entity<Feedback>()
+                .HasOne(s => s.Member)
+                .WithMany(m => m._Feedbacks)
+                .HasForeignKey(s => s.MemberId);
+            //
+            /*Product-Feedback*/
+            //
+            modelBuilder.Entity<Feedback>()
+                .HasOne(s => s.Product)
+                .WithMany(m => m._Feedbacks)
+                .HasForeignKey(s => s.ProductId);
+            //
+            /*Service-Feedback*/
+            //
+            modelBuilder.Entity<Feedback>()
+                .HasOne(s => s.Service)
+                .WithMany(m => m._Feedbacks)
+                .HasForeignKey(s => s.ServiceId);
+
         }
 
     }

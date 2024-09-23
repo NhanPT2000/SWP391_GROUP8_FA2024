@@ -1,9 +1,6 @@
 ﻿using DataAccess.Repository;
 using DataObject;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Experimental.FileAccess;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Newtonsoft.Json.Linq;
 using PetShopClient.Models;
 
 namespace PetShopClient.Controllers
@@ -16,10 +13,11 @@ namespace PetShopClient.Controllers
         {
             _memberService = memberService;
         }
+
         [HttpGet]
         public IActionResult Login()
         {
-            if (HttpContext.Session.GetString("Email") == null)
+            if (HttpContext.Session.GetString("Id") == null)
             {
                 return View();
             }
@@ -31,18 +29,20 @@ namespace PetShopClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([Bind("Email, Password")]RequestAccount requestedAccount)
         {
-            if (HttpContext.Session.GetString("Email") == null)
+            if (HttpContext.Session.GetString("Id") == null)
             {
                 if (ModelState.IsValid)
                 {
                     var member = await _memberService.GetMemberByEmailAsync(requestedAccount.Email, requestedAccount.Password);
                     if (member != null)
                     {
-                        HttpContext.Session.SetString("Email", member.Email.ToString());
+                        HttpContext.Session.SetString("Id", member.MemberId.ToString());
+                        Console.WriteLine(HttpContext.Session.ToString());
                         return RedirectToAction("Index", "Home");
                     }
                 }
             }
+            Console.WriteLine("Error");
             return View();
         }
         [HttpGet]
@@ -55,7 +55,7 @@ namespace PetShopClient.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            if (HttpContext.Session.GetString("Email") == null)
+            if (HttpContext.Session.GetString("Id") == null)
             {
                 return View();
             }

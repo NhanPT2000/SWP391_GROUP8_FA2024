@@ -18,7 +18,8 @@ namespace DataAccess.Repository
         Task<bool> FindMemberAsync(Guid id);
 
         Task<Member>GetMemberByEmailAsync(string Email, string Password);
-        Task<bool> CheckPassword(string password);
+        Task<Member> GetMemberByEmailOnlyAsync(string Email);
+        Task<bool> CheckPassword(string password, Member member);
     }
 
 }

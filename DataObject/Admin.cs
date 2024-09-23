@@ -15,5 +15,6 @@ namespace DataObject
         [ForeignKey("Member")]
         public Guid AdminId { get; set; }
         public Member? Member { get; set; }
+        public ICollection<Event> _Events { get; set; }
     }
 }

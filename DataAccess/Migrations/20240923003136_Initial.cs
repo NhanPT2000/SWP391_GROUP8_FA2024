@@ -128,6 +128,8 @@ namespace DataAccess.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     PhoneNumber2 = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     Addess = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Profile = table.Column<string>(type: "nvarchar(255)", nullable: true),
+                    OnlineTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -155,6 +157,37 @@ namespace DataAccess.Migrations
                         principalTable: "Members",
                         principalColumn: "MemberId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Feedbacks",
+                columns: table => new
+                {
+                    FeedbackId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Message = table.Column<string>(type: "nvarchar(255)", nullable: true),
+                    PostDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feedbacks", x => x.FeedbackId);
+                    table.ForeignKey(
+                        name: "FK_Feedbacks_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
+                        principalColumn: "MemberId");
+                    table.ForeignKey(
+                        name: "FK_Feedbacks_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId");
+                    table.ForeignKey(
+                        name: "FK_Feedbacks_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "ServiceId");
                 });
 
             migrationBuilder.CreateTable(
@@ -188,7 +221,8 @@ namespace DataAccess.Migrations
                     SpeciesId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Birthdate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(128)", nullable: true),
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(128)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -228,6 +262,26 @@ namespace DataAccess.Migrations
                         principalTable: "WorkSchedules",
                         principalColumn: "WorkScheduleId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Events",
+                columns: table => new
+                {
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EventTitle = table.Column<string>(type: "nvarchar(128)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    AdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PostDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events", x => x.EventId);
+                    table.ForeignKey(
+                        name: "FK_Events_Admins_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "Admins",
+                        principalColumn: "AdminId");
                 });
 
             migrationBuilder.CreateTable(
@@ -327,7 +381,8 @@ namespace DataAccess.Migrations
                     PlannedUnits = table.Column<int>(type: "int", nullable: false),
                     CostPerUnit = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(255)", nullable: true)
+                    Notes = table.Column<string>(type: "nvarchar(255)", nullable: true),
+                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -337,6 +392,11 @@ namespace DataAccess.Migrations
                         column: x => x.CaseId,
                         principalTable: "Cases",
                         principalColumn: "CaseId");
+                    table.ForeignKey(
+                        name: "FK_PlannedServices_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
+                        principalColumn: "MemberId");
                     table.ForeignKey(
                         name: "FK_PlannedServices_Services_ServiceId",
                         column: x => x.ServiceId,
@@ -386,6 +446,26 @@ namespace DataAccess.Migrations
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Events_AdminId",
+                table: "Events",
+                column: "AdminId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Feedbacks_MemberId",
+                table: "Feedbacks",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Feedbacks_ProductId",
+                table: "Feedbacks",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Feedbacks_ServiceId",
+                table: "Feedbacks",
+                column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Invoices_ServiceId",
                 table: "Invoices",
                 column: "ServiceId");
@@ -416,6 +496,11 @@ namespace DataAccess.Migrations
                 column: "CaseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PlannedServices_MemberId",
+                table: "PlannedServices",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PlannedServices_ServiceId",
                 table: "PlannedServices",
                 column: "ServiceId");
@@ -443,7 +528,10 @@ namespace DataAccess.Migrations
                 name: "_OrderDetails");
 
             migrationBuilder.DropTable(
-                name: "Admins");
+                name: "Events");
+
+            migrationBuilder.DropTable(
+                name: "Feedbacks");
 
             migrationBuilder.DropTable(
                 name: "Invoices");
@@ -453,6 +541,9 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Vouchers");
+
+            migrationBuilder.DropTable(
+                name: "Admins");
 
             migrationBuilder.DropTable(
                 name: "Products");

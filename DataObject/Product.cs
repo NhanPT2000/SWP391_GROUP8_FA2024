@@ -33,5 +33,6 @@ namespace DataObject
         public string? Image {  get; set; }
 
         public ICollection<OrderDetails>? _OrderDetails { get; set; }
+        public ICollection<Feedback>? _Feedbacks { get; set; }
     }
 }

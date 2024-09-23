@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,7 +29,7 @@ namespace DataAccess.Service
                 {
                     MemberId = member.MemberId,
                     Email = member.Email,
-                    Password = member.Password,
+                    Password = HashPassword(member.Password),
                     Addess = member.Addess,
                     Gender = member.Gender,
                     MemberName = member.MemberName,
@@ -113,16 +115,33 @@ namespace DataAccess.Service
             }
             return member;
         }
-        public async Task<bool> CheckPassword(string password)
+        public async Task<Member> GetMemberByEmailOnlyAsync(string Email)
         {
-            var memberToFind = await _memberContext.Members.FirstOrDefaultAsync(m => m.Password == password);
+            var member = await _memberContext.Members.FirstOrDefaultAsync(m => m.Email == Email);
 
-            if (memberToFind == null)
+            if (member == null)
+            {
+                return default;
+            }
+            return member;
+        }
+        public async Task<bool> CheckPassword(string password, Member member)
+        {
+            var defaultPassword = await _memberContext.Members.FirstOrDefaultAsync(m => m.Password == HashPassword(password));
+
+            if (defaultPassword == null)
             {
                 return false;
             }
             return await _memberContext.SaveChangesAsync() > 0;
         }
-    }
 
+        private string HashPassword(string password)
+        {
+            var sha = SHA256.Create();
+            var asByteArray = Encoding.UTF8.GetBytes(password);
+            var HashPassword = sha.ComputeHash(asByteArray);
+            return Convert.ToBase64String(HashPassword);
+        }
+    }
 }

@@ -24,5 +24,6 @@ namespace DataObject
         public float CostPerUnity { get; set; }
         public ICollection<Invoice>? _Invoices { get; set; }
         public ICollection<PlannedService>? _PlannedServices { get; set; }
+        public ICollection<Feedback>? _Feedbacks { get; set; }
     }
 }

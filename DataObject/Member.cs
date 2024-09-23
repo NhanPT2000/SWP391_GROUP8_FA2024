@@ -34,7 +34,9 @@ namespace DataObject
         [Column(TypeName = "nvarchar(50)")]
         [Required(ErrorMessage = "This field is required.")]
         public string? Addess {  get; set; }
-
+        [Column(TypeName = "nvarchar(255)")]
+        public string? Profile {  get; set; }
+        public DateTime? OnlineTime { get; set; }
         public ICollection<Pet>? _Pets { get; set; }
         public ICollection<Order>? _Orders { get; set; }
 
@@ -43,5 +45,7 @@ namespace DataObject
 
         public Staff? _Staff { get; set; }
         public Admin? _Admin { get; set; }
+        public ICollection<PlannedService>?_PlannedServices { get; set; }
+        public ICollection<Feedback>? _Feedbacks { get; set; }
     }
 }

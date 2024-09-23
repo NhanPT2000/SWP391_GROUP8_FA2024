@@ -1,7 +1,10 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@model DataObject.Member
+@using DataAccess.Repository
+
+@{
     ViewData["Title"] = "Home Page";
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,21 +43,35 @@
             <a href="#" class="fas fa-shopping-cart"></a>
             <div class="fas fa-user" id="login-btn"></div>
         </div>
-    
-        <form action="" class="login-form">
-            <h3>sign in</h3>
-            <input type="email" name="" placeholder="enter your email" id="" class="box">
-            <input type="password" name="" placeholder="enter your password" id="" class="box">
-            <div class="remember">
-                <input type="checkbox" name="" id="remember-me">
-                <label for="remember-me">remember me</label>
-            </div>
-            <input type="submit" value="sign in" class="btn">
-            <div class="links">
-                <a href="#">forget password</a>
-                <a href="#">sign up</a>
-            </div>
-        </form>
+            @{
+                if (Context.Session.GetString("Id") == null)
+                {
+                        <form asp-action="Index" method="post" class="login-form">
+                            <h3>sign in</h3>
+                            <input asp-for="Email" type="email" placeholder="enter your email" id="" class="box">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <input asp-for="Password "type="password" placeholder="enter your password" id="" class="box">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <div class="remember">
+                                <div type="checkbox" name="" id="remember-me" />
+                                <label for="remember-me">remember me</label>
+                            </div>
+                            <button type="submit" value="sign in" class="btn"/>
+                            <div class="links">
+                                <a href="#">forget password</a>
+                                <a asp-controller="Access" asp-action="Register">sign up</a>
+                            </div>
+                        </form>
+                }
+                else
+                {
+                    <form asp-action="index" method="get" class="login-form">
+                        <h3>Welcome @Context.Session.GetString("MemberName")</h3>
+                        <a asp-controller="Home" asp-action="Profile">Profile</a>
+                        <a asp-controller="Access" asp-action="Logout">Log out</a>
+                    </form>
+                }
+            }
 
     </section>
 

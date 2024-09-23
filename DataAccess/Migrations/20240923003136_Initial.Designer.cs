@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PetShopContext))]
-    [Migration("20240920060151_Initial")]
+    [Migration("20240923003136_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -86,6 +86,33 @@ namespace DataAccess.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("DataObject.Event", b =>
+                {
+                    b.Property<Guid>("EventId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AdminId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("EventTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime>("PostDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("EventId");
+
+                    b.HasIndex("AdminId");
+
+                    b.ToTable("Events");
+                });
+
             modelBuilder.Entity("DataObject.Facility", b =>
                 {
                     b.Property<Guid>("FacilityId")
@@ -111,6 +138,38 @@ namespace DataAccess.Migrations
                     b.HasKey("FacilityId");
 
                     b.ToTable("Facilities");
+                });
+
+            modelBuilder.Entity("DataObject.Feedback", b =>
+                {
+                    b.Property<Guid>("FeedbackId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("MemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("PostDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FeedbackId");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("Feedbacks");
                 });
 
             modelBuilder.Entity("DataObject.Invoice", b =>
@@ -174,6 +233,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<DateTime?>("OnlineTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
@@ -184,6 +246,9 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("PhoneNumber2")
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Profile")
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<Guid?>("RoleId")
                         .HasColumnType("uniqueidentifier");
@@ -256,6 +321,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("Birthdate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<Guid?>("MemberId")
                         .HasColumnType("uniqueidentifier");
 
@@ -293,6 +361,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("MemberId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(255)");
 
@@ -311,6 +382,8 @@ namespace DataAccess.Migrations
                     b.HasKey("PlannedServiceId");
 
                     b.HasIndex("CaseId");
+
+                    b.HasIndex("MemberId");
 
                     b.HasIndex("ServiceId");
 
@@ -502,6 +575,36 @@ namespace DataAccess.Migrations
                     b.Navigation("Pet");
                 });
 
+            modelBuilder.Entity("DataObject.Event", b =>
+                {
+                    b.HasOne("DataObject.Admin", "Admin")
+                        .WithMany("_Events")
+                        .HasForeignKey("AdminId");
+
+                    b.Navigation("Admin");
+                });
+
+            modelBuilder.Entity("DataObject.Feedback", b =>
+                {
+                    b.HasOne("DataObject.Member", "Member")
+                        .WithMany("_Feedbacks")
+                        .HasForeignKey("MemberId");
+
+                    b.HasOne("DataObject.Product", "Product")
+                        .WithMany("_Feedbacks")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("DataObject.Service", "Service")
+                        .WithMany("_Feedbacks")
+                        .HasForeignKey("ServiceId");
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("DataObject.Invoice", b =>
                 {
                     b.HasOne("DataObject.Case", "Case")
@@ -579,6 +682,10 @@ namespace DataAccess.Migrations
                         .WithMany("_PlannedServices")
                         .HasForeignKey("CaseId");
 
+                    b.HasOne("DataObject.Member", "_Member")
+                        .WithMany("_PlannedServices")
+                        .HasForeignKey("MemberId");
+
                     b.HasOne("DataObject.Service", "Service")
                         .WithMany("_PlannedServices")
                         .HasForeignKey("ServiceId");
@@ -586,6 +693,8 @@ namespace DataAccess.Migrations
                     b.Navigation("Case");
 
                     b.Navigation("Service");
+
+                    b.Navigation("_Member");
                 });
 
             modelBuilder.Entity("DataObject.Product", b =>
@@ -633,6 +742,11 @@ namespace DataAccess.Migrations
                     b.Navigation("PlannedService");
                 });
 
+            modelBuilder.Entity("DataObject.Admin", b =>
+                {
+                    b.Navigation("_Events");
+                });
+
             modelBuilder.Entity("DataObject.Case", b =>
                 {
                     b.Navigation("Invoices");
@@ -654,9 +768,13 @@ namespace DataAccess.Migrations
                 {
                     b.Navigation("_Admin");
 
+                    b.Navigation("_Feedbacks");
+
                     b.Navigation("_Orders");
 
                     b.Navigation("_Pets");
+
+                    b.Navigation("_PlannedServices");
 
                     b.Navigation("_Staff");
                 });
@@ -680,6 +798,8 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataObject.Product", b =>
                 {
+                    b.Navigation("_Feedbacks");
+
                     b.Navigation("_OrderDetails");
                 });
 
@@ -690,6 +810,8 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataObject.Service", b =>
                 {
+                    b.Navigation("_Feedbacks");
+
                     b.Navigation("_Invoices");
 
                     b.Navigation("_PlannedServices");
