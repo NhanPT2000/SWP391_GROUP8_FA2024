@@ -22,7 +22,7 @@ namespace DataObject
         [Column(TypeName = "nvarchar(128)")]
         public string? Notes { get; set; }
         public Guid? MemberId { get; set; }
-        public Member? Member { get; set; }
+        public User? Member { get; set; }
         public ICollection<Case>? _Cases { get; set; }
         [Column(TypeName ="nvarchar(128)")]
         public string? Image {  get; set; }

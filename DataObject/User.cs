@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace DataObject
 {
-    public class Member
+    public class User
     {
         [Key]
         [Required]
-        public Guid MemberId { get; set; }
+        public Guid UserId { get; set; }
         [Column(TypeName ="nvarchar(50)")]
         [Required(ErrorMessage ="This field is required.")]
-        public string? MemberName { get; set; }
+        public string? UserName { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         [Required(ErrorMessage = "This field is required.")]
         public string? Password {  get; set; }
@@ -43,9 +43,10 @@ namespace DataObject
         public Role? _Role { get; set; }
         public Guid? RoleId { get; set; }
 
-        public Staff? _Staff { get; set; }
-        public Admin? _Admin { get; set; }
+        public StaffDetails? _StaffDetails { get; set; }
+        public ICollection<Event>? _Events { get; set; }
         public ICollection<PlannedService>?_PlannedServices { get; set; }
         public ICollection<Feedback>? _Feedbacks { get; set; }
+        public ICollection<Voucher>? _Vouchers { get; set; }
     }
 }

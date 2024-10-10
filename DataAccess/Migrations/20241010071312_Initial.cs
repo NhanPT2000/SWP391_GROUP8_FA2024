@@ -122,8 +122,8 @@ namespace DataAccess.Migrations
                 name: "Members",
                 columns: table => new
                 {
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MemberName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(50)", nullable: true),
@@ -137,7 +137,7 @@ namespace DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Members", x => x.MemberId);
+                    table.PrimaryKey("PK_Members", x => x.UserId);
                     table.ForeignKey(
                         name: "FK_Members_Roles_RoleId",
                         column: x => x.RoleId,
@@ -146,20 +146,23 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Admins",
+                name: "Events",
                 columns: table => new
                 {
-                    AdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EventTitle = table.Column<string>(type: "nvarchar(128)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    AdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PostDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Admins", x => x.AdminId);
+                    table.PrimaryKey("PK_Events", x => x.EventId);
                     table.ForeignKey(
-                        name: "FK_Admins_Members_AdminId",
+                        name: "FK_Events_Members_AdminId",
                         column: x => x.AdminId,
                         principalTable: "Members",
-                        principalColumn: "MemberId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -180,7 +183,7 @@ namespace DataAccess.Migrations
                         name: "FK_Feedbacks_Members_MemberId",
                         column: x => x.MemberId,
                         principalTable: "Members",
-                        principalColumn: "MemberId");
+                        principalColumn: "UserId");
                     table.ForeignKey(
                         name: "FK_Feedbacks_Products_ProductId",
                         column: x => x.ProductId,
@@ -211,7 +214,7 @@ namespace DataAccess.Migrations
                         name: "FK_Orders_Members_MemberId",
                         column: x => x.MemberId,
                         principalTable: "Members",
-                        principalColumn: "MemberId",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -234,7 +237,7 @@ namespace DataAccess.Migrations
                         name: "FK_Pets_Members_MemberId",
                         column: x => x.MemberId,
                         principalTable: "Members",
-                        principalColumn: "MemberId");
+                        principalColumn: "UserId");
                     table.ForeignKey(
                         name: "FK_Pets__Species_SpeciesId",
                         column: x => x.SpeciesId,
@@ -243,7 +246,7 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Staffs",
+                name: "StaffDetails",
                 columns: table => new
                 {
                     StaffId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -252,39 +255,19 @@ namespace DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Staffs", x => x.StaffId);
+                    table.PrimaryKey("PK_StaffDetails", x => x.StaffId);
                     table.ForeignKey(
-                        name: "FK_Staffs_Members_StaffId",
+                        name: "FK_StaffDetails_Members_StaffId",
                         column: x => x.StaffId,
                         principalTable: "Members",
-                        principalColumn: "MemberId",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Staffs_WorkSchedules_StaffId",
+                        name: "FK_StaffDetails_WorkSchedules_StaffId",
                         column: x => x.StaffId,
                         principalTable: "WorkSchedules",
                         principalColumn: "WorkScheduleId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Events",
-                columns: table => new
-                {
-                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EventTitle = table.Column<string>(type: "nvarchar(128)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", nullable: false),
-                    AdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PostDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events", x => x.EventId);
-                    table.ForeignKey(
-                        name: "FK_Events_Admins_AdminId",
-                        column: x => x.AdminId,
-                        principalTable: "Admins",
-                        principalColumn: "AdminId");
                 });
 
             migrationBuilder.CreateTable(
@@ -399,7 +382,7 @@ namespace DataAccess.Migrations
                         name: "FK_PlannedServices_Members_MemberId",
                         column: x => x.MemberId,
                         principalTable: "Members",
-                        principalColumn: "MemberId");
+                        principalColumn: "UserId");
                     table.ForeignKey(
                         name: "FK_PlannedServices_Services_ServiceId",
                         column: x => x.ServiceId,
@@ -416,11 +399,17 @@ namespace DataAccess.Migrations
                     VourcherDescription = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Discount = table.Column<int>(type: "int", nullable: false),
                     PlannedServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vouchers", x => x.Voucherid);
+                    table.ForeignKey(
+                        name: "FK_Vouchers_Members_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Members",
+                        principalColumn: "UserId");
                     table.ForeignKey(
                         name: "FK_Vouchers_Orders_OrderId",
                         column: x => x.OrderId,
@@ -438,9 +427,9 @@ namespace DataAccess.Migrations
                 columns: new[] { "RoleId", "RoleName", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("3e00afcc-36a6-44b6-97e3-d0d78ab4cf69"), "Guest", "None" },
-                    { new Guid("3ed6a78d-bc6d-470f-893f-1c47eb8e0b92"), "Staff", "None" },
-                    { new Guid("a32dae86-f273-464e-8036-10314c1a2694"), "Admin", "None" }
+                    { new Guid("21de9c59-bcff-4415-827d-31ffb6aaf30b"), "Admin", "None" },
+                    { new Guid("828736b5-eee6-48b4-9d23-47f9bb7b922e"), "Member", "None" },
+                    { new Guid("e3f7c089-5286-40e0-8934-f798560d61ed"), "Staff", "None" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -532,6 +521,11 @@ namespace DataAccess.Migrations
                 name: "IX_Vouchers_PlannedServiceId",
                 table: "Vouchers",
                 column: "PlannedServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vouchers_UserId",
+                table: "Vouchers",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -550,13 +544,10 @@ namespace DataAccess.Migrations
                 name: "Invoices");
 
             migrationBuilder.DropTable(
-                name: "Staffs");
+                name: "StaffDetails");
 
             migrationBuilder.DropTable(
                 name: "Vouchers");
-
-            migrationBuilder.DropTable(
-                name: "Admins");
 
             migrationBuilder.DropTable(
                 name: "Products");

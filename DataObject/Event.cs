@@ -19,7 +19,7 @@ namespace DataObject
         [Column(TypeName = "nvarchar(500)")]
         [Required(ErrorMessage = "This field is required.")]
         public string? Description { get; set; }
-        public Admin? Admin { get; set; }
+        public User? Admin { get; set; }
         public Guid? AdminId { get; set; }
         public DateTime PostDate { get; set; }
     }

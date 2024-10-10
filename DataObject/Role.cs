@@ -19,6 +19,6 @@ namespace DataObject
         public string? RoleName { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         public string? Status { get; set; }
-        public ICollection<Member>? _Members { get; set; }
+        public ICollection<User>? _Members { get; set; }
     }
 }

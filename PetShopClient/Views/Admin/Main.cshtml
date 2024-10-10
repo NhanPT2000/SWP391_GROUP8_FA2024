@@ -1,0 +1,448 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link Font-Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <!-- Link Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/css/admin.css">
+    <title>Admin DashBoard</title>
+</head>
+
+<body>
+    <div class="side-bar">
+        <div class="sidebar-brand">
+            <div class="brand-flex d-flex align-items-center justify-content-between">
+                <a><img src="../../Image/ative-dot.jpg" alt="this is online mode" width="10px"></a>
+                <div class="brand-icon d-flex align-items-center gap-3">
+                    <i class="fa-solid fa-bell"></i>
+                    <i class="fa-regular fa-circle-user"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-main">
+            <div class="sidebar-user">
+                <!-- Admin details profile here -->
+                <img src="../../Image/avatar-profile.jpg" alt="this is avatar user" class="avatar-profile">
+                <div class="user-detail">
+                    <h3>Unknown Name</h3>
+                    <span>unknowname@gmail.com</span>
+                </div>
+
+                <div class="sidebar-menu d-flex flex-column align-items-start justifycontent-start mt-5">
+                    <div class="menu-head">
+                        <span>DashBoard</span>
+                        <div class="line"></div>
+                    </div>
+                    <ul class="d-flex flex-column align-items-start justifycontent-start gap-2 mt-2">
+                        <li>
+                            <a href="" class="d-flex align-items-center justify-content-center gap-3">
+                                <i class="fa-solid fa-chart-simple"></i>
+                                Event & News
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="d-flex align-items-center justify-content-center gap-3">
+                                <i class="fa-regular fa-id-card"></i>
+                                Staffs
+                            </a>
+                        </li>
+                        <li class=""></li>
+                        <a class="product-link d-flex align-items-center justify-content-center gap-3">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span>Product</span>
+                        </a>
+                        </li>
+                    </ul>
+                    <div class="menu-head">
+                        <span>Application</span>
+                        <div class="line"></div>
+                    </div>
+
+                    <ul class="d-flex flex-column align-items-start justifycontent-start gap-2 mt-2">
+                        <li>
+                            <a href="" class="d-flex align-items-center justify-content-center gap-3">
+                                <i class="fa-solid fa-bell-concierge"></i>
+                                <span>Service</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="" class="d-flex align-items-center justify-content-center gap-3">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span>MailBox</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="" class="d-flex align-items-center justify-content-center gap-3">
+                                <i class="fa-solid fa-list-check"></i>
+                                <span>Task</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="main-content">
+        <header class="header d-flex align-items-center justify-content-between">
+            <div class="menu-toggle">
+                <label for="">
+                    <i class="fa-solid fa-bars"></i>
+                </label>
+            </div>
+            <div class="header-icons">
+                <div class="d-flex align-items-center justify-content-around gap-4">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <i class="fa-solid fa-bookmark"></i>
+                    <i class="fa-solid fa-comment-sms"></i>
+                    <!-- Logo  -->
+                    <img src="../../Image/logo.avif" alt="this is logo" class="img-logo">
+                </div>
+
+
+            </div>
+
+        </header>
+
+        <main class="main1">
+            <div class="app-header d-flex align-items-center justify-content-between">
+                <div class="d-flex flex-column align-items-start justify-content-start gap-3">
+                    <div>
+                        <h1>
+                            Analytics DashBoard
+                        </h1>
+                        <small>
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        </small>
+                    </div>
+                    <div class="header-actions">
+                        <button>
+                            <i class="fa-solid fa-file-export"></i>
+                            Export
+                        </button>
+                        <button>
+                            <i class="fa-solid fa-wrench"></i>
+                            Settings
+                        </button>
+                    </div>
+
+                    <div class="container mt-5">
+                        <div class="row d-flex align-items-center justify-content-center">
+                            <!-- Card 1 -->
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="card-single h-100 p-4"
+                                     style="min-width: 350px; flex-grow: 1; margin-bottom: 30px;">
+
+                                    <div class="card-flex d-flex justify-content-between">
+                                        <div class="card-info">
+                                            <div class="card-head">
+                                                <span>Purchase</span>
+                                                <small>Number of purchase</small>
+                                            </div>
+                                            <h2>$25, 0777</h2>
+                                            <small>10% less purchase</small>
+                                        </div>
+                                        <div class="card-chart">
+                                            <i class="fa-solid fa-chart-line" style="color: orange;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="card-single h-100 p-4"
+                                     style="min-width: 350px; flex-grow: 1; margin-bottom: 30px;">
+                                    <div class="card-flex d-flex justify-content-between">
+                                        <div class="card-info">
+                                            <div class="card-head">
+                                                <span>Visitors</span>
+                                                <small>Number of visitors</small>
+                                            </div>
+                                            <h2>20,0503</h2>
+                                            <small>2% less visitors</small>
+                                        </div>
+                                        <div class="card-chart">
+                                            <i class="fa-solid fa-chart-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="job-grid">
+                <div class="analytics-card">
+                    <div class="analytics-head d-flex align-items-center justify-content-between">
+                        <h3>Actions needed</h3>
+
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+
+                    <div class="analytics-chart">
+                        <div class="chart-circle">
+                            <h1>74%</h1>
+                        </div>
+
+                        <div class="analytics-note">
+                            <small>
+                                Note: Current sprint requires stakeholders metting to reach conclusions
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="analytics-btn">
+                        <button>Generate Report</button>
+                    </div>
+                </div>
+
+                <div class="jobs">
+                    <h3>Jobs <small><a href="!#">See all jobs <i class="fa-solid fa-arrow-right"></i></a></small></h3>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="indicator"></div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Customer experience designer
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Design
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Copehagen Dk.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Posted 6 days ago
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <button>
+                                            3 applications
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="indicator even"></div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Software
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Developer
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Copehagen Dk.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Posted 6 days ago
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <button>
+                                            8 applications
+                                        </button>
+                                    </div>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="indicator"></div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Software
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Developer
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Copehagen Dk.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        Posted 6 days ago
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <button>
+                                            3 applications
+                                        </button>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr></tr>
+                        <td>
+                            <div class="indicator even"></div>
+                        </td>
+                        <td>
+                            <div>
+                                Customer experience designer
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                Design
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                Copehagen Dk.
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                Posted 6 days ago
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <button>
+                                    8 applications
+                                </button>
+                            </div>
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </main>
+
+        <main class="main2 hidden">
+            <div class="app-header">
+                <div>
+                    <h1>
+                        Our Product
+                    </h1>
+                    <small>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    </small>
+                </div>
+                <div class="header-actions">
+                    <button>
+                        <a href="../Product/AddProduct.html">
+                            <i class="fa-solid fa-wrench"></i>
+                            Add More...
+                        </a>
+                    </button>
+                </div>
+            </div>
+
+            <div class="container mt-5">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <!-- Search Product here -->
+                        <div class="wrapper-search">
+                            <input type="text" placeholder="">
+                        </div>
+                        <!-- List Product -->
+                        <div class="wrapper-product-list">
+                            <div class="row product-list-item">
+                                <!-- Hồi list product ở đây nha, tại tui kb code là chi nên list đại từ js lên -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script>
+        const productLink = document.querySelector('.product-link');
+        const sideBar = document.querySelector('.side-bar');
+        const mainContent = document.querySelector('.main-content');
+        const header = document.querySelector('.header');
+        const menuToggle = document.querySelector('.menu-toggle');
+        const main1 = document.querySelector('.main1');
+        const main2 = document.querySelector('.main2');
+        const productListItem = document.querySelector('.product-list-item');
+
+        const products = [
+            { id: 1, name: 'Food for Dogs', desc: 'Good, Healthy and Balance', unitPrice: 150 },
+            { id: 2, name: 'Food for Cats', desc: 'Good, Healthy and Balance', unitPrice: 150 },
+            { id: 3, name: 'Food for All', desc: 'Good, Healthy and Balance', unitPrice: 350 },
+            { id: 4, name: 'Food for Cat and Dog', desc: 'Good, Healthy and Balance', unitPrice: 450 },
+            { id: 5, name: 'Food for Cat Home just Cat Home', desc: 'Good, Healthy and Balance', unitPrice: 250 },
+            { id: 6, name: 'Food for Dog Home just Dog Home', desc: 'Good, Healthy and Balance', unitPrice: 250 },
+        ];
+
+        menuToggle.onclick = () => {
+            sideBar.classList.toggle('active');
+            header.classList.toggle('shift');
+            mainContent.classList.toggle('shift');
+        }
+
+        productLink.onclick = () => {
+            main1.classList.add('hidden');
+            main2.classList.remove('hidden');
+        }
+
+        const displayProductItem = () => {
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'col-lg-3 col-md-4 col-sm-6 mb-4';
+                productItem.innerHTML = `
+            <div class="card h-100">
+                <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                <div class="card-body">
+                    <h5 class="card-title">${product.name}</h5>
+                    <p class="card-text">${product.desc}</p>
+                    <p class="card-text"><strong>Price: $${product.unitPrice}</strong></p>
+                    <a href="#" class="btn btn-primary">Update</a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        `;
+                productListItem.appendChild(productItem);
+            });
+        }
+
+        displayProductItem();
+
+
+    </script>
+</body>
+
+</html>

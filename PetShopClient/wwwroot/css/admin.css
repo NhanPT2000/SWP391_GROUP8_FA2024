@@ -1,0 +1,341 @@
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+.side-bar {
+    display: block;
+    width: 290px;
+    position: fixed;
+    left: -350px;
+    top: 0;
+    height: 100%;
+    padding: 1rem;
+    background-color: #efefee;
+    color: #000;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    border-top-right-radius: 20px;
+    z-index: 20;
+    transition: left 300ms;
+}
+
+.side-bar.active {
+    left: 0;
+}
+
+.sidebar-brand {
+    height: 50px;
+}
+
+.main-content {
+    margin-left: 0;
+}
+
+.main-content.shift {
+    margin-left: 300px
+}
+
+.main1.hidden {
+    display: none;
+}
+
+.main2 {
+    margin-top: 70px;
+}
+
+.header {
+    height: 70px;
+    background-color: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 1rem 1.5rem;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    top: 0;
+    z-index: 20;
+    transition: left 300ms;
+}
+
+.header.shift {
+    left: 300px;
+}
+
+main {
+    padding: 1.5rem;
+    background: #f1f5f9;
+    min-height: calc(100vh - 70px);
+}
+
+
+.main2.hidden {
+    display: none;
+}
+
+.app-header {
+    margin-top: 50px;
+}
+
+.header-icon i {
+    display: inline-block;
+    margin-right: .7rem;
+    font-size: 1.4rem;
+}
+
+.header-actions button {
+    outline: none;
+    color: #fff;
+    background: #5850ec;
+    border: none;
+    padding: 5px 10px;
+    margin-left: .1rem;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    font-weight: 600;
+}
+
+.header-actions button i {
+    font-size: 1.2rem;
+    margin-right: .6rem;
+}
+
+small {
+    width: 200px;
+}
+
+.menu-toggle label {
+    height: 60px;
+    width: 60px;
+    display: grid;
+    place-items: center;
+    font-size: 1.5rem;
+    border-radius: 50%;
+}
+
+.menu-toggle label:hover {
+    background: #efefee;
+}
+
+.brand-icon i {
+    font-size: 1.5rem;
+}
+
+
+.sidebar-user {
+    margin: 1rem 0rem;
+    text-align: center;
+}
+
+.menu-head {
+    text-transform: uppercase;
+    color: #8da2fb;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.line {
+    padding: 2px;
+    background-color: #8da2fb;
+    width: 80px;
+    border-radius: 30px;
+}
+
+.img-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.bars {
+    margin-right: 20px;
+}
+
+.avatar-profile {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border-left: 2px solid c;
+    border-right: 2px solid #8da2fb;
+    border-bottom: 2px solid #8da2fb;
+    border-top: 2px solid transparent;
+}
+
+
+.card-single {
+    background: #fff;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.card-chart i {
+    font-size: 6rem;
+    color: green;
+}
+
+.job-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: auto 66%;
+    grid-gap: 2rem;
+}
+
+.analytics-card {
+    background-color: #fff;
+    padding: 1.5rem;
+}
+
+.analytics-head {
+    margin-bottom: 2rem;
+}
+
+.analytics-head span {
+    font-size: 1.5rem;
+}
+
+.analytics-chart small {
+    font-weight: 600;
+    color: #555;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.chart-circle {
+    height: 150px;
+    width: 150px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid #8da2fb;
+    border-bottom: 10px solid #8da2fb;
+    border-top: 10px solid #8da2fb;
+    display: grid;
+    place-items: center;
+    margin: auto;
+    border-radius: 50%;
+    margin-bottom: 3rem;
+}
+
+.analytics-card button {
+    display: block;
+    padding: .6rem 1rem;
+    width: 100%;
+    height: 45px;
+    background-color: #5850ec;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+}
+
+.jobs h3 small {
+    font-weight: 600;
+    color: #5850ec;
+    display: inline-block;
+    margin-left: 1rem;
+    font-size: .9rem;
+}
+
+.jobs a {
+    color: #5850ec;
+}
+
+.jobs table {
+    border-collapse: collapse;
+    background: #fff;
+    margin-top: 1rem;
+
+}
+
+.jobs table tr {
+    background: #fff;
+}
+
+.jobs table td div {
+    background: #fff;
+    margin-bottom: .8rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: .5rem;
+    color: #444;
+    font-weight: 500;
+}
+
+.jobs .indicator {
+    width: 10px;
+    height: 10px;
+    background-color: #c9f7f5;
+    border-radius: 50px;
+    margin-left: 10px;
+}
+
+.jobs .indicator.even {
+    width: 10px;
+    height: 10px;
+    background-color: #fff4de;
+    border-radius: 50px;
+    margin-left: 10px;
+}
+
+table button {
+    background: #8da2fb;
+    color: midnightblue;
+    border: 1px solid #8da2fb;
+    border-radius: 3px;
+    width: 110px;
+}
+
+.product-list-item {
+    list-style: none;
+    padding: 0;
+
+}
+
+.product-item {
+    flex: 0 1 calc(33.333% - 10px);
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper-search {
+    margin-bottom: 20px;
+    text-align: end;
+
+}
+
+.wrapper-search input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+
+}
+
+.wrapper-search input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.wrapper-search input[type="text"]::placeholder {
+    color: #aaa;
+    opacity: 1;
+}

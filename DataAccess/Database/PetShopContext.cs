@@ -14,10 +14,9 @@ namespace DataAccess.Database
         public PetShopContext() { }
         public PetShopContext(DbContextOptions<PetShopContext> options) : base(options)
         { }
-        public DbSet<Admin> Admins { get; set; }
-        public DbSet<Member> Members { get; set; }
+        public DbSet<User> Members { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Staff> Staffs { get; set; }
+        public DbSet<StaffDetails> StaffDetails { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -88,14 +87,14 @@ namespace DataAccess.Database
             //
             /*Staff-WorkSchedule*/
             //
-            modelBuilder.Entity<Staff>()
+            modelBuilder.Entity<StaffDetails>()
                 .HasOne(p => p.WorkSchedule)
                 .WithMany(m => m.Staffs)
                 .HasForeignKey(p => p.StaffId);
             //
             /*Member-Role*/
             //
-            modelBuilder.Entity<Member>()
+            modelBuilder.Entity<User>()
                 .HasOne(p => p._Role)
                 .WithMany(m => m._Members)
                 .HasForeignKey(p => p.RoleId);
@@ -147,26 +146,19 @@ namespace DataAccess.Database
                 .WithMany(m => m.Invoices)
                 .HasForeignKey(p => p.InvoiceId);
             //
-            /*Member-Staff*/
+            /*User-Staff*/
             //
-            modelBuilder.Entity<Staff>()
+            modelBuilder.Entity<StaffDetails>()
                 .HasOne(s => s.Member)
-                .WithOne(m => m._Staff)
-                .HasForeignKey<Staff>(s => s.StaffId);
+                .WithOne(m => m._StaffDetails)
+                .HasForeignKey<StaffDetails>(s => s.StaffId);
             //
-            /*Member-Admin*/
+            /*Voucher-User*/
             //
-            modelBuilder.Entity<Admin>()
-                .HasOne(s => s.Member)
-                .WithOne(m => m._Admin)
-                .HasForeignKey<Admin>(s => s.AdminId);
-            //
-            /*Voucher-Staff*/
-            //
-            modelBuilder.Entity<Staff>()
-                .HasOne(s => s.Member)
-                .WithOne(m => m._Staff)
-                .HasForeignKey<Staff>(s => s.StaffId);
+            modelBuilder.Entity<Voucher>()
+                .HasOne(s => s.User)
+                .WithMany(m => m._Vouchers)
+                .HasForeignKey(s => s.UserId);
             //
             /*Voucher-PlannedService*/
             //
@@ -221,7 +213,7 @@ namespace DataAccess.Database
             //
             modelBuilder.Entity<Role>().HasData(
                 new { RoleId = Guid.NewGuid(), RoleName = "Admin", Status ="None" },
-                new { RoleId = Guid.NewGuid(), RoleName = "Guest", Status = "None" },
+                new { RoleId = Guid.NewGuid(), RoleName = "Member", Status = "None" },
                 new { RoleId = Guid.NewGuid(), RoleName = "Staff", Status = "None" });
         }
 

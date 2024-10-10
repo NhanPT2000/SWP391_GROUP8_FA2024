@@ -1,4 +1,4 @@
-﻿@model DataObject.Member
+﻿@model DataObject.User
 
 @{
     Layout = null;
@@ -18,10 +18,9 @@
         <form asp-action="Register" class="form">
             <div class="input-box">
                 <label>Full Name</label>
-                <input asp-for="MemberName" type="text" placeholder="Enter full name" required />
-                <span asp-validation-for="MemberName" class="text-danger"></span>
+                <input asp-for="UserName" type="text" placeholder="Enter full name" required />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
-
             <div class="input-box">
                 <label>Email Address</label>
                 <input asp-for="Email" type="email" placeholder="Enter email address" required />
@@ -79,3 +78,26 @@
     </section>
 </body>
 </html>
+@if (ViewData["ShowEmailConfirmed"] != null && (bool)ViewData["ShowEmailConfirmed"])
+{
+    <div class="modal fade" id="emailConfirmedModal" tabindex="-1" aria-labelledby="emailConfirmedModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emailConfirmedModalLabel">Email Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Your email has been confirmed successfully. You can now log in.
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <a href="/Account/Login" class="btn btn-success">Login Now</a>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

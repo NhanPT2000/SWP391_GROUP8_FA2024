@@ -14,7 +14,7 @@ namespace DataObject
         public Guid OrderId { get; set; }
         /*Has 1 member*/
         public Guid MemberId { get; set; }
-        public Member? Member { get; set; }
+        public User? Member { get; set; }
         /**/
         public DateTime OrderDate { get; set; }
         public DateTime RequiredDate { get; set; }

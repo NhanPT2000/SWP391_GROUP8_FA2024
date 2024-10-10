@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PetShopContext))]
-    [Migration("20240923143011_Initial")]
+    [Migration("20241010071312_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,16 +24,6 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("DataObject.Admin", b =>
-                {
-                    b.Property<Guid>("AdminId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AdminId");
-
-                    b.ToTable("Admins");
-                });
 
             modelBuilder.Entity("DataObject.Case", b =>
                 {
@@ -210,57 +200,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("Invoices");
-                });
-
-            modelBuilder.Entity("DataObject.Member", b =>
-                {
-                    b.Property<Guid>("MemberId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Addess")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool?>("ConfirmedEmail")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MemberName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("OnlineTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PhoneNumber2")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Profile")
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<Guid?>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("MemberId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("DataObject.Order", b =>
@@ -452,19 +391,19 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("a32dae86-f273-464e-8036-10314c1a2694"),
+                            RoleId = new Guid("21de9c59-bcff-4415-827d-31ffb6aaf30b"),
                             RoleName = "Admin",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("3e00afcc-36a6-44b6-97e3-d0d78ab4cf69"),
-                            RoleName = "Guest",
+                            RoleId = new Guid("828736b5-eee6-48b4-9d23-47f9bb7b922e"),
+                            RoleName = "Member",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("3ed6a78d-bc6d-470f-893f-1c47eb8e0b92"),
+                            RoleId = new Guid("e3f7c089-5286-40e0-8934-f798560d61ed"),
                             RoleName = "Staff",
                             Status = "None"
                         });
@@ -510,7 +449,7 @@ namespace DataAccess.Migrations
                     b.ToTable("_Species");
                 });
 
-            modelBuilder.Entity("DataObject.Staff", b =>
+            modelBuilder.Entity("DataObject.StaffDetails", b =>
                 {
                     b.Property<Guid>("StaffId")
                         .HasColumnType("uniqueidentifier");
@@ -523,7 +462,58 @@ namespace DataAccess.Migrations
 
                     b.HasKey("StaffId");
 
-                    b.ToTable("Staffs");
+                    b.ToTable("StaffDetails");
+                });
+
+            modelBuilder.Entity("DataObject.User", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Addess")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool?>("ConfirmedEmail")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("OnlineTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PhoneNumber2")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Profile")
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<Guid?>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("DataObject.Voucher", b =>
@@ -541,6 +531,9 @@ namespace DataAccess.Migrations
                     b.Property<Guid?>("PlannedServiceId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("VourcherDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
@@ -554,6 +547,8 @@ namespace DataAccess.Migrations
                     b.HasIndex("OrderId");
 
                     b.HasIndex("PlannedServiceId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Vouchers");
                 });
@@ -570,17 +565,6 @@ namespace DataAccess.Migrations
                     b.HasKey("WorkScheduleId");
 
                     b.ToTable("WorkSchedules");
-                });
-
-            modelBuilder.Entity("DataObject.Admin", b =>
-                {
-                    b.HasOne("DataObject.Member", "Member")
-                        .WithOne("_Admin")
-                        .HasForeignKey("DataObject.Admin", "AdminId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("DataObject.Case", b =>
@@ -600,7 +584,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataObject.Event", b =>
                 {
-                    b.HasOne("DataObject.Admin", "Admin")
+                    b.HasOne("DataObject.User", "Admin")
                         .WithMany("_Events")
                         .HasForeignKey("AdminId");
 
@@ -609,7 +593,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataObject.Feedback", b =>
                 {
-                    b.HasOne("DataObject.Member", "Member")
+                    b.HasOne("DataObject.User", "Member")
                         .WithMany("_Feedbacks")
                         .HasForeignKey("MemberId");
 
@@ -645,18 +629,9 @@ namespace DataAccess.Migrations
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("DataObject.Member", b =>
-                {
-                    b.HasOne("DataObject.Role", "_Role")
-                        .WithMany("_Members")
-                        .HasForeignKey("RoleId");
-
-                    b.Navigation("_Role");
-                });
-
             modelBuilder.Entity("DataObject.Order", b =>
                 {
-                    b.HasOne("DataObject.Member", "Member")
+                    b.HasOne("DataObject.User", "Member")
                         .WithMany("_Orders")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -686,7 +661,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataObject.Pet", b =>
                 {
-                    b.HasOne("DataObject.Member", "Member")
+                    b.HasOne("DataObject.User", "Member")
                         .WithMany("_Pets")
                         .HasForeignKey("MemberId");
 
@@ -705,7 +680,7 @@ namespace DataAccess.Migrations
                         .WithMany("_PlannedServices")
                         .HasForeignKey("CaseId");
 
-                    b.HasOne("DataObject.Member", "_Member")
+                    b.HasOne("DataObject.User", "_Member")
                         .WithMany("_PlannedServices")
                         .HasForeignKey("MemberId");
 
@@ -731,11 +706,11 @@ namespace DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("DataObject.Staff", b =>
+            modelBuilder.Entity("DataObject.StaffDetails", b =>
                 {
-                    b.HasOne("DataObject.Member", "Member")
-                        .WithOne("_Staff")
-                        .HasForeignKey("DataObject.Staff", "StaffId")
+                    b.HasOne("DataObject.User", "Member")
+                        .WithOne("_StaffDetails")
+                        .HasForeignKey("DataObject.StaffDetails", "StaffId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -750,6 +725,15 @@ namespace DataAccess.Migrations
                     b.Navigation("WorkSchedule");
                 });
 
+            modelBuilder.Entity("DataObject.User", b =>
+                {
+                    b.HasOne("DataObject.Role", "_Role")
+                        .WithMany("_Members")
+                        .HasForeignKey("RoleId");
+
+                    b.Navigation("_Role");
+                });
+
             modelBuilder.Entity("DataObject.Voucher", b =>
                 {
                     b.HasOne("DataObject.Order", "Order")
@@ -760,14 +744,15 @@ namespace DataAccess.Migrations
                         .WithMany("_Vouchers")
                         .HasForeignKey("PlannedServiceId");
 
+                    b.HasOne("DataObject.User", "User")
+                        .WithMany("_Vouchers")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Order");
 
                     b.Navigation("PlannedService");
-                });
 
-            modelBuilder.Entity("DataObject.Admin", b =>
-                {
-                    b.Navigation("_Events");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DataObject.Case", b =>
@@ -785,21 +770,6 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataObject.Facility", b =>
                 {
                     b.Navigation("_Cases");
-                });
-
-            modelBuilder.Entity("DataObject.Member", b =>
-                {
-                    b.Navigation("_Admin");
-
-                    b.Navigation("_Feedbacks");
-
-                    b.Navigation("_Orders");
-
-                    b.Navigation("_Pets");
-
-                    b.Navigation("_PlannedServices");
-
-                    b.Navigation("_Staff");
                 });
 
             modelBuilder.Entity("DataObject.Order", b =>
@@ -843,6 +813,23 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataObject.Species", b =>
                 {
                     b.Navigation("Pets");
+                });
+
+            modelBuilder.Entity("DataObject.User", b =>
+                {
+                    b.Navigation("_Events");
+
+                    b.Navigation("_Feedbacks");
+
+                    b.Navigation("_Orders");
+
+                    b.Navigation("_Pets");
+
+                    b.Navigation("_PlannedServices");
+
+                    b.Navigation("_StaffDetails");
+
+                    b.Navigation("_Vouchers");
                 });
 
             modelBuilder.Entity("DataObject.WorkSchedule", b =>

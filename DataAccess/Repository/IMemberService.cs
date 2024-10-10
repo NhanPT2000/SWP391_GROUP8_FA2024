@@ -10,16 +10,17 @@ namespace DataAccess.Repository
 {
     public interface IMemberService
     {
-        Task CreateMemberAsync(Member member);
-        Task<bool> UpdateMemberAsync(Guid id, Member member);
+        Task CreateMemberAsync(User member);
+        Task<bool> UpdateMemberAsync(Guid id, User member);
         Task<bool> DeleteMemberAsync(Guid id);
-        Task<Member> GetMemberDetailsAsync(Guid id);
-        Task<IEnumerable<Member>> GetMembersAsync();
+        Task<User> GetMemberDetailsAsync(Guid id);
+        Task<IEnumerable<User>> GetMembersAsync();
         Task<bool> FindMemberAsync(Guid id);
 
-        Task<Member>GetMemberByEmailAsync(string Email, string Password);
-        Task<Member> GetMemberByEmailOnlyAsync(string Email);
-        Task<bool> CheckPassword(string password, Member member);
+        Task<User>GetMemberByEmailAsync(string Email, string Password);
+        Task<User> GetMemberByEmailOnlyAsync(string Email);
+        Task<bool> CheckPassword(string password, User member);
+        Task<bool> ChangePasswordAsync(string oldPassword, string newPassword, Guid Id);
     }
 
 }

@@ -10,6 +10,6 @@ namespace DataObject
     {
         public Guid WorkScheduleId { get; set; }
         public string? Image {  get; set; }
-        public ICollection<Staff>? Staffs { get; set; }
+        public ICollection<StaffDetails>? Staffs { get; set; }
     }
 }

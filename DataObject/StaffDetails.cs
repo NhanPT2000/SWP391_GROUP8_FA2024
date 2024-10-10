@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataObject
 {
-    public class Staff
+    public class StaffDetails
     {
         [Key]
         [Required]
@@ -18,6 +18,6 @@ namespace DataObject
         public string? DegreeImage {  get; set; }
         public Guid WorkScheduleId { get; set; }
         public WorkSchedule? WorkSchedule { get; set; }
-        public Member? Member { get; set; }
+        public User? Member { get; set; }
     }
 }

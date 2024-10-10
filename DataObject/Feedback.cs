@@ -11,7 +11,7 @@ namespace DataObject
     public class Feedback
     {
         public Guid FeedbackId { get; set; }
-        public Member? Member { get; set; }
+        public User? Member { get; set; }
         public Guid? ServiceId { get; set; }
         public Service? Service { get; set; }
         public Guid? ProductId { get; set; }

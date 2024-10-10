@@ -25,5 +25,7 @@ namespace DataObject
         public Guid? PlannedServiceId { get; set; }
         public Order? Order { get; set; }
         public Guid? OrderId { get; set; }
+        public Guid? UserId { get; set; }
+        public User? User { get; set; }
     }
 }

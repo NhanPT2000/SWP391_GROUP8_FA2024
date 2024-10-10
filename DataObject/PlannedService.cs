@@ -28,7 +28,7 @@ namespace DataObject
         [Column(TypeName = "nvarchar(255)")]
         public string? Notes { get; set; }
         public ICollection<Voucher>? _Vouchers { get; set; }
-        public Member? _Member { get; set; }
+        public User? _Member { get; set; }
         public Guid? MemberId { get; set; }
     }
 }

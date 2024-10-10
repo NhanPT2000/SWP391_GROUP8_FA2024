@@ -20,20 +20,20 @@ namespace DataAccess.Service
         {
             _memberContext = dbContext;
         }
-        public async Task CreateMemberAsync(Member member)
+        public async Task CreateMemberAsync(User member)
         {
             using var transaction = await _memberContext.Database.BeginTransactionAsync();
             try
             {
-                var newMember = new Member
+                var newMember = new User
                 {
-                    MemberId = member.MemberId,
+                    UserId = member.UserId,
                     Email = member.Email,
                     Password = HashPassword(member.Password),
                     ConfirmedEmail = false,
                     Addess = member.Addess,
                     Gender = member.Gender,
-                    MemberName = member.MemberName,
+                    UserName = member.UserName,
                     PhoneNumber = member.PhoneNumber,
                     PhoneNumber2 = member.PhoneNumber2,
                     RoleId = _memberContext.Roles.FirstOrDefault(m => m.RoleName == "Member")?.RoleId
@@ -52,7 +52,7 @@ namespace DataAccess.Service
 
         public async Task<bool> DeleteMemberAsync(Guid id)
         {
-            var memberToDelete = await _memberContext.Members.FirstAsync(p => p.MemberId == id);
+            var memberToDelete = await _memberContext.Members.FirstAsync(p => p.UserId == id);
 
             if (memberToDelete == null)
             {
@@ -74,7 +74,7 @@ namespace DataAccess.Service
             return await _memberContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<Member> GetMemberDetailsAsync(Guid id)
+        public async Task<User> GetMemberDetailsAsync(Guid id)
         {
             var member = await _memberContext.Members.FindAsync(id);
 
@@ -84,12 +84,12 @@ namespace DataAccess.Service
             }
             return member;
         }
-        public async Task<IEnumerable<Member>> GetMembersAsync()
+        public async Task<IEnumerable<User>> GetMembersAsync()
         {
             return await _memberContext.Members.ToListAsync();
         }
 
-        public async Task<bool> UpdateMemberAsync(Guid id, Member member)
+        public async Task<bool> UpdateMemberAsync(Guid id, User member)
         {
             var memberToUpdate = await _memberContext.Members.FindAsync(id);
 
@@ -97,6 +97,9 @@ namespace DataAccess.Service
             {
                 return false;
             }
+            memberToUpdate.OnlineTime = DateTime.UtcNow;
+            memberToUpdate.UserName = member.UserName;
+            memberToUpdate.Profile = member.Profile;
             memberToUpdate.Addess = member.Addess;
             memberToUpdate.PhoneNumber = member.PhoneNumber;
             memberToUpdate.PhoneNumber2 = member.PhoneNumber2;
@@ -106,9 +109,9 @@ namespace DataAccess.Service
             _memberContext.Update(memberToUpdate);
             return await _memberContext.SaveChangesAsync() > 0;
         }
-        public async Task<Member> GetMemberByEmailAsync(string Email, string password)
+        public async Task<User> GetMemberByEmailAsync(string Email, string password)
         {
-            var member = await _memberContext.Members.FirstOrDefaultAsync(m => m.Email == Email && m.Password == password);
+            var member = await _memberContext.Members.FirstOrDefaultAsync(m => m.Email == Email && m.Password == HashPassword(password));
 
             if (member == null)
             {
@@ -116,7 +119,7 @@ namespace DataAccess.Service
             }
             return member;
         }
-        public async Task<Member> GetMemberByEmailOnlyAsync(string Email)
+        public async Task<User> GetMemberByEmailOnlyAsync(string Email)
         {
             var member = await _memberContext.Members.FirstOrDefaultAsync(m => m.Email == Email);
 
@@ -126,7 +129,7 @@ namespace DataAccess.Service
             }
             return member;
         }
-        public async Task<bool> CheckPassword(string password, Member member)
+        public async Task<bool> CheckPassword(string password, User member)
         {
             var defaultPassword = await _memberContext.Members.FirstOrDefaultAsync(m => m.Password == HashPassword(password));
 
@@ -134,7 +137,7 @@ namespace DataAccess.Service
             {
                 return false;
             }
-            return await _memberContext.SaveChangesAsync() > 0;
+            return true;
         }
 
         private string HashPassword(string password)
@@ -143,6 +146,27 @@ namespace DataAccess.Service
             var asByteArray = Encoding.UTF8.GetBytes(password);
             var HashPassword = sha.ComputeHash(asByteArray);
             return Convert.ToBase64String(HashPassword);
+        }
+
+        public async Task<bool> ChangePasswordAsync(string oldPassword, string newPassword, Guid Id)
+        {
+            var member = await _memberContext.Members.FindAsync(Id);
+            if (member == null) 
+            {
+                Console.WriteLine("No member found");
+                return false; 
+            }
+            else if(HashPassword(oldPassword) != member.Password) 
+            {
+                Console.WriteLine("Old password did not match");
+                return false; 
+            }
+            else
+            {
+                member.Password = HashPassword(newPassword);
+                _memberContext.Update(member);
+                return await _memberContext.SaveChangesAsync() > 0;
+            }
         }
     }
 }
