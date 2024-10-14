@@ -57,6 +57,13 @@ namespace DataAccess.Database
                 .WithMany(m=> m._Pets)
                 .HasForeignKey(p => p.MemberId);
             //
+            /*Product-Category*/
+            //
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(m => m._Products)
+                .HasForeignKey(p => p.CategoryId);
+            //
             /*Order-Member*/
             //
             modelBuilder.Entity<Order>()
@@ -215,6 +222,92 @@ namespace DataAccess.Database
                 new { RoleId = Guid.NewGuid(), RoleName = "Admin", Status ="None" },
                 new { RoleId = Guid.NewGuid(), RoleName = "Member", Status = "None" },
                 new { RoleId = Guid.NewGuid(), RoleName = "Staff", Status = "None" });
+            //
+            /*Category-Seeding*/
+            var dogFoodCategoryId = Guid.NewGuid();
+            var catFoodCategoryId = Guid.NewGuid();
+            var birdFoodCategoryId = Guid.NewGuid();
+            modelBuilder.Entity<Category>().HasData(
+                new { CategoryId = dogFoodCategoryId, CategoryName = "Dog Food", Status = "None"},
+                new { CategoryId = catFoodCategoryId, CategoryName = "Cat Food", Status = "None"},
+                new { CategoryId = birdFoodCategoryId, CategoryName = "Bird Food", Status = "None"}
+                );
+            //
+            /*Products-Sedding*/
+            //
+            modelBuilder.Entity<Product>().HasData(
+                new
+                {
+                    ProductId = Guid.NewGuid(),
+                    ProductName = "Premium Dog Food",
+                    ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                    Origin = "Viet Nam",
+                    Weight = (float)12,
+                    UnitPrice = (float)10000,
+                    UnitsInStock = 1,
+                    Image = "product_01.jpg",
+                    CategoryId = dogFoodCategoryId
+                },
+                new
+                {
+                    ProductId = Guid.NewGuid(),
+                    ProductName = "Premium Dog Food",
+                    ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                    Origin = "Viet Nam",
+                    Weight = (float)12,
+                    UnitPrice = (float)10000,
+                    UnitsInStock = 1,
+                    Image = "product_02.jpg",
+                    CategoryId = catFoodCategoryId
+                }, new
+                {
+                    ProductId = Guid.NewGuid(),
+                    ProductName = "Premium Cat Food",
+                    ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                    Origin = "Viet Nam",
+                    Weight = (float)0.76,
+                    UnitPrice = (float)10000,
+                    UnitsInStock = 0,
+                    Image = "product_03.jpg",
+                    CategoryId = birdFoodCategoryId
+                },
+                new
+                {
+                    ProductId = Guid.NewGuid(),
+                    ProductName = "Premium Bird Food",
+                    ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                    Origin = "England",
+                    Weight = (float)12,
+                    UnitPrice = (float)10000,
+                    UnitsInStock = 10,
+                    Image = "product_04.jpg",
+                    CategoryId = dogFoodCategoryId
+                },
+                new
+                {
+                    ProductId = Guid.NewGuid(),
+                    ProductName = "Premium Dog Food",
+                    ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                    Origin = "Viet Nam",
+                    Weight = (float)13,
+                    UnitPrice = (float)10000,
+                    UnitsInStock = 1,
+                    Image = "product_05.jpg",
+                    CategoryId = birdFoodCategoryId
+                },
+                new
+                {
+                    ProductId = Guid.NewGuid(),
+                    ProductName = "Premium Dog Food",
+                    ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                    Origin = "Viet Nam",
+                    Weight = (float)12,
+                    UnitPrice = (float)10000,
+                    UnitsInStock = 1,
+                    Image = "product_06.jpg",
+                    CategoryId = dogFoodCategoryId
+                }
+                );
         }
 
     }

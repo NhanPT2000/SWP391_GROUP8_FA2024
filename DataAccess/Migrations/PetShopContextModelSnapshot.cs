@@ -71,6 +71,26 @@ namespace DataAccess.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = new Guid("c0ecbc91-d34a-4004-a3e9-3125d0f76352"),
+                            CategoryName = "Dog Food",
+                            Status = "None"
+                        },
+                        new
+                        {
+                            CategoryId = new Guid("2300fc0e-0ef3-4221-abdb-70d889e5e4f5"),
+                            CategoryName = "Cat Food",
+                            Status = "None"
+                        },
+                        new
+                        {
+                            CategoryId = new Guid("f5ed9939-9719-4ffc-b073-1c49b112e25b"),
+                            CategoryName = "Bird Food",
+                            Status = "None"
+                        });
                 });
 
             modelBuilder.Entity("DataObject.Event", b =>
@@ -335,7 +355,8 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Image")
@@ -366,6 +387,80 @@ namespace DataAccess.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = new Guid("3c2c87da-9022-4fff-bc7c-29d2892515b2"),
+                            CategoryId = new Guid("c0ecbc91-d34a-4004-a3e9-3125d0f76352"),
+                            Image = "product_01.jpg",
+                            Origin = "Viet Nam",
+                            ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                            ProductName = "Premium Dog Food",
+                            UnitPrice = 10000m,
+                            UnitsInStock = 1,
+                            Weight = 12m
+                        },
+                        new
+                        {
+                            ProductId = new Guid("f80b534d-1b05-45ec-ba4b-8f7d1bb3f107"),
+                            CategoryId = new Guid("2300fc0e-0ef3-4221-abdb-70d889e5e4f5"),
+                            Image = "product_02.jpg",
+                            Origin = "Viet Nam",
+                            ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                            ProductName = "Premium Dog Food",
+                            UnitPrice = 10000m,
+                            UnitsInStock = 1,
+                            Weight = 12m
+                        },
+                        new
+                        {
+                            ProductId = new Guid("c0ea12e8-884f-448a-9f1a-a315e6a73633"),
+                            CategoryId = new Guid("f5ed9939-9719-4ffc-b073-1c49b112e25b"),
+                            Image = "product_03.jpg",
+                            Origin = "Viet Nam",
+                            ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                            ProductName = "Premium Cat Food",
+                            UnitPrice = 10000m,
+                            UnitsInStock = 0,
+                            Weight = 0.76m
+                        },
+                        new
+                        {
+                            ProductId = new Guid("56572f88-5eae-4216-9351-becb450c936a"),
+                            CategoryId = new Guid("c0ecbc91-d34a-4004-a3e9-3125d0f76352"),
+                            Image = "product_04.jpg",
+                            Origin = "England",
+                            ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                            ProductName = "Premium Bird Food",
+                            UnitPrice = 10000m,
+                            UnitsInStock = 10,
+                            Weight = 12m
+                        },
+                        new
+                        {
+                            ProductId = new Guid("15062ed6-889b-4e5f-97a0-396b502f3482"),
+                            CategoryId = new Guid("f5ed9939-9719-4ffc-b073-1c49b112e25b"),
+                            Image = "product_05.jpg",
+                            Origin = "Viet Nam",
+                            ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                            ProductName = "Premium Dog Food",
+                            UnitPrice = 10000m,
+                            UnitsInStock = 1,
+                            Weight = 13m
+                        },
+                        new
+                        {
+                            ProductId = new Guid("aa0c3fe0-5dac-4be2-b821-78a5d7e177c9"),
+                            CategoryId = new Guid("c0ecbc91-d34a-4004-a3e9-3125d0f76352"),
+                            Image = "product_06.jpg",
+                            Origin = "Viet Nam",
+                            ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
+                            ProductName = "Premium Dog Food",
+                            UnitPrice = 10000m,
+                            UnitsInStock = 1,
+                            Weight = 12m
+                        });
                 });
 
             modelBuilder.Entity("DataObject.Role", b =>
@@ -388,19 +483,19 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("21de9c59-bcff-4415-827d-31ffb6aaf30b"),
+                            RoleId = new Guid("9c87e5f9-43fb-4c47-93ba-901a82c66455"),
                             RoleName = "Admin",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("828736b5-eee6-48b4-9d23-47f9bb7b922e"),
+                            RoleId = new Guid("e66a1518-caa0-495e-ad87-4194b6e71cc9"),
                             RoleName = "Member",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("e3f7c089-5286-40e0-8934-f798560d61ed"),
+                            RoleId = new Guid("3d8dc470-dce1-414b-87a1-0e3123e0fe18"),
                             RoleName = "Staff",
                             Status = "None"
                         });

@@ -15,6 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<PetShopContext>();
 builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderDetailsService, OrderDetailsService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>

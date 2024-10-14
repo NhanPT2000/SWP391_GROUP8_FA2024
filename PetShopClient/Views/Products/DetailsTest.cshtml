@@ -1,0 +1,9 @@
+﻿@{
+    Layout = null;
+}
+@model DataObject.Product
+
+@await Html.PartialAsync("User.cshtml");
+<h1>@Model.ProductName</h1>
+<p>@Model.ProductDescription</p>
+<p>Price: @Model.UnitPrice</p>

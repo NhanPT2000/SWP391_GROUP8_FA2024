@@ -811,8 +811,8 @@ body {
   background-color: #f9f9f9;
   border-radius: 8px;
   width: 260px; /* Fixed width */
-  height: 460px; /* Fixed height */
-  display: flex;
+  height: 560px; /* Fixed height */
+/*  display: flex;*/
   flex-direction: column;
   justify-content: space-between; /* Ensure spacing for the content */
 }

@@ -22,7 +22,7 @@ namespace DataObject
         [Column(TypeName = "nvarchar(50)")]
         [Required(ErrorMessage = "This field is required.")]
         public Category? Category { get; set; }
-        public Guid CategoryId {  get; set; }
+        public Guid? CategoryId {  get; set; }
         public string? Origin { get; set; }
         [Column(TypeName = "decimal(10,2)")]
         public float Weight { get; set; }

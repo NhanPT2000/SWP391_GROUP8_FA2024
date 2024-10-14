@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@model DataObject.Product
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +14,7 @@
 <body>
     <header class="header">
         <section class="flex">
-            <a href="#" class="logo"> <i class="fas fa-paw"></i> shop </a>
+            <a asp-action="Index" asp-controller="Home" class="logo"> <i class="fas fa-paw"></i> shop </a>
             <nav class="navbar">
                 <a asp-action="Index" asp-controller="Home">home</a>
                 <a asp-action="Index" asp-controller="Home">about</a>
@@ -23,27 +27,34 @@
                 <a href="#" class="fas fa-shopping-cart"></a>
                 <div class="fas fa-user" id="login-btn"></div>
             </div>
-            @await Html.PartialAsync("User.cshtml");
         </section>
+        @await Html.PartialAsync("User.cshtml", ViewData["User"] as DataObject.User);
     </header>
 
     <section class="product-detail">
         <div class="image-gallery">
-            <img src="~/image/product_01.jpg" alt="Product Image 1">
+            <img src="@Url.Action("GetImage", "Products", new { fileName = Model.Image })" alt="Product Image">
 
         </div>
         <div class="details">
-            <h1>DOGGY PUPPY DOG FOOD</h1>
+            <h1>@Model.ProductName</h1>
             <ul>
                 <li>High-quality ingredients</li>
                 <li>Rich in vitamins and minerals</li>
                 <li>Supports healthy growth</li>
                 <li>Suitable for all breeds</li>
             </ul>
-            <p class="price"><del>$15.00</del></p>
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" min="1" value="1">
-            <button class="btn">Add to Cart</button>
+            <p class="price"><del>@Model.UnitPrice vnd</del></p>
+            <p class="price"><del>There are @Model.UnitsInStock left</del></p>
+
+            <form asp-action="AddToCart" method="post" asp-controller="Cart">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="1" max="@Model.UnitsInStock" value="1">
+                <input type="hidden" name="productId" value="@Model.ProductId" />
+                <input type="hidden" name="productName" value="@Model.ProductName" />
+                <input type="hidden" name="unitPrice" value="@Model.UnitPrice" />
+                <button type="submit" class="btn">Add to Cart</button>
+            </form>
         </div>
     </section>
 
@@ -84,10 +95,11 @@
         </div>
     </section>
 
-    
-<!-- shop section ends -->
 
+    <!-- shop section ends -->
 
+</body>
+</html>
 <footer class="footer">
 
     <img src="~/image/top_wave.png" alt="">
@@ -103,7 +115,5 @@
     <div class="credit"> 2024 created by <span> Group 8 </span> | all rights reserved! </div>
 
 </footer>
-
-    <script src="~/js/productDetails_script.js"></script>
-</body>
-</html>
+<script src="~/js/productDetails_script.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

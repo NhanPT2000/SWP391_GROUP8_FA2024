@@ -34,7 +34,7 @@ namespace PetShopClient.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Login([Bind("Email, Password")] RequestAccount requestedAccount)
+        public async Task<IActionResult> Login([Bind("Email, Password")] RequestAccount requestedAccount, string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +55,7 @@ namespace PetShopClient.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity), authProperties);
 
-                    return RedirectToAction("Index", "Home");
+                    return Redirect(returnUrl ?? Url.Action("Index", "Home"));
                 }
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return View(requestedAccount);

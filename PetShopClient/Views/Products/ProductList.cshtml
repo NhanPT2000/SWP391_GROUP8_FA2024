@@ -1,0 +1,52 @@
+﻿@model IEnumerable<DataObject.Product>
+@{
+    Layout = null;
+}
+<!-- font awesome cdn link  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- custom css file link  -->
+<link rel="stylesheet" href="~/css/ListStyle.css">
+<!-- Product List Section -->
+<section class="shop">
+    <h2 class="heading">Our <span>Products</span></h2>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search for products...">
+        <button onclick="searchProducts()">Search</button>
+    </div>
+
+    <div id="products-container" class="products-container">
+        <!-- Products will be displayed here -->
+        @foreach(var product in Model)
+        {
+            <div class="product-box" data-category="@product.CategoryId">
+                <form asp-action="AddToCart" method="post" asp-controller="Cart">
+                    <input type="hidden" name="productId" value="@product.ProductId" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <input type="hidden" name="productName" value="@product.ProductName" />
+                    <input type="hidden" name="unitPrice" value="@product.UnitPrice" />
+                <img src="@Url.Action("GetImage", "User", new { fileName = product.Image })" alt="Product Image">
+                <h3>@product.ProductName</h3>
+                <div class="category">Category: @product.Category.CategoryName</div>
+                <div class="price">@product.UnitPrice vnd</div>
+                @* <a href="#" class="btn">Add to Cart</a> *@
+                    <button type="submit" class="btn">Add to Cart</button>
+                <a href="/Products/Details/@product.ProductId" class="btn secondary">View Detail</a>
+                </form>
+            </div>
+        }
+    </div>
+</section>
+<script src="~/js/ListScript.js"></script>
+<script>
+    document.querySelectorAll('.product-box form').forEach(form => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const productName = this.querySelector('input[name="productName"]').value;
+            alert(`${productName} has been added to your cart!`);
+            this.submit();
+        });
+    });
+</script>

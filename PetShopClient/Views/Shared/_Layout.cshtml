@@ -1,4 +1,4 @@
-﻿@model DataObject.User
+﻿@* @model DataObject.User
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="/css/IndexStyle.css">
 </head>
-<body>
+<body> *@
     @* <header>
         <section class="flex">
 
@@ -60,7 +60,7 @@
 
         </section>
     </header> *@
-    <div class="container">
+@*     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -77,4 +77,4 @@
     @await RenderSectionAsync("Scripts", required: false)
     <script src="/js/script.js"></script>
 </body>
-</html>
+</html> *@
