@@ -204,7 +204,7 @@ namespace DataAccess.Migrations
                     MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RequiredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ShippedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ShippedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Freight = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
@@ -427,9 +427,9 @@ namespace DataAccess.Migrations
                 columns: new[] { "CategoryId", "CategoryName", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("2300fc0e-0ef3-4221-abdb-70d889e5e4f5"), "Cat Food", "None" },
-                    { new Guid("c0ecbc91-d34a-4004-a3e9-3125d0f76352"), "Dog Food", "None" },
-                    { new Guid("f5ed9939-9719-4ffc-b073-1c49b112e25b"), "Bird Food", "None" }
+                    { new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"), "Dog Food", "None" },
+                    { new Guid("92ea04af-0b9d-453c-afeb-ad8bf3d29d3d"), "Bird Food", "None" },
+                    { new Guid("e72affbb-efa9-4ad1-b101-f15b89ad7793"), "Cat Food", "None" }
                 });
 
             migrationBuilder.InsertData(
@@ -437,9 +437,9 @@ namespace DataAccess.Migrations
                 columns: new[] { "RoleId", "RoleName", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("3d8dc470-dce1-414b-87a1-0e3123e0fe18"), "Staff", "None" },
-                    { new Guid("9c87e5f9-43fb-4c47-93ba-901a82c66455"), "Admin", "None" },
-                    { new Guid("e66a1518-caa0-495e-ad87-4194b6e71cc9"), "Member", "None" }
+                    { new Guid("22e26704-a374-448e-a361-43a51467cda6"), "Staff", "None" },
+                    { new Guid("7627a498-5371-46d9-aa12-9d0a0667f217"), "Member", "None" },
+                    { new Guid("f06f8f17-39c1-47c0-b406-d660a7b05dbe"), "Admin", "None" }
                 });
 
             migrationBuilder.InsertData(
@@ -447,12 +447,12 @@ namespace DataAccess.Migrations
                 columns: new[] { "ProductId", "CategoryId", "Image", "Origin", "ProductDescription", "ProductName", "UnitPrice", "UnitsInStock", "Weight" },
                 values: new object[,]
                 {
-                    { new Guid("15062ed6-889b-4e5f-97a0-396b502f3482"), new Guid("f5ed9939-9719-4ffc-b073-1c49b112e25b"), "product_05.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 13m },
-                    { new Guid("3c2c87da-9022-4fff-bc7c-29d2892515b2"), new Guid("c0ecbc91-d34a-4004-a3e9-3125d0f76352"), "product_01.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
-                    { new Guid("56572f88-5eae-4216-9351-becb450c936a"), new Guid("c0ecbc91-d34a-4004-a3e9-3125d0f76352"), "product_04.jpg", "England", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Bird Food", 10000m, 10, 12m },
-                    { new Guid("aa0c3fe0-5dac-4be2-b821-78a5d7e177c9"), new Guid("c0ecbc91-d34a-4004-a3e9-3125d0f76352"), "product_06.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
-                    { new Guid("c0ea12e8-884f-448a-9f1a-a315e6a73633"), new Guid("f5ed9939-9719-4ffc-b073-1c49b112e25b"), "product_03.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Cat Food", 10000m, 0, 0.76m },
-                    { new Guid("f80b534d-1b05-45ec-ba4b-8f7d1bb3f107"), new Guid("2300fc0e-0ef3-4221-abdb-70d889e5e4f5"), "product_02.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m }
+                    { new Guid("1f304adc-3a60-4830-a102-1e3feb47e588"), new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"), "product_01.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
+                    { new Guid("88cf23f1-7fec-4255-813a-3331fe97f813"), new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"), "product_04.jpg", "England", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Bird Food", 10000m, 10, 12m },
+                    { new Guid("90f57df2-f3d5-4ceb-9ef1-dd64d93cca74"), new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"), "product_06.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
+                    { new Guid("9e2e03e3-0e69-47df-b49b-14042b30223b"), new Guid("92ea04af-0b9d-453c-afeb-ad8bf3d29d3d"), "product_03.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Cat Food", 10000m, 0, 0.76m },
+                    { new Guid("d14100e7-a0cf-492a-88bc-079642c7e8c1"), new Guid("92ea04af-0b9d-453c-afeb-ad8bf3d29d3d"), "product_05.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 13m },
+                    { new Guid("f0459d5e-4353-4ab5-b272-8ebd02ce2fff"), new Guid("e72affbb-efa9-4ad1-b101-f15b89ad7793"), "product_02.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m }
                 });
 
             migrationBuilder.CreateIndex(
