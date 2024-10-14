@@ -20,7 +20,7 @@ namespace DataObject
         public DateTime RequiredDate { get; set; }
         public DateTime? ShippedDate { get; set; }
         public float Freight { get; set; }
-        public ICollection<OrderDetails>? OrderDetails { get;set; }
+        public HashSet<OrderDetails>? OrderDetails { get;set; }
         public ICollection<Voucher>? _Vouchers { get;set; }
     }
 }

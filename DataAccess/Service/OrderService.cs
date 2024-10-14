@@ -70,7 +70,14 @@ namespace DataAccess.Service
 
         public async Task<IEnumerable<Order>> GetOrdersAsync(Guid userId)
         {
-            return await (from order in _serviceContext.Orders where order.MemberId == userId select order).ToListAsync();
+            var orders = from order in _serviceContext.Orders
+                         where order.MemberId == userId
+                         select order;
+
+            return await orders
+                .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.Product)
+                .ToListAsync();
         }
 
         public Task<bool> UpdateOrderAsync(Order order, Guid id)
