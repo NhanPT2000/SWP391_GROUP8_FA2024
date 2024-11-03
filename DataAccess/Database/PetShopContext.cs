@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -218,12 +220,29 @@ namespace DataAccess.Database
             //
             /*Role-Seeding*/
             //
+            var AdminId = Guid.NewGuid();
             modelBuilder.Entity<Role>().HasData(
-                new { RoleId = Guid.NewGuid(), RoleName = "Admin", Status ="None" },
+                new { RoleId = AdminId, RoleName = "Admin", Status ="None" },
                 new { RoleId = Guid.NewGuid(), RoleName = "Member", Status = "None" },
                 new { RoleId = Guid.NewGuid(), RoleName = "Staff", Status = "None" });
             //
+            /*Admin-Seeding*/
+            //
+            modelBuilder.Entity<User>().HasData(
+                new {
+                    UserId = Guid.NewGuid(),
+                    UserName = "Manh",
+                    Password = HashPassword("manh123"),
+                    Email = "manh123@gmail.com",
+                    Gender = "Male",
+                    PhoneNumber = "0123456789",
+                    Addess = "123 ABc",
+                    RoleId = AdminId
+                }
+                );
+            //
             /*Category-Seeding*/
+            //
             var dogFoodCategoryId = Guid.NewGuid();
             var catFoodCategoryId = Guid.NewGuid();
             var birdFoodCategoryId = Guid.NewGuid();
@@ -308,6 +327,13 @@ namespace DataAccess.Database
                     CategoryId = dogFoodCategoryId
                 }
                 );
+        }
+        private string HashPassword(string password)
+        {
+            var sha = SHA256.Create();
+            var asByteArray = Encoding.UTF8.GetBytes(password);
+            var HashPassword = sha.ComputeHash(asByteArray);
+            return Convert.ToBase64String(HashPassword);
         }
 
     }

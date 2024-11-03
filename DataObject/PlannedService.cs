@@ -30,5 +30,6 @@ namespace DataObject
         public ICollection<Voucher>? _Vouchers { get; set; }
         public User? _Member { get; set; }
         public Guid? MemberId { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

@@ -71,10 +71,11 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ServiceName = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    ServiceDescription = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    ServiceName = table.Column<string>(type: "nvarchar(900)", nullable: false),
+                    ServiceDescription = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     HasLimit = table.Column<bool>(type: "bit", nullable: true),
-                    CostPerUnity = table.Column<decimal>(type: "decimal(10,2)", nullable: false)
+                    CostPerUnity = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(500)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,13 +124,13 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(256)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     PhoneNumber2 = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    Addess = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Addess = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     Profile = table.Column<string>(type: "nvarchar(255)", nullable: true),
                     OnlineTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ConfirmedEmail = table.Column<bool>(type: "bit", nullable: true),
@@ -150,10 +151,11 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EventTitle = table.Column<string>(type: "nvarchar(128)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    EventTitle = table.Column<string>(type: "nvarchar(900)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     AdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PostDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    PostDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(MAX)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -427,9 +429,9 @@ namespace DataAccess.Migrations
                 columns: new[] { "CategoryId", "CategoryName", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"), "Dog Food", "None" },
-                    { new Guid("92ea04af-0b9d-453c-afeb-ad8bf3d29d3d"), "Bird Food", "None" },
-                    { new Guid("e72affbb-efa9-4ad1-b101-f15b89ad7793"), "Cat Food", "None" }
+                    { new Guid("4c0d5274-44a8-4203-8d2a-812daf366702"), "Cat Food", "None" },
+                    { new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"), "Dog Food", "None" },
+                    { new Guid("be87443f-bc63-4479-836b-e0bd5bf3af71"), "Bird Food", "None" }
                 });
 
             migrationBuilder.InsertData(
@@ -437,22 +439,27 @@ namespace DataAccess.Migrations
                 columns: new[] { "RoleId", "RoleName", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("22e26704-a374-448e-a361-43a51467cda6"), "Staff", "None" },
-                    { new Guid("7627a498-5371-46d9-aa12-9d0a0667f217"), "Member", "None" },
-                    { new Guid("f06f8f17-39c1-47c0-b406-d660a7b05dbe"), "Admin", "None" }
+                    { new Guid("22fd5e77-262c-4a38-9a43-26066501f1c8"), "Member", "None" },
+                    { new Guid("c00d5d18-058b-4dad-90c7-44e11c8989e3"), "Admin", "None" },
+                    { new Guid("d7e9e6e7-9050-4630-8fa6-88ba0bb280c1"), "Staff", "None" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Members",
+                columns: new[] { "UserId", "Addess", "ConfirmedEmail", "Email", "Gender", "OnlineTime", "Password", "PhoneNumber", "PhoneNumber2", "Profile", "RoleId", "UserName" },
+                values: new object[] { new Guid("55241cb9-3c1f-4dd6-840a-bddb1303042b"), "123 ABc", null, "manh123@gmail.com", "Male", null, "nsZXnLisYMRi5raBLsXJFWnp0G/cOmcXIe5wNwLRrJk=", "0123456789", null, null, new Guid("c00d5d18-058b-4dad-90c7-44e11c8989e3"), "Manh" });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "ProductId", "CategoryId", "Image", "Origin", "ProductDescription", "ProductName", "UnitPrice", "UnitsInStock", "Weight" },
                 values: new object[,]
                 {
-                    { new Guid("1f304adc-3a60-4830-a102-1e3feb47e588"), new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"), "product_01.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
-                    { new Guid("88cf23f1-7fec-4255-813a-3331fe97f813"), new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"), "product_04.jpg", "England", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Bird Food", 10000m, 10, 12m },
-                    { new Guid("90f57df2-f3d5-4ceb-9ef1-dd64d93cca74"), new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"), "product_06.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
-                    { new Guid("9e2e03e3-0e69-47df-b49b-14042b30223b"), new Guid("92ea04af-0b9d-453c-afeb-ad8bf3d29d3d"), "product_03.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Cat Food", 10000m, 0, 0.76m },
-                    { new Guid("d14100e7-a0cf-492a-88bc-079642c7e8c1"), new Guid("92ea04af-0b9d-453c-afeb-ad8bf3d29d3d"), "product_05.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 13m },
-                    { new Guid("f0459d5e-4353-4ab5-b272-8ebd02ce2fff"), new Guid("e72affbb-efa9-4ad1-b101-f15b89ad7793"), "product_02.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m }
+                    { new Guid("7214221c-5668-4ac1-9075-213144f68b7e"), new Guid("4c0d5274-44a8-4203-8d2a-812daf366702"), "product_02.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
+                    { new Guid("898cd542-ada3-4b78-8f21-de5957994b48"), new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"), "product_04.jpg", "England", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Bird Food", 10000m, 10, 12m },
+                    { new Guid("91a2eba5-26d4-49f0-966a-977bfa5ee5e4"), new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"), "product_06.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
+                    { new Guid("94beae78-c9d7-4830-aa59-94567c562cd4"), new Guid("be87443f-bc63-4479-836b-e0bd5bf3af71"), "product_03.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Cat Food", 10000m, 0, 0.76m },
+                    { new Guid("aba453a0-2819-4794-b13a-e2bf8a3712bd"), new Guid("be87443f-bc63-4479-836b-e0bd5bf3af71"), "product_05.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 13m },
+                    { new Guid("f2bb30ec-0133-4963-a596-74626552d5ef"), new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"), "product_01.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m }
                 });
 
             migrationBuilder.CreateIndex(

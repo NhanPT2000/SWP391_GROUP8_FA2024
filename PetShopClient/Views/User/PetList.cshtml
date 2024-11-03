@@ -1,0 +1,70 @@
+﻿@model IEnumerable<DataObject.Pet>
+@{
+    Layout = null;
+}
+<div class="container">
+    <h4>Pet List</h4>
+    <button id="addPetBtn" class="btn btn-primary">Add Pet</button>
+    <div id="petList" class="row">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var pet in Model)
+            {
+                <div class="card transaction-card">
+                    <div class="card-body">
+                        <img src="@Url.Action("GetPetImage", "User", new { fileName = pet.Image })" alt="dog1" class="pet-image"/>
+                        <h5>@pet.PetName</h5>
+                        <p>Type: @pet.Species.SpeciesName</p>
+                        <p>Birthdate: @pet.Birthdate?.ToString("yyyy-MM-dd")</p>
+                        <p>Origin and More: @pet.Notes</p>
+                        <button class="btn btn-info" onclick="window.location.href='/Pet/Details/{@pet.PetId}'">Details</button>
+                        <button class="btn btn-danger" onclick="deletePet('@pet.PetId')">Delete</button>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <label style="color:red">There's no pets here.</label>
+        }
+        <div id="petFormContainer"></div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#addPetBtn').on('click', function () {
+            $.ajax({
+                url: '/User/PetForm',
+                type: 'GET',
+                success: function (result) {
+                    $('#petFormContainer').html(result);
+                },
+                error: function () {
+                    alert('Failed to load the pet form. Please try again.');
+                }
+            });
+        });
+    });
+
+    function deletePet(petId) {
+        if (confirm("Are you sure you want to delete this pet?")) {
+            $.ajax({
+                url: '/Pet/Delete/' + petId,
+                type: 'DELETE',
+                success: function (response) {
+                    if (response.success) {
+                        alert('Pet deleted successfully!');
+                        location.reload();
+                    } else {
+                        alert('Failed to delete pet: ' + response.message);
+                    }
+                },
+                error: function () {
+                    alert('An error occurred while trying to delete the pet.');
+                }
+            });
+        }
+    }
+</script>

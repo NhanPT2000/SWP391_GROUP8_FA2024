@@ -22,5 +22,7 @@ namespace DataObject
         public float Freight { get; set; }
         public HashSet<OrderDetails>? OrderDetails { get;set; }
         public ICollection<Voucher>? _Vouchers { get;set; }
+
+        public bool? IsDeleted { get; set; }
     }
 }

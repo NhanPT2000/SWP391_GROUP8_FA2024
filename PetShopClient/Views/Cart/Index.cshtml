@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<DataObject.Order>
 @{
-    Layout = null;
+    Layout = "_Layout";
 }
 <!DOCTYPE html>
 <html lang="vi">
@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <header class="header">
+@*     <header class="header">
 
         <section class="flex">
 
@@ -42,10 +42,9 @@
 
         </section>
 
-    </header>
-
+    </header> *@
+    <a asp-action="Index" asp-controller="Home">Back to home</a>
     <main class="main-content mt-5 d-flex align-items-start justify-content-center gap-5 ">
-        @foreach (var order in Model) {
             <div class="">
                 <div class="wrapper-cart-detail">
                     <table class="table table-striped">
@@ -55,9 +54,12 @@
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>SubTotal</th>
+                                <th>Cancel</th>
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach (var order in Model)
+                        {
                             @if (order.OrderDetails != null)
                             {
                                 foreach (var orderdetails in order.OrderDetails)
@@ -68,18 +70,20 @@
                                             <span>@orderdetails.Product.ProductName</span>
                                         </td>
                                         <td>
-                                            <span class="product-price">@orderdetails.UnitPrice</span> vnd
+                                            <span id="product-price" class="product-price">@orderdetails.UnitPrice</span> vnd
                                         </td>
                                         <td>
                                             <span class="btn btn-add">+</span>
-                                            <input type="number" class="input-quantity" value="@orderdetails.Quantity" min="1" 
-                                            max="@orderdetails.Product.UnitsInStock">
+                                            <input type="number" data-quantity="@orderdetails.UnitPrice" class="input-quantity" id="input-quantity" value="@orderdetails.Quantity" min="1"
+                                                   max="@orderdetails.Product.UnitsInStock">
                                             <span class="btn btn-remove">-</span>
                                         </td>
-                                        <td class="subtotal">@orderdetails.UnitPrice * @orderdetails.Quantity vnd</td>
+                                        <td class="subtotal">@(@orderdetails.UnitPrice * @orderdetails.Quantity) vnd</td>
+                                        <td><a href="/Cart/Cancel/@orderdetails.OrderId">Cancel</a></td>
                                     </tr>
                                 }
                             }
+                        }
                         </tbody>
                     </table>
                 </div>
@@ -91,7 +95,7 @@
                 </div>
                 <div class="detail-total">
                     <span>Total</span>
-                    <span>$200</span>
+                    <span id="detail-total"> vnd</span>
                 </div>
                 <!-- List discount is here -->
                 <div class="discount-part">
@@ -106,7 +110,7 @@
                 <div class="shipping-part">
                     <div>
                         <p>Shipping</p>
-                        <span>Flat rate <strong>$8.00</strong></span>
+                        <span>Flat rate <strong>10000 vnd</strong></span>
                         <span>Shipping to: <strong>VietNam</strong></span>
                     </div>
                     <a>Change address</a>
@@ -116,53 +120,58 @@
                 <div class="checkour-part">
                     <div class="detail-subtotal">
                         <span>SubTotal</span>
-                        <span>$208</span>
+                        <span id="detail-subtotal"> vnd</span>
                     </div>
                     <button>Check Out</button>
                 </div>
 
             </div>
         </div>
-        }
 
     </main>
+    <footer class="footer">
+
+        <img src="/image/top_wave.png" alt="">
+
+        <div class="share">
+            <a href="#" class="btn"> <i class="fab fa-facebook-f"></i> facebook </a>
+            <a href="#" class="btn"> <i class="fab fa-twitter"></i> twitter </a>
+            <a href="#" class="btn"> <i class="fab fa-instagram"></i> instagram </a>
+            <a href="#" class="btn"> <i class="fab fa-linkedin"></i> linkedin </a>
+            <a href="#" class="btn"> <i class="fab fa-pinterest"></i> pinterest </a>
+        </div>
+
+        <div class="credit"> 2024 created by <span> Group 8 </span> | all rights reserved! </div>
+
+    </footer>
 </body>
 </html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Function to calculate the total
-        function calculateTotal() {
+        function updateCartTotal() {
             let total = 0;
-            let shippingCost = 8;
-            let subtotal = 0;
-
             $('.table tbody tr').each(function () {
                 const price = parseFloat($(this).data('price'));
-                const quantity = parseInt($(this).find('.input-quantity').val());
-                const productTotal = price * quantity;
-                subtotal += productTotal;
-                $(this).find('.subtotal').text(productTotal + ' vnd');
-            });
+                const quantity = parseFloat($(this).find('.input-quantity').val());
+                const subtotal = price * quantity;
 
-            total = subtotal + shippingCost;
-            $('.detail-total span').text(total + ' vnd');
-            $('.detail-subtotal span').text(subtotal + ' vnd');
+                $(this).find('.subtotal').text(subtotal.toLocaleString() + ' vnd');
+
+                total += subtotal;
+            });
+            const shippingCost = 10000;
+            const formattedTotal = total.toLocaleString();
+            const formattedSubTotal = (total + shippingCost).toLocaleString();
+
+            $('#detail-total').text(formattedTotal + ' vnd');
+            $('#detail-subtotal').text(formattedSubTotal + ' vnd');
         }
-        $('.btn-add').click(function () {
-            const quantityInput = $(this).siblings('.input-quantity');
-            let quantity = parseInt(quantityInput.val());
-            quantityInput.val(quantity + 1);
-            calculateTotal();
+        $('.input-quantity').on('input', function () {
+            updateCartTotal();
         });
 
-        $('.btn-remove').click(function () {
-            const quantityInput = $(this).siblings('.input-quantity');
-            let quantity = parseInt(quantityInput.val());
-            if (quantity > 1) {
-                quantityInput.val(quantity - 1);
-            }
-            calculateTotal();
-        calculateTotal();
+        updateCartTotal();
     });
 </script>

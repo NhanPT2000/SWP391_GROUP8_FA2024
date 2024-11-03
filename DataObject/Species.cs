@@ -16,6 +16,8 @@ namespace DataObject
         [Column(TypeName = "nvarchar(50)")]
         [Required(ErrorMessage = "This field is required.")]
         public string? SpeciesName { get; set; }
-        public ICollection<Pet>? Pets { get; set; }
+        public HashSet<Pet>? Pets { get; set; }
+
+        public bool? IsDelete { get; set; }
     }
 }

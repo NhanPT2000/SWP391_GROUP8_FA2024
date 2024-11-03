@@ -76,7 +76,9 @@ namespace DataAccess.Service
 
         public async Task<User> GetMemberDetailsAsync(Guid id)
         {
-            var member = await _memberContext.Members.FindAsync(id);
+            var member = await _memberContext.Members
+                .Include(m => m._Role)
+                .FirstOrDefaultAsync(m => m.UserId == id);
 
             if (member == null)
             {
@@ -86,7 +88,7 @@ namespace DataAccess.Service
         }
         public async Task<IEnumerable<User>> GetMembersAsync()
         {
-            return await _memberContext.Members.ToListAsync();
+            return await _memberContext.Members.Include(u => u._Role).ToListAsync();
         }
 
         public async Task<bool> UpdateMemberAsync(Guid id, User member)

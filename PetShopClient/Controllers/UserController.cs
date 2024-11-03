@@ -1,9 +1,11 @@
 ﻿using DataAccess.Repository;
 using DataObject;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetShopClient.Helper;
 using PetShopClient.Models;
+using System.Security.Claims;
 
 namespace PetShopClient.Controllers
 {
@@ -12,11 +14,20 @@ namespace PetShopClient.Controllers
         private readonly IMemberService _memberService;
         private readonly ILogger<UserController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public UserController(ILogger<UserController> logger, IMemberService memberService, IWebHostEnvironment webHostEnvironment)
+        private readonly IPetService _petService;
+        private readonly ISpeciesService _speciesService;
+        public UserController(
+            ILogger<UserController> logger, 
+            IMemberService memberService, 
+            IWebHostEnvironment webHostEnvironment, 
+            IPetService petService,
+            ISpeciesService speciesService)
         {
             _logger = logger;
             _memberService = memberService;
             _webHostEnvironment = webHostEnvironment;
+            _petService = petService;
+            _speciesService = speciesService;
         }
         [HttpGet("Profile/{id}")]
         public async Task<IActionResult> Profile(Guid? id)
@@ -35,15 +46,16 @@ namespace PetShopClient.Controllers
             return View("Profile", member);
         }
 
-        [HttpGet("Main/{id}")]
-        public async Task<IActionResult> Main(Guid? id)
+        [HttpGet]
+        public async Task<IActionResult> Main()
         {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (id == null)
             {
                 return NotFound();
             }
 
-            var member = await _memberService.GetMemberDetailsAsync((Guid)id);
+            var member = await _memberService.GetMemberDetailsAsync(Guid.Parse(id));
             if (member == null)
             {
                 return NotFound();
@@ -105,16 +117,17 @@ namespace PetShopClient.Controllers
             if (!ModelState.IsValid)
             {
                 Console.WriteLine("Invalid1");
-                var member = await _memberService.GetMemberDetailsAsync(Guid.Parse(HttpContext.Session.GetString("Id")));
                 return PartialView("ChangePassword", changePassword);
             }
             if (changePassword.NewPassword == changePassword.ConfirmPassword)
             {
-                var changed = await _memberService.ChangePasswordAsync(
-                    changePassword.OldPassword,
-                    changePassword.NewPassword,
-                    Guid.Parse(HttpContext.Session.GetString("Id")));
-                if (changed == true) { return RedirectToAction("Index", "Home"); }
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (userIdClaim != null) {
+                    var changed = await _memberService.ChangePasswordAsync(
+                        changePassword.OldPassword,
+                        changePassword.NewPassword,
+                        Guid.Parse(userIdClaim));
+                    if (changed == true) { return RedirectToAction("Index", "Home"); } }
                 else
                 {
                     Console.WriteLine("Invalid2");
@@ -134,6 +147,99 @@ namespace PetShopClient.Controllers
             }
             var imageBytes = System.IO.File.ReadAllBytes(imagePath);
             return File(imageBytes, "image/png");
+        }
+
+        [HttpGet]
+        public IActionResult GetPetImage(string fileName)
+        {
+            string imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Image", "Pets");
+            string imagePath = Path.Combine(imageFolderPath, fileName);
+
+            if (!System.IO.File.Exists(imagePath))
+            {
+                return NotFound();
+            }
+
+            var imageBytes = System.IO.File.ReadAllBytes(imagePath);
+            return File(imageBytes, "image/png");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PetList()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdClaim == null) { return RedirectToAction("Login","Access"); }
+            var pets = await _petService.GetPetsAsync(Guid.Parse(userIdClaim));
+            return PartialView("PetList", pets);
+        }
+        [HttpGet]
+        public async Task<IActionResult> PetForm()
+        {
+            ViewData["SpeciesId"] = new SelectList(await _speciesService.GetAll(), "SpeciesId", "SpeciesName");
+            return PartialView("PetForm");
+        }
+        [HttpPost]
+        public async Task<IActionResult> PetForm([Bind("PetName,SpeciesId,Birthdate,Notes,Image")] Pet pet, IFormFile file)
+        {
+            try
+            {
+                if (!ModelState.IsValid || file == null || file.Length == 0)
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            Console.WriteLine("ModelState error: " + error.ErrorMessage);
+                        }
+                    }
+                    if (file == null)
+                    {
+                        Console.WriteLine("File is null.");
+                    }
+                    else if (file.Length == 0)
+                    {
+                        Console.WriteLine("File length is zero.");
+                    }
+                    ViewData["SpeciesId"] = new SelectList(await _speciesService.GetAll(), "SpeciesId", "SpeciesName");
+                    return PartialView("PetForm", pet);
+                }
+                var fileExtension = Path.GetExtension(file.FileName);
+                var newFileName = $"{pet.PetId}_{Guid.NewGuid()}{fileExtension}";
+                var imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Image", "Pets");
+
+                if (!Directory.Exists(imageFolderPath))
+                {
+                    Directory.CreateDirectory(imageFolderPath);
+                }
+
+                var filePath = Path.Combine(imageFolderPath, newFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                pet.PetId = Guid.NewGuid();
+                var memberid = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                pet.Image = newFileName;
+                pet.MemberId = memberid;
+                await _petService.CreatePetAsync(pet);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Errror here 2");
+                Console.WriteLine("An error occurred: " + ex.Message);
+                Console.WriteLine("Stack Trace: " + ex.StackTrace);
+
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine("Inner Exception: " + ex.InnerException.Message);
+                }
+
+
+                return Json(new { success = false, message = "An error occurred while adding the pet.", error = ex.Message });
+            }
         }
     }
 }

@@ -46,14 +46,15 @@ namespace DataAccess.Service
 
         public async Task<bool> DeleteOrderAsync(Guid id)
         {
-            var orderToDelete = await _serviceContext.Orders.FirstAsync(p => p.OrderId == id);
+            var orderToDelete = await _serviceContext.Orders.Include(o => o.Member).FirstOrDefaultAsync(p => p.OrderId == id);
 
             if (orderToDelete == null)
             {
                 return false;
             }
 
-            _serviceContext.Remove(orderToDelete);
+            if (orderToDelete.Member != null) orderToDelete.IsDeleted = true;
+            else _serviceContext.Remove(orderToDelete);
             return await _serviceContext.SaveChangesAsync() > 0;
         }
 
@@ -77,6 +78,7 @@ namespace DataAccess.Service
             return await orders
                 .Include(o => o.OrderDetails)
                 .ThenInclude(od => od.Product)
+                .Where(o => o.IsDeleted != true)
                 .ToListAsync();
         }
 

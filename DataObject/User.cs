@@ -13,17 +13,17 @@ namespace DataObject
         [Key]
         [Required]
         public Guid UserId { get; set; }
-        [Column(TypeName ="nvarchar(50)")]
+        [Column(TypeName ="nvarchar(255)")]
         [Required(ErrorMessage ="This field is required.")]
         public string? UserName { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(255)")]
         [Required(ErrorMessage = "This field is required.")]
         public string? Password {  get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(255)")]
         [Required(ErrorMessage = "This field is required.")]
         [EmailAddress]
         public string? Email { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(256)")]
         public string? Gender { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         [Required(ErrorMessage = "This field is required.")]
@@ -31,7 +31,7 @@ namespace DataObject
         public string? PhoneNumber { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         public string? PhoneNumber2 { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(255)")]
         [Required(ErrorMessage = "This field is required.")]
         public string? Addess {  get; set; }
         [Column(TypeName = "nvarchar(255)")]

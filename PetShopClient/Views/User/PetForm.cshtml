@@ -1,0 +1,85 @@
+﻿@model DataObject.Pet
+@{
+    Layout = null;
+}
+<div class="popup-content">
+    <span class="close" id="closePopup">&times;</span>
+    <h4>Add New Pet</h4>
+    <form id="addPetForm" asp-action="PetForm" asp-controller="User" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="form-label">Pet Photo</label>
+            <input type="file" id="petPhoto" name="file" class="form-control mb-1" accept="image/*" onchange="previewImage(event)">
+            <input asp-for="Image" value="none" hidden>
+            <img id="petImagePreview" src="" alt="Pet Image Preview" class="d-block ui-w-80" style="display:none;">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Pet Name</label>
+            <input asp-for="PetName" type="text" id="petName" class="form-control mb-1" placeholder="Enter pet name">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Pet Type</label>
+            @* <input asp-for="SpeciesId" type="text" id="petType" name="Type" class="form-control mb-1" placeholder="Enter type (e.g., Dog, Cat)"> *@
+            <select asp-for="SpeciesId" id="petType" class="form-control mb-1" asp-items="ViewBag.SpeciesId"></select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Birthdate</label>
+            <input type="date" asp-for="Birthdate" id="petWeight" class="form-control mb-1" placeholder="Enter weight">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Tell us more about its origin, weight, size, ect</label>
+            <input type="text" id="petOrigin" asp-for="Notes" class="form-control mb-1" placeholder="Enter pet's other informations">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Pet</button>
+        <button type="button" id="closePetFormBtn" class="btn btn-secondary">Cancel</button>
+    </form>
+</div>
+<script>
+
+    function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function () {
+        var output = document.getElementById('petImagePreview');
+        output.src = reader.result;
+        output.style.display = 'block';
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+$(document).ready(function () {
+    let isSubmitting = false;
+
+    $(document).on('submit', '#addPetForm', function (e) {
+        e.preventDefault();
+
+        if (isSubmitting) return;
+        isSubmitting = true;
+
+        $(this).find(':input').prop('disabled', true);
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '/User/PetForm',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+                    alert('Pet added successfully!');
+                    $('#petFormContainer').html('');
+                    location.reload();
+                } else {
+                    alert('Failed to add pet: ' + response.message);
+                }
+            },
+            error: function () {
+                alert('An error occurred. Please try again.');
+            },
+            complete: function() {
+                isSubmitting = false;
+                $(this).find(':input').prop('disabled', false);
+            }
+        });
+    });
+});
+</script>

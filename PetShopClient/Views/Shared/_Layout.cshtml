@@ -1,80 +1,17 @@
-﻿@* @model DataObject.User
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PetShopClient</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PetShopClient.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="/css/IndexStyle.css">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/IndexStyle.css" />
 </head>
-<body> *@
-    @* <header>
-        <section class="flex">
-
-            <a href="#" class="logo"> <i class="fas fa-paw"></i> shop </a>
-
-            <nav class="navbar">
-                <a href="#home">home</a>
-                <a href="#about">about</a>
-                <a href="#shop">shop</a>
-                <a href="#services">services</a>
-                <a href="#contact">contact</a>
-            </nav>
-            <div class="icons">
-                <div class="fas fa-bars" id="menu-btn"></div>
-                <a href="#" class="fas fa-shopping-cart"></a>
-                <div class="fas fa-user" id="login-btn"></div>
-            </div>
-            @{
-                if (Context.Session.GetString("Id") == null)
-                {
-                    <form asp-action="Index" method="post" class="login-form">
-                        <h3>sign in</h3>
-                        <input asp-for="Email" type="email" name="" placeholder="enter your email" id="" class="box">
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                        <input asp-for="Password " type="password" name="" placeholder="enter your password" id="" class="box">
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                        <div class="remember">
-                            <div type="checkbox" name="" id="remember-me"/>
-                            <label for="remember-me">remember me</label>
-                        </div>
-                        <button type="submit" value="sign in" class="btn"/>
-                        <div class="links">
-                            <a href="#">forget password</a>
-                            <a href="#">sign up</a>
-                        </div>
-                    </form>
-                }
-                else
-                {
-                    <form asp-action="index" method="get" class="login-form">
-                        <h3>Welcome @Model.MemberName</h3>
-                    </form>
-                }
-            }
-
-        </section>
-    </header> *@
-@*     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - PetShopClient - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-    <script src="/js/script.js"></script>
+<body>
+    <header class="header">
+        @await Html.PartialAsync("_LoginHeader")
+    </header>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+    <script src="~/js/script.js"></script>
 </body>
-</html> *@
+</html>

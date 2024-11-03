@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Admin Dashboard</h2>
+            <ul>
+                <li><a href="#overview" data-target="overview">Overview</a></li>
+                <li><a href="#users" data-target="users">Users</a></li>
+                <li><a href="#PetService" data-target="PetService">Pet Service</a></li>
+                <li><a href="#Products" data-target="Products">Products</a></li>
+                <li><a href="#Events" data-target="Events">Events</a></li>
+                <li><a href="#Invoice" data-target="Invoice">Invoice</a></li>
+                <li><a href="#payments" data-target="payments">Income</a></li>
+                <li><a href="#settings" data-target="settings">Profile</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Navbar -->
+            <nav class="navbar">
+                <div class="navbar-title">Admin Panel</div>
+                <div class="navbar-user">
+                    <span>Welcome, Admin</span>
+                    <button class="logout-btn">Logout</button>
+                </div>
+            </nav>
+
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section">
+                <h2>Overview</h2>
+                <div class="widget-container">
+                    <div class="widget">
+                        <h3>Total Revenue</h3>
+                        <p>$12,500</p>
+                    </div>
+                    <div class="widget">
+                        <h3>Active Tutors</h3>
+                        <p>15</p>
+                    </div>
+                    <div class="widget">
+                        <h3>Pending Payments</h3>
+                        <p>$1,200</p>
+                    </div>
+                    <div class="widget">
+                        <h3>Total Students</h3>
+                        <p>120</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Users Section -->
+            <section id="users" class="dashboard-section" style="display: none;">
+                <h2>Users</h2>
+                <button id="addUserBtn" class="add-btn">Add User</button>
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>Tutor</td>
+                            <td>Active</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Jane Smith</td>
+                            <td>Student</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Products Section -->
+            <section id="Products" class="dashboard-section" style="display: none;">
+                <h2>Products</h2>
+                <button id="addProductBtn" class="add-btn">Add Product</button>
+                <table id="productsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>From</th>
+                            <th>Weight</th>
+                            <th>Image</th>
+                            <th>Amount</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example row -->
+                        <tr>
+                            <td>Product 1</td>
+                            <td>Sample Description</td>
+                            <td>USA</td>
+                            <td>1kg</td>
+                            <td><img src="sample.jpg" alt="Product Image" width="50"></td>
+                            <td>20</td>
+                            <td>$50</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Events Section -->
+            <section id="Events" class="dashboard-section" style="display: none;">
+                <h2>Events</h2>
+                <button id="addEventBtn" class="add-btn">Add Event</button>
+                <table id="eventsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Created Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example row -->
+                        <tr>
+                            <td>Event 1</td>
+                            <td>Event Description</td>
+                            <td><img src="event.jpg" alt="Event Image" width="50"></td>
+                            <td>2024-10-15</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Pet Service Section -->
+            <section id="PetService" class="dashboard-section" style="display: none;">
+                <h2>Pet Service</h2>
+                <button id="addPetServiceBtn" class="add-btn">Add Pet Service</button>
+                <table id="petServiceTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Available</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example row -->
+                        <tr>
+                            <td>Service 1</td>
+                            <td>Pet grooming</td>
+                            <td>Yes</td>
+                            <td>$30</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Payment Section -->
+            <section id="payments" class="dashboard-section" style="display: none;">
+                <h2>Payments</h2>
+                <p>Payment processing details...</p>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="dashboard-section" style="display: none;">
+                <h2>Settings</h2>
+                <p>Manage system settings...</p>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for Users -->
+    <div id="userModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add User</h2>
+            <form id="userForm" class="user-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <input type="text" id="role" name="role" required>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <input type="text" id="status" name="status" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" id="saveUserBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Products -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="productForm" class="product-form">
+                <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="productDesc">Description</label>
+                    <input type="text" id="productDesc" required>
+                </div>
+                <div class="form-group">
+                    <label for="productFrom">From</label>
+                    <input type="text" id="productFrom" required>
+                </div>
+                <div class="form-group">
+                    <label for="productWeight">Weight</label>
+                    <input type="number" id="productWeight" required>
+                </div>
+                <div class="form-group">
+                    <label for="productImage">Image Upload</label>
+                    <input type="file" id="productImage" accept="image/*" required>
+                    <img id="productImagePreview" src="" alt="Image Preview" style="display:none; margin-top: 10px; max-width: 100%; height: auto;">
+                </div>
+                
+                
+                <div class="form-group">
+                    <label for="productAmount">Amount</label>
+                    <input type="number" id="productAmount" required>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Price</label>
+                    <input type="number" id="productPrice" required>
+                </div>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+    
+
+    <!-- Modal for Events -->
+    <div id="eventModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalEventTitle">Add Event</h2>
+            <form id="eventForm" class="user-form">
+                <div class="form-group">
+                    <label for="eventName">Name:</label>
+                    <input type="text" id="eventName" name="eventName" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventDesc">Description:</label>
+                    <input type="text" id="eventDesc" name="eventDesc" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventImage">Image Upload</label>
+                    <input type="file" id="eventImage" accept="image/*" required>
+                    <img id="eventImagePreview" src="" alt="Image Preview" style="display:none; margin-top: 10px; max-width: 100%; height: auto;">
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventDate">Created Date:</label>
+                    <input type="date" id="eventDate" name="eventDate" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" id="saveEventBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Pet Service -->
+    <div id="petServiceModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalPetServiceTitle">Add Pet Service</h2>
+            <form id="petServiceForm" class="user-form">
+                <div class="form-group">
+                    <label for="serviceName">Name:</label>
+                    <input type="text" id="serviceName" name="serviceName" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceDesc">Description:</label>
+                    <input type="text" id="serviceDesc" name="serviceDesc" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceAvailable">Available:</label>
+                    <select id="serviceAvailable" name="serviceAvailable" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="servicePrice">Price:</label>
+                    <input type="number" id="servicePrice" name="servicePrice" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" id="savePetServiceBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

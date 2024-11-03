@@ -18,6 +18,7 @@ namespace DataObject
         public string? CategoryName { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         public string? Status { get; set; }
-        public ICollection<Product>? _Products { get; set; }
+        public HashSet<Product>? _Products { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

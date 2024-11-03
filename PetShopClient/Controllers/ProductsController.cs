@@ -21,20 +21,34 @@ namespace PetShopClient.Controllers
         }
 
         [HttpGet]
-        public IActionResult Main()
+        public async Task<IActionResult> Main()
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdClaim != null)
+            {
+                var user = await _memberService.GetMemberDetailsAsync(Guid.Parse(userIdClaim));
+                if (user != null)
+                {
+                    ViewBag.UserId = userIdClaim;
+                    ViewBag.UserName = user.UserName;
+                }
+            }
             return View();
         }
         [HttpGet("Products/Details/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var product = await _productService.GetProductByIdAsync(id);
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out Guid userId))
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdClaim != null)
             {
-                ViewData["User"] = await _memberService.GetMemberDetailsAsync(userId);
+                var user = await _memberService.GetMemberDetailsAsync(Guid.Parse(userIdClaim));
+                if (user != null)
+                {
+                    ViewBag.UserId = userIdClaim;
+                    ViewBag.UserName = user.UserName;
+                }
             }
-            else ViewData["User"] = new User();
+            var product = await _productService.GetProductByIdAsync(id);
             if (product == null) return NotFound(id);
             return View(product);
         }

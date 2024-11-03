@@ -32,7 +32,11 @@ namespace PetShopClient.Controllers
                 return RedirectToAction("Login", "Access", new { returnUrl = Url.Action("Index") });
             }
             var orders = await _orderService.GetOrdersAsync(Guid.Parse(userIdClaim));
-            ViewData["User"] = _memberService.GetMemberDetailsAsync(Guid.Parse(userIdClaim));
+            var user = await _memberService.GetMemberDetailsAsync(Guid.Parse(userIdClaim));
+            if (user != null) {
+                ViewBag.UserId = userIdClaim;
+                ViewBag.UserName = user.UserName;
+            }
             return View(orders);
         }
 
@@ -70,6 +74,13 @@ namespace PetShopClient.Controllers
             await _orderDetailsService.CreateOrderDetailsAsync(orderDetails);
 
             return RedirectToAction("Index", "Cart");
+        }
+        [HttpGet("Cart/Cancel/{id}")]
+        public async Task<IActionResult> Cancel(Guid id)
+        {
+            var getdeleted = await _orderService.DeleteOrderAsync(id);
+            if (getdeleted == false) return View();
+            return RedirectToAction("Index");
         }
 
     }

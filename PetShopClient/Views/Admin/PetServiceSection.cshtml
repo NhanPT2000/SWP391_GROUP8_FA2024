@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DataObject.Service>
+@{
+    Layout = null;
+}
+<section id="PetService" class="dashboard-section" style="display: none;">
+    <h2>Pet Service</h2>
+    <button id="addPetServiceBtn" class="add-btn">Add Pet Service</button>
+    <div id="serviceFormContainer"></div>
+    <table id="petServiceTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Available</th>
+                <th>Image</th>
+                <th>Cost</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example row -->
+            @if(Model!=null && Model.Any())
+            {
+                foreach(var service in Model)
+                {
+                    <tr>
+                        <td>@service.ServiceName</td>
+                        <td>@service.ServiceDescription</td>
+                            @if (service.HasLimit != null && service.HasLimit == true)
+                        {
+                            <td>Yes</td>
+                        }
+                        else
+                        {
+                            <td>No</td>
+                        }
+                        <td>@service.CostPerUnity</td>
+                        <td><img src="@Url.Action("GetServiceImage", "Admin", new { fileName = service.Image })" alt="Service Image" width="50"></td>
+                        <td>
+                            <button class="edit-btn" data-id="@service.ServiceId">Edit</button>
+                            <button class="delete-btn" data-id="@service.ServiceId">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>

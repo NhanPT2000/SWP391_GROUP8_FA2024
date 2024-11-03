@@ -1,0 +1,69 @@
+﻿@{
+    Layout = null;
+    ViewBag.EmailError = TempData["EmailError"];
+    ViewBag.PasswordError = TempData["PasswordError"];
+
+}
+
+    <section class="flex">
+
+        <a href="#" class="logo"> <i class="fas fa-paw"></i> shop </a>
+
+        <nav class="navbar">
+            <a asp-action="Index" asp-controller="Home">home</a>
+            <a href="#about">about</a>
+            <a asp-action="Main" asp-controller="Products">shop</a>
+            <a href="#services">services</a>
+            <a href="#contact">contact</a>
+        </nav>
+
+        <div class="icons">
+            <div class="fas fa-bars" id="menu-btn"></div>
+            <a href="/Cart/Index" class="fas fa-shopping-cart"></a>
+            <div class="fas fa-user" id="login-btn"></div>
+        </div>
+        @{
+            @if (ViewBag.UserId == null)
+            {
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "login-form" }))
+            {
+                <h3>Sign In</h3>
+                <input name="Email" type="email" placeholder="Enter your email" class="box">
+                @if (ViewBag.EmailError != null)
+                {
+                    <span class="text-danger">@ViewBag.EmailError</span>
+                }
+                <input name="Password" type="password" placeholder="Enter your password" class="box">
+                @if (ViewBag.PasswordError != null)
+                {
+                    <span class="text-danger">@ViewBag.PasswordError</span>
+                }
+
+                <button type="submit" class="btn">Sign In</button>
+                <div class="links">
+                    <a href="#">Forget Password</a>
+                </div>
+                <div class="links">
+                    <a asp-controller="Access" asp-action="Register">Sign Up</a>
+                </div>
+            }
+            }
+            else
+            {
+                <form asp-action="Index" method="get" class="login-form">
+                    <h3>Welcome @ViewBag.UserName</h3>
+                    <div class="links">                  
+                    <a asp-controller="User" asp-action="Profile" asp-route-id="@ViewBag.UserId">Profile</a><br />                  
+                     <a asp-controller="Access" asp-action="Logout" method="get">Log out</a>
+                    @if (ViewBag.Role == "Admin")
+                    {
+                        <a asp-controller="Admin" asp-action="Main">Dashboard</a>
+
+                        <br />
+                    }
+                    </div>
+                </form>
+            }
+        }
+
+    </section>

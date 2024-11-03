@@ -1,6 +1,6 @@
 ﻿@model DataObject.Product
 @{
-    Layout = null;
+    Layout = "_Layout";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <header class="header">
+    @* <header class="header">
         <section class="flex">
             <a asp-action="Index" asp-controller="Home" class="logo"> <i class="fas fa-paw"></i> shop </a>
             <nav class="navbar">
@@ -28,8 +28,7 @@
                 <div class="fas fa-user" id="login-btn"></div>
             </div>
         </section>
-        @await Html.PartialAsync("User.cshtml", ViewData["User"] as DataObject.User);
-    </header>
+    </header> *@
 
     <section class="product-detail">
         <div class="image-gallery">

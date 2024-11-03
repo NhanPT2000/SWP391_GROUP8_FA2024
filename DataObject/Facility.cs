@@ -13,20 +13,23 @@ namespace DataObject
         [Key]
         [Required]
         public Guid FacilityId {  get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(MAX)")]
         [Required(ErrorMessage = "This field is required.")]
         public string? FacilityName {  get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(MAX)")]
         [Required(ErrorMessage = "This field is required.")]
         [EmailAddress]
         public string? Address { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(MAX)")]
         [Required(ErrorMessage = "This field is required.")]
         [Phone]
         public string? PhoneNumber { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(MAX)")]
         [Required(ErrorMessage = "This field is required.")]
         public string? ContractPer { get; set; }
-        public ICollection<Case>? _Cases { get; set; }
+        [Column(TypeName = "nvarchar(MAX)")]
+        public string? Image { get; set; }
+        public HashSet<Case>? _Cases { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

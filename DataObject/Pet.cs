@@ -19,12 +19,14 @@ namespace DataObject
         public Guid? SpeciesId { get; set; }
         public Species? Species { get;set; }
         public DateTime? Birthdate { get; set; }
-        [Column(TypeName = "nvarchar(128)")]
+        [Column(TypeName = "nvarchar(Max)")]
         public string? Notes { get; set; }
         public Guid? MemberId { get; set; }
         public User? Member { get; set; }
-        public ICollection<Case>? _Cases { get; set; }
-        [Column(TypeName ="nvarchar(128)")]
+        public HashSet<Case>? _Cases { get; set; }
+        [Column(TypeName ="nvarchar(MAX)")]
         public string? Image {  get; set; }
+
+        public bool? IsDeleted { get; set; }
     }
 }

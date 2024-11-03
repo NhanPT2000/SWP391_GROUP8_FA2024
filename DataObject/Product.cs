@@ -14,13 +14,12 @@ namespace DataObject
         [Required]
         public Guid ProductId { get; set; }
         [Column(TypeName = "nvarchar(50)")]
-        [Required(ErrorMessage = "This field is required.")]
+        [Required(ErrorMessage = "Product name is required.")]
         public string? ProductName { get; set; }
         [Column(TypeName = "nvarchar(900)")]
-        [Required(ErrorMessage = "This field is required.")]
+        [Required(ErrorMessage = "Description is required.")]
         public string? ProductDescription { get; set; }
         [Column(TypeName = "nvarchar(50)")]
-        [Required(ErrorMessage = "This field is required.")]
         public Category? Category { get; set; }
         public Guid? CategoryId {  get; set; }
         public string? Origin { get; set; }
@@ -29,10 +28,12 @@ namespace DataObject
         [Column(TypeName = "decimal(10,2)")]
         public float UnitPrice { get; set; }
         public int UnitsInStock { get; set; }
-        [Column(TypeName = "nvarchar(256)")]
+        [Column(TypeName = "nvarchar(Max)")]
         public string? Image {  get; set; }
 
-        public ICollection<OrderDetails>? _OrderDetails { get; set; }
+        public HashSet<OrderDetails>? _OrderDetails { get; set; }
         public ICollection<Feedback>? _Feedbacks { get; set; }
+
+        public bool? IsDeleted { get; set; }
     }
 }

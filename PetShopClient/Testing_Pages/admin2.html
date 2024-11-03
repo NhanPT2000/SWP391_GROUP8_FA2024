@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Admin Dashboard</h2>
+            <ul>
+                <li><a href="#overview" data-target="overview">Overview</a></li>
+                <li><a href="#users" data-target="users">Users</a></li>
+                <li><a href="#payments" data-target="payments">Payments</a></li>
+                <li><a href="#settings" data-target="settings">Settings</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Navbar -->
+            <nav class="navbar">
+                <div class="navbar-title">Admin Panel</div>
+                <div class="navbar-user">
+                    <span>Welcome, Admin</span>
+                    <button class="logout-btn">Logout</button>
+                </div>
+            </nav>
+
+            <!-- Dashboard Sections -->
+            <section id="overview" class="dashboard-section">
+                <h2>Overview</h2>
+                <div class="widget-container">
+                    <div class="widget">
+                        <h3>Total Revenue</h3>
+                        <p>$12,500</p>
+                    </div>
+                    <div class="widget">
+                        <h3>Active Tutors</h3>
+                        <p>15</p>
+                    </div>
+                    <div class="widget">
+                        <h3>Pending Payments</h</h3>
+                        <p>$1,200</p>
+                    </div>
+                    <div class="widget">
+                        <h3>Total Students</h3>
+                        <p>120</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="users" class="dashboard-section" style="display: none;">
+                <h2>Users</h2>
+                <button id="addUserBtn" class="add-btn">Add User</button>
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>Tutor</td>
+                            <td>Active</td>
+                            <td>
+                                <button class="edit-btn" data-name="John Doe" data-role="Tutor" data-status="Active">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Jane Smith</td>
+                            <td>Student</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="edit-btn" data-name="Jane Smith" data-role="Student" data-status="Pending">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Payment Section -->
+            <section id="payments" class="dashboard-section" style="display: none;">
+                <h2>Payments</h2>
+                <p>Payment processing details...</p>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="dashboard-section" style="display: none;">
+                <h2>Settings</h2>
+                <p>Manage system settings...</p>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Update User -->
+    <div id="userModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add User</h2>
+            <form id="userForm" class="user-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <input type="text" id="role" name="role" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <input type="text" id="status" name="status" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" id="saveUserBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

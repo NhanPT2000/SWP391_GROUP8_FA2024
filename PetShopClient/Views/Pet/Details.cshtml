@@ -1,0 +1,104 @@
+﻿@model DataObject.Pet
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/css/RegisterStyle.css" />
+</head>
+<body>
+    <section class="container">
+        <header>Update Pet</header>
+        <form asp-action="Details" asp-controller="Pet" asp-route-id="@Model.PetId" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="PUT" />
+            <input type="hidden" asp-for="PetId" />
+
+            <div class="input-box">
+                <label>Pet Name</label>
+                <input asp-for="PetName" type="text" placeholder="Enter pet name" required />
+                <span asp-validation-for="PetName" class="text-danger"></span>
+            </div>
+
+            <div class="input-box">
+                <label>Species</label>
+                <select asp-for="SpeciesId" asp-items="ViewBag.SpeciesList" required></select>
+                <span asp-validation-for="SpeciesId" class="text-danger"></span>
+            </div>
+
+            <div class="input-box">
+                <label>Birth Date</label>
+                <input asp-for="Birthdate" type="date" placeholder="Enter birth date" required />
+                <span asp-validation-for="Birthdate" class="text-danger"></span>
+            </div>
+
+            <div class="input-box">
+                <label>Notes</label>
+                <textarea asp-for="Notes" placeholder="Enter notes"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+
+            <div class="input-box">
+                <label>Current Image</label>
+                <img id="petImagePreview" src="@Url.Action("GetPetImage", "User", new { fileName = Model.Image })" alt="Pet Image" class="d-block ui-w-80" 
+
+                style="width: 150px; height: auto;" />
+            </div>
+
+            <div class="input-box">
+                <label>Change Image (optional)</label>
+                <input type="file" name="newImageFile" id="newImageFile" onchange="previewImage(event)" />
+                <input asp-for="Image" value="@Model.Image" hidden />
+            </div>
+
+            <button type="submit">Update Pet</button>
+        </form>
+        <a asp-controller="User" asp-action="Profile" asp-route-id="@ViewBag.UserId">Back</a><br />
+    </section>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('petImagePreview');
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+    $(document).ready(function () {
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            var petId = $('input[name=PetId]').val();
+
+            $.ajax({
+                url: '/Pet/Details/' + petId,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        if (response.newImageFileName) {
+                            $('#petImagePreview').attr('src', '/Image/Pets/' + response.newImageFileName);
+                        }
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred: ' + error);
+                }
+            });
+        });
+    });
+</script>

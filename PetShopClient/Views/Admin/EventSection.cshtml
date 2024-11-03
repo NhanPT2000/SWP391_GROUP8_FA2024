@@ -1,0 +1,31 @@
+﻿@model IEnumerable<DataObject.Event>
+@{
+    Layout = null;
+}
+<section id="Events" class="dashboard-section" style="display: none;">
+    <h2>Events</h2>
+    <button id="addEventBtn" class="add-btn">Add Event</button>
+    <table id="eventsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Event 1</td>
+                <td>Event Description</td>
+                <td><img src="~/image/dog_food.png" alt="Event Image" width="50"></td>
+                <td>2024-10-15</td>
+                <td>
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

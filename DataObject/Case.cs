@@ -20,9 +20,10 @@ namespace DataObject
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public bool IsClosed { get; set; }
-        [Column(TypeName ="nvarchar(255)")]
+        [Column(TypeName ="nvarchar(MAX)")]
         public string? Notes {  get; set; }
-        public ICollection<Invoice>? Invoices { get; set; }
-        public ICollection<PlannedService>? _PlannedServices { get; set; }
+        public  HashSet<Invoice>? Invoices { get; set; }
+        public HashSet<PlannedService>? _PlannedServices { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

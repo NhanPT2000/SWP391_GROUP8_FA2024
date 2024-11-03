@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PetShopContext))]
-    [Migration("20241014085731_Initial")]
+    [Migration("20241101024514_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -78,19 +78,19 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            CategoryId = new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"),
+                            CategoryId = new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"),
                             CategoryName = "Dog Food",
                             Status = "None"
                         },
                         new
                         {
-                            CategoryId = new Guid("e72affbb-efa9-4ad1-b101-f15b89ad7793"),
+                            CategoryId = new Guid("4c0d5274-44a8-4203-8d2a-812daf366702"),
                             CategoryName = "Cat Food",
                             Status = "None"
                         },
                         new
                         {
-                            CategoryId = new Guid("92ea04af-0b9d-453c-afeb-ad8bf3d29d3d"),
+                            CategoryId = new Guid("be87443f-bc63-4479-836b-e0bd5bf3af71"),
                             CategoryName = "Bird Food",
                             Status = "None"
                         });
@@ -107,11 +107,15 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<string>("EventTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(900)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<DateTime>("PostDate")
                         .HasColumnType("datetime2");
@@ -394,8 +398,8 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("1f304adc-3a60-4830-a102-1e3feb47e588"),
-                            CategoryId = new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"),
+                            ProductId = new Guid("f2bb30ec-0133-4963-a596-74626552d5ef"),
+                            CategoryId = new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"),
                             Image = "product_01.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -406,8 +410,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("f0459d5e-4353-4ab5-b272-8ebd02ce2fff"),
-                            CategoryId = new Guid("e72affbb-efa9-4ad1-b101-f15b89ad7793"),
+                            ProductId = new Guid("7214221c-5668-4ac1-9075-213144f68b7e"),
+                            CategoryId = new Guid("4c0d5274-44a8-4203-8d2a-812daf366702"),
                             Image = "product_02.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -418,8 +422,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("9e2e03e3-0e69-47df-b49b-14042b30223b"),
-                            CategoryId = new Guid("92ea04af-0b9d-453c-afeb-ad8bf3d29d3d"),
+                            ProductId = new Guid("94beae78-c9d7-4830-aa59-94567c562cd4"),
+                            CategoryId = new Guid("be87443f-bc63-4479-836b-e0bd5bf3af71"),
                             Image = "product_03.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -430,8 +434,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("88cf23f1-7fec-4255-813a-3331fe97f813"),
-                            CategoryId = new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"),
+                            ProductId = new Guid("898cd542-ada3-4b78-8f21-de5957994b48"),
+                            CategoryId = new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"),
                             Image = "product_04.jpg",
                             Origin = "England",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -442,8 +446,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("d14100e7-a0cf-492a-88bc-079642c7e8c1"),
-                            CategoryId = new Guid("92ea04af-0b9d-453c-afeb-ad8bf3d29d3d"),
+                            ProductId = new Guid("aba453a0-2819-4794-b13a-e2bf8a3712bd"),
+                            CategoryId = new Guid("be87443f-bc63-4479-836b-e0bd5bf3af71"),
                             Image = "product_05.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -454,8 +458,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("90f57df2-f3d5-4ceb-9ef1-dd64d93cca74"),
-                            CategoryId = new Guid("315bf1b6-5103-4e6a-a712-55b7eb0f4ef0"),
+                            ProductId = new Guid("91a2eba5-26d4-49f0-966a-977bfa5ee5e4"),
+                            CategoryId = new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"),
                             Image = "product_06.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -486,19 +490,19 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("f06f8f17-39c1-47c0-b406-d660a7b05dbe"),
+                            RoleId = new Guid("c00d5d18-058b-4dad-90c7-44e11c8989e3"),
                             RoleName = "Admin",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("7627a498-5371-46d9-aa12-9d0a0667f217"),
+                            RoleId = new Guid("22fd5e77-262c-4a38-9a43-26066501f1c8"),
                             RoleName = "Member",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("22e26704-a374-448e-a361-43a51467cda6"),
+                            RoleId = new Guid("d7e9e6e7-9050-4630-8fa6-88ba0bb280c1"),
                             RoleName = "Staff",
                             Status = "None"
                         });
@@ -516,13 +520,17 @@ namespace DataAccess.Migrations
                     b.Property<bool?>("HasLimit")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("ServiceDescription")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<string>("ServiceName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(900)");
 
                     b.HasKey("ServiceId");
 
@@ -568,24 +576,24 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Addess")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<bool?>("ConfirmedEmail")
                         .HasColumnType("bit");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<DateTime?>("OnlineTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -602,13 +610,26 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("Members");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("55241cb9-3c1f-4dd6-840a-bddb1303042b"),
+                            Addess = "123 ABc",
+                            Email = "manh123@gmail.com",
+                            Gender = "Male",
+                            Password = "nsZXnLisYMRi5raBLsXJFWnp0G/cOmcXIe5wNwLRrJk=",
+                            PhoneNumber = "0123456789",
+                            RoleId = new Guid("c00d5d18-058b-4dad-90c7-44e11c8989e3"),
+                            UserName = "Manh"
+                        });
                 });
 
             modelBuilder.Entity("DataObject.Voucher", b =>

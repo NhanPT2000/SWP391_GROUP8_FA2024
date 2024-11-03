@@ -17,14 +17,46 @@ namespace DataAccess.Service
         {
             _productContext = dbContext;
         }
-        public Task CreateProductAsync(Product product)
+        public async Task CreateProductAsync(Product product)
         {
-            throw new NotImplementedException();
+            using var transaction = await _productContext.Database.BeginTransactionAsync();
+            try
+            {
+                var newProduct = new Product
+                {
+                    CategoryId = product.CategoryId,
+                    ProductDescription = product.ProductDescription,
+                    Image = product.Image,
+                    Origin = product.Origin,
+                    ProductId = product.ProductId,
+                    ProductName = product.ProductName,
+                    UnitPrice = product.UnitPrice,
+                    UnitsInStock = product.UnitsInStock,
+                    Weight = product.Weight,
+                };
+
+                await _productContext.Products.AddAsync(newProduct);
+                await _productContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
-        public Task<bool> DeleteProductAsync(Guid id)
+        public async Task<bool> DeleteProductAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var productToDelete = await _productContext.Products.Include(p => p._OrderDetails).FirstOrDefaultAsync(p => p.ProductId == id);
+
+            if (productToDelete == null)
+            {
+                return false;
+            }
+            if(productToDelete._OrderDetails != null && productToDelete._OrderDetails.Any()) productToDelete.IsDeleted = true;
+            else _productContext.Remove(productToDelete);
+            return await _productContext.SaveChangesAsync() > 0;
         }
 
         public async Task<Product?> GetProductByIdAsync(Guid id)
@@ -43,12 +75,28 @@ namespace DataAccess.Service
             return await _productContext.
                 Products
                 .Include(p => p.Category)
+                .Where(p => p.IsDeleted != true)
                 .ToListAsync();
         }
 
-        public Task<bool> UpdateProductAsync(Product product, Guid id)
+        public async Task<bool> UpdateProductAsync(Product product, Guid id)
         {
-            throw new NotImplementedException();
+            var productToUpdate = await _productContext.Products.FindAsync(id);
+
+            if (productToUpdate == null)
+            {
+                return false;
+            }
+            productToUpdate.UnitPrice = product.UnitPrice;
+            productToUpdate.ProductDescription = product.ProductDescription;
+            productToUpdate.ProductName = product.ProductName;
+            productToUpdate.Image = product.Image;
+            productToUpdate.Origin = product.Origin;
+            productToUpdate.UnitsInStock = product.UnitsInStock;
+            productToUpdate.Weight = product.Weight;
+            productToUpdate.CategoryId = product.CategoryId;
+            _productContext.Update(productToUpdate);
+            return await _productContext.SaveChangesAsync() > 0;
         }
     }
 }

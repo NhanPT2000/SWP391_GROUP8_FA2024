@@ -18,6 +18,11 @@ builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderDetailsService, OrderDetailsService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IPetServiceService, PetServiceService>();
+builder.Services.AddScoped<IPetService, PetService>();
+builder.Services.AddScoped<ISpeciesService, SpeciesService>();
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
@@ -73,6 +78,11 @@ app.UseRouting();
 app.UseSession();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "admin",
+    pattern: "Admin/{action}/{id?}",
+    defaults: new { controller = "Admin", action = "Main" });
 
 app.MapControllerRoute(
     name: "default",

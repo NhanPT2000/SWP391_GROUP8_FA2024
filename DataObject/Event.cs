@@ -13,14 +13,17 @@ namespace DataObject
         [Key]
         [Required]
         public Guid EventId { get; set; }
-        [Column(TypeName ="nvarchar(128)")]
+        [Column(TypeName ="nvarchar(900)")]
         [Required(ErrorMessage ="This field is required.")]
         public string? EventTitle { get; set; }
-        [Column(TypeName = "nvarchar(500)")]
+        [Column(TypeName = "nvarchar(MAX)")]
         [Required(ErrorMessage = "This field is required.")]
         public string? Description { get; set; }
         public User? Admin { get; set; }
         public Guid? AdminId { get; set; }
         public DateTime PostDate { get; set; }
+        [Column(TypeName = "nvarchar(MAX)")]
+        [Required(ErrorMessage = "This field is required.")]
+        public string? Image {  get; set; }
     }
 }

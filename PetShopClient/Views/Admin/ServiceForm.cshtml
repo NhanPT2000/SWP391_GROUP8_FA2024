@@ -1,0 +1,44 @@
+﻿@model DataObject.Service
+@{
+    Layout = null;
+}
+<div id="petServiceModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalPetServiceTitle">Add Pet Service</h2>
+        <form asp-action="AddService" method="post" id="petServiceForm" class="user-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="ServiceName">Service Name</label>
+                <input asp-for="ServiceName" type="text" required />
+                <span asp-validation-for="ServiceName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceDescription">Description</label>
+                <textarea asp-for="ServiceDescription" required></textarea>
+                <span asp-validation-for="ServiceDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HasLimit">Is Available</label>
+                <select asp-for="HasLimit" required>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="productImage">Image Upload</label>
+                <input type="file" name="serviceImage" id="serviceImage" accept="image/*" required>
+                <input type="text" asp-for="Image" value="none" hidden />
+                <span asp-validation-for="Image" class="text-danger"></span>
+                <img id="productImagePreview" src="" alt="Image Preview" style="display:none; margin-top: 10px; max-width: 100%; height: auto;">
+            </div>
+            <div class="form-group">
+                <label asp-for="CostPerUnity">Price:</label>
+                <input asp-for="CostPerUnity" type="number" step="0.01" required />
+                <span asp-validation-for="CostPerUnity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" id="savePetServiceBtn">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DataObject.User>
+@{
+    Layout = "_Layout";
+}
+<section id="users" class="dashboard-section" style="display: none;">
+    <h2>Users</h2>
+    <button id="addUserBtn" class="add-btn">Add User</button>
+    <table id="usersTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model != null && Model.Any()){
+            foreach(var user in Model)
+            {
+                if(user._Role.RoleId != ViewBag.Role)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user._Role.RoleName</td>
+                        <td>@user.PhoneNumber</td>
+                        @if(user.PhoneNumber2 != null)
+                        {
+                            <td>@user.PhoneNumber2</td>
+                        }
+                        else
+                        {
+                            <td>None</td>
+                        }
+                        <td>@user.</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+            }
+        </tbody>
+    </table>
+</section>

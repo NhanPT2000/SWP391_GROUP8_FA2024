@@ -24,7 +24,7 @@ namespace DataAccess.Service
             var product = await _serviceContext.Products.SingleOrDefaultAsync(p => p.ProductId == orderDetails.ProductId);
             if (product != null) 
             {
-                price = orderDetails.Quantity * product.UnitPrice - orderDetails.Discount;
+                price = (float)(orderDetails.Quantity * product.UnitPrice - orderDetails.Discount);
             }
             try
             {
@@ -50,14 +50,14 @@ namespace DataAccess.Service
 
         public async Task<bool> DeleteOrderDetailsAsync(Guid orderId, Guid productId)
         {
-            var orderDetailsToDelete = await _serviceContext._OrderDetails.FirstAsync(p => p.OrderId == orderId && p.ProductId == orderId);
+            var orderDetailsToDelete = await _serviceContext._OrderDetails.Include(o => o.Order).FirstOrDefaultAsync(p => p.OrderId == orderId && p.ProductId == orderId);
 
             if (orderDetailsToDelete == null)
             {
                 return false;
             }
-
-            _serviceContext.Remove(orderDetailsToDelete);
+            if(orderDetailsToDelete.Order != null) orderDetailsToDelete.IsDeleted = true;
+            else _serviceContext.Remove(orderDetailsToDelete);
             return await _serviceContext.SaveChangesAsync() > 0;
         }
 
@@ -74,7 +74,7 @@ namespace DataAccess.Service
 
         public async Task<IEnumerable<OrderDetails>> GetOrderDetailsListAsync()
         {
-            return await _serviceContext._OrderDetails.ToListAsync();
+            return await _serviceContext._OrderDetails.Where(o => o.IsDeleted != true).ToListAsync();
         }
 
         public Task<bool> UpdateOrderAsync(OrderDetails orderDetails, Guid orderId, Guid productId)
