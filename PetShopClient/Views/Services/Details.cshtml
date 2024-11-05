@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model DataObject.Service
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,45 +9,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-        <section class="flex">
-            <a href="#" class="logo"> <i class="fas fa-paw"></i> shop </a>
-            <nav class="navbar">
-                <a asp-action="Index" asp-controller="Home">home</a>
-                <a asp-action="Index" asp-controller="Home">about</a>
-                <a asp-action="Main" asp-controller="Products">shop</a>
-                <a asp-action="Main" asp-controller="Services">services</a>
-                <a href="#contact">contact</a>
-            </nav>
-            <div class="icons">
-                <div class="fas fa-bars" id="menu-btn"></div>
-                <a href="#" class="fas fa-shopping-cart"></a>
-                <div class="fas fa-user" id="login-btn"></div>
-            </div>
-            @await Html.PartialAsync("User.cshtml");
-        </section>
-    </header>
-
     <section class="product-detail">
         <div class="image-gallery">
-            <img src="~/image/product_01.jpg" alt="Product Image 1">
+            <img src="@Url.Action("GetServiceImage", "Admin", new { fileName = Model.Image })" alt="Service Image">
 
         </div>
         <div class="details">
-            <h1>DOGGY PUPPY DOG FOOD</h1>
+            <h1>@Model.ServiceName</h1>
             <ul>
-                <li>High-quality ingredients</li>
-                <li>Rich in vitamins and minerals</li>
-                <li>Supports healthy growth</li>
-                <li>Suitable for all breeds</li>
+                <li>@Model.ServiceDescription</li>
             </ul>
-            <p class="price"><del>$15.00</del></p>
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" min="1" value="1">
-            <button class="btn">Add to Cart</button>
+            <p class="price"><del>@Model.CostPerUnity vnd</del></p>
+            @if (Model.HasLimit != true)
+            {
+                <p class="price"><del>Available right now!</del></p>
+            }
+            else
+            {
+                <p class="price"><del>Currently unavailable</del></p>
+            }
+            <button type="submit" class="btn">Plan your pet</button>
         </div>
     </section>
-
     <section class="reviews">
         <h2>Reviews</h2>
         <div class="review">

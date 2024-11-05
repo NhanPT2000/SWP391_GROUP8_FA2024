@@ -41,5 +41,23 @@ namespace PetShopClient.Controllers
             }
             return PartialView("ServiceList", services);
         }
+
+        [HttpGet("Services/Details/{id}")]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdClaim != null)
+            {
+                var user = await _memberService.GetMemberDetailsAsync(Guid.Parse(userIdClaim));
+                if (user != null)
+                {
+                    ViewBag.UserId = userIdClaim;
+                    ViewBag.UserName = user.UserName;
+                }
+            }
+            var service = await _petServiceService.GetServiceByIdAsync(id);
+            if (service == null) return NotFound(id);
+            return View("Details", service);
+        }
     }
 }

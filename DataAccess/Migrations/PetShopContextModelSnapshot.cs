@@ -81,19 +81,19 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            CategoryId = new Guid("f60a55fa-76e3-4847-aeb2-17b5bf81e987"),
+                            CategoryId = new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"),
                             CategoryName = "Dog Food",
                             Status = "None"
                         },
                         new
                         {
-                            CategoryId = new Guid("503a6d00-885c-4fe8-a6eb-906ec28e20c0"),
+                            CategoryId = new Guid("e606e2c3-f649-4559-8b06-98366b6f5533"),
                             CategoryName = "Cat Food",
                             Status = "None"
                         },
                         new
                         {
-                            CategoryId = new Guid("25e38ce7-afa8-42be-8be1-f7966a415314"),
+                            CategoryId = new Guid("b474fdbe-7aa2-4ea8-890e-3857aca0bd8d"),
                             CategoryName = "Bird Food",
                             Status = "None"
                         });
@@ -421,8 +421,8 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("5254230b-4dad-46a5-b0dc-38618c5223f1"),
-                            CategoryId = new Guid("f60a55fa-76e3-4847-aeb2-17b5bf81e987"),
+                            ProductId = new Guid("e069ff54-2d57-49d3-a209-a7724a6eace1"),
+                            CategoryId = new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"),
                             Image = "product_01.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -433,8 +433,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("bf88b717-c4cc-43b9-8d07-21ea1b2a4a1a"),
-                            CategoryId = new Guid("503a6d00-885c-4fe8-a6eb-906ec28e20c0"),
+                            ProductId = new Guid("2c83af7c-29d1-4936-ac6b-b74aad9c2397"),
+                            CategoryId = new Guid("e606e2c3-f649-4559-8b06-98366b6f5533"),
                             Image = "product_02.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -445,8 +445,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("f59a87ff-ae9e-4ed7-a6a8-87b981b4e3a5"),
-                            CategoryId = new Guid("25e38ce7-afa8-42be-8be1-f7966a415314"),
+                            ProductId = new Guid("2886a828-3d20-40b6-95b5-d29c362c5f8d"),
+                            CategoryId = new Guid("b474fdbe-7aa2-4ea8-890e-3857aca0bd8d"),
                             Image = "product_03.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -457,8 +457,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("67f4c4c2-69e6-44c5-a80f-e643bed00092"),
-                            CategoryId = new Guid("f60a55fa-76e3-4847-aeb2-17b5bf81e987"),
+                            ProductId = new Guid("0c7b99f7-736c-4791-bbdb-9782ccc1adb3"),
+                            CategoryId = new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"),
                             Image = "product_04.jpg",
                             Origin = "England",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -469,8 +469,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("d9a3cc5d-b53d-400e-9353-d0b503b53c4a"),
-                            CategoryId = new Guid("25e38ce7-afa8-42be-8be1-f7966a415314"),
+                            ProductId = new Guid("9ac6a02b-5646-426d-ad97-1fc2995186fc"),
+                            CategoryId = new Guid("b474fdbe-7aa2-4ea8-890e-3857aca0bd8d"),
                             Image = "product_05.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -481,8 +481,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("b4f2b108-becb-4750-a04d-3dc23f8ea193"),
-                            CategoryId = new Guid("f60a55fa-76e3-4847-aeb2-17b5bf81e987"),
+                            ProductId = new Guid("fb970628-a172-4988-a221-430a0f005af1"),
+                            CategoryId = new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"),
                             Image = "product_06.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -513,19 +513,19 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("522c0a68-d730-4e27-931c-75320c933f75"),
+                            RoleId = new Guid("27ac3bb4-8c2e-4c30-915f-5b05c39f175f"),
                             RoleName = "Admin",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("f7c0e812-b954-409a-bdbd-12137568475a"),
+                            RoleId = new Guid("65ba74e9-de79-4dbe-83ec-ecb1b8eecd71"),
                             RoleName = "Member",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("9b2573d6-ec86-4a93-84c1-67eaaa9de8c8"),
+                            RoleId = new Guid("2f28dc93-9aa3-4f12-8ed7-a48a27d01f0e"),
                             RoleName = "Staff",
                             Status = "None"
                         });
@@ -649,13 +649,13 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("4b419e89-36ef-4c36-aa3e-395eb127206e"),
+                            UserId = new Guid("e2c21dd7-65e0-4050-bb07-6fc9911e7741"),
                             Addess = "123 ABc",
                             Email = "manh123@gmail.com",
                             Gender = "Male",
                             Password = "nsZXnLisYMRi5raBLsXJFWnp0G/cOmcXIe5wNwLRrJk=",
                             PhoneNumber = "0123456789",
-                            RoleId = new Guid("522c0a68-d730-4e27-931c-75320c933f75"),
+                            RoleId = new Guid("27ac3bb4-8c2e-4c30-915f-5b05c39f175f"),
                             UserName = "Manh"
                         });
                 });

@@ -12,24 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    @* <header class="header">
-        <section class="flex">
-            <a asp-action="Index" asp-controller="Home" class="logo"> <i class="fas fa-paw"></i> shop </a>
-            <nav class="navbar">
-                <a asp-action="Index" asp-controller="Home">home</a>
-                <a asp-action="Index" asp-controller="Home">about</a>
-                <a asp-action="Main" asp-controller="Products">shop</a>
-                <a asp-action="Main" asp-controller="Services">services</a>
-                <a href="#contact">contact</a>
-            </nav>
-            <div class="icons">
-                <div class="fas fa-bars" id="menu-btn"></div>
-                <a href="#" class="fas fa-shopping-cart"></a>
-                <div class="fas fa-user" id="login-btn"></div>
-            </div>
-        </section>
-    </header> *@
-
     <section class="product-detail">
         <div class="image-gallery">
             <img src="@Url.Action("GetImage", "Products", new { fileName = Model.Image })" alt="Product Image">

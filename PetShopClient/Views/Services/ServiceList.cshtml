@@ -20,11 +20,15 @@
 
     <div id="services-container" class="products-container">
         <!-- Services will be displayed here -->
-        @if(Model != null && Model.Any()){
-         foreach (var service in Model)
-
+        @if (Model != null && Model.Any())
         {
-            <div class="service-box" data-category="@service.ServiceId">
+
+            foreach (var service in Model)
+
+
+
+            {
+                <div class="service-box" data-category="@service.ServiceId">
                     <form asp-action="AddToCart" method="post" asp-controller="Cart" class="service-form">
                         <input type="hidden" name="serviceId" value="@service.ServiceId" />
                         <input type="hidden" name="quantity" value="1" />
@@ -45,10 +49,12 @@
                         </div>
                     </form>
 
-            </div>
-        }
+                </div>
+            }
+
         }
     </div>
 </section>
 
 <script src="~/js/ListScript.js"></script>
+
