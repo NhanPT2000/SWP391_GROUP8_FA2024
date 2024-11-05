@@ -23,13 +23,6 @@
             <h4 onclick="filterProducts('All')">All</h4>
         </div>
         <div class="category">
-            <h4 onclick="toggleSubcategories('pet-food')">Pet Food</h4>
-            <div id="pet-food" class="subcategories">
-                <a href="#" onclick="filterProducts('Pet Food 1')">Pet Food 1</a>
-                <a href="#" onclick="filterProducts('Pet Food 2')">Pet Food 2</a>
-            </div>
-        </div>
-        <div class="category">
             <h4 onclick="toggleSubcategories('pet-service')">Pet Service</h4>
             <div id="pet-service" class="subcategories">
                 <a href="#" onclick="filterProducts('Pet Service 1')">Pet Service 1</a>
@@ -70,3 +63,25 @@
 </body>
 </html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        loadServiceList();
+        $('#refresh-button').on('click', function () {
+            loadServiceList();
+        });
+        setInterval(loadServiceList, 30000);
+    });
+
+    function loadServiceList() {
+        $.ajax({
+            url: '@Url.Action("ServiceList", "Services")',
+            type: 'GET',
+            success: function (result) {
+                $('#products-container').html(result);
+            },
+            error: function () {
+                alert('Error loading service list.');
+            }
+        });
+    }
+</script>

@@ -18,7 +18,8 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     SpeciesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SpeciesName = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    SpeciesName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    IsDelete = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,7 +32,8 @@ namespace DataAccess.Migrations
                 {
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryName = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(50)", nullable: true)
+                    Status = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,10 +45,12 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     FacilityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FacilityName = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    ContractPer = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    FacilityName = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    ContractPer = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,7 +79,8 @@ namespace DataAccess.Migrations
                     ServiceDescription = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     HasLimit = table.Column<bool>(type: "bit", nullable: true),
                     CostPerUnity = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(500)", nullable: false)
+                    Image = table.Column<string>(type: "nvarchar(500)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,12 +106,13 @@ namespace DataAccess.Migrations
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     ProductDescription = table.Column<string>(type: "nvarchar(900)", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Origin = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Weight = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     UnitsInStock = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(256)", nullable: true)
+                    Image = table.Column<string>(type: "nvarchar(Max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -115,8 +121,7 @@ namespace DataAccess.Migrations
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CategoryId");
                 });
 
             migrationBuilder.CreateTable(
@@ -207,7 +212,8 @@ namespace DataAccess.Migrations
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RequiredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ShippedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Freight = table.Column<float>(type: "real", nullable: false)
+                    Freight = table.Column<float>(type: "real", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -228,9 +234,10 @@ namespace DataAccess.Migrations
                     PetName = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     SpeciesId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Birthdate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(128)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(Max)", nullable: true),
                     MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(128)", nullable: true)
+                    Image = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -278,9 +285,10 @@ namespace DataAccess.Migrations
                 {
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UnitPrice = table.Column<float>(type: "real", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Discount = table.Column<float>(type: "real", nullable: false)
+                    UnitPrice = table.Column<float>(type: "real", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: true),
+                    Discount = table.Column<float>(type: "real", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -309,7 +317,8 @@ namespace DataAccess.Migrations
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsClosed = table.Column<bool>(type: "bit", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(255)", nullable: true)
+                    Notes = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -369,8 +378,9 @@ namespace DataAccess.Migrations
                     PlannedUnits = table.Column<int>(type: "int", nullable: false),
                     CostPerUnit = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(255)", nullable: true),
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Notes = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -426,12 +436,12 @@ namespace DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "CategoryId", "CategoryName", "Status" },
+                columns: new[] { "CategoryId", "CategoryName", "IsDeleted", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("4c0d5274-44a8-4203-8d2a-812daf366702"), "Cat Food", "None" },
-                    { new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"), "Dog Food", "None" },
-                    { new Guid("be87443f-bc63-4479-836b-e0bd5bf3af71"), "Bird Food", "None" }
+                    { new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"), "Dog Food", null, "None" },
+                    { new Guid("b474fdbe-7aa2-4ea8-890e-3857aca0bd8d"), "Bird Food", null, "None" },
+                    { new Guid("e606e2c3-f649-4559-8b06-98366b6f5533"), "Cat Food", null, "None" }
                 });
 
             migrationBuilder.InsertData(
@@ -439,27 +449,27 @@ namespace DataAccess.Migrations
                 columns: new[] { "RoleId", "RoleName", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("22fd5e77-262c-4a38-9a43-26066501f1c8"), "Member", "None" },
-                    { new Guid("c00d5d18-058b-4dad-90c7-44e11c8989e3"), "Admin", "None" },
-                    { new Guid("d7e9e6e7-9050-4630-8fa6-88ba0bb280c1"), "Staff", "None" }
+                    { new Guid("27ac3bb4-8c2e-4c30-915f-5b05c39f175f"), "Admin", "None" },
+                    { new Guid("2f28dc93-9aa3-4f12-8ed7-a48a27d01f0e"), "Staff", "None" },
+                    { new Guid("65ba74e9-de79-4dbe-83ec-ecb1b8eecd71"), "Member", "None" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Members",
                 columns: new[] { "UserId", "Addess", "ConfirmedEmail", "Email", "Gender", "OnlineTime", "Password", "PhoneNumber", "PhoneNumber2", "Profile", "RoleId", "UserName" },
-                values: new object[] { new Guid("55241cb9-3c1f-4dd6-840a-bddb1303042b"), "123 ABc", null, "manh123@gmail.com", "Male", null, "nsZXnLisYMRi5raBLsXJFWnp0G/cOmcXIe5wNwLRrJk=", "0123456789", null, null, new Guid("c00d5d18-058b-4dad-90c7-44e11c8989e3"), "Manh" });
+                values: new object[] { new Guid("e2c21dd7-65e0-4050-bb07-6fc9911e7741"), "123 ABc", null, "manh123@gmail.com", "Male", null, "nsZXnLisYMRi5raBLsXJFWnp0G/cOmcXIe5wNwLRrJk=", "0123456789", null, null, new Guid("27ac3bb4-8c2e-4c30-915f-5b05c39f175f"), "Manh" });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductId", "CategoryId", "Image", "Origin", "ProductDescription", "ProductName", "UnitPrice", "UnitsInStock", "Weight" },
+                columns: new[] { "ProductId", "CategoryId", "Image", "IsDeleted", "Origin", "ProductDescription", "ProductName", "UnitPrice", "UnitsInStock", "Weight" },
                 values: new object[,]
                 {
-                    { new Guid("7214221c-5668-4ac1-9075-213144f68b7e"), new Guid("4c0d5274-44a8-4203-8d2a-812daf366702"), "product_02.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
-                    { new Guid("898cd542-ada3-4b78-8f21-de5957994b48"), new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"), "product_04.jpg", "England", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Bird Food", 10000m, 10, 12m },
-                    { new Guid("91a2eba5-26d4-49f0-966a-977bfa5ee5e4"), new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"), "product_06.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
-                    { new Guid("94beae78-c9d7-4830-aa59-94567c562cd4"), new Guid("be87443f-bc63-4479-836b-e0bd5bf3af71"), "product_03.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Cat Food", 10000m, 0, 0.76m },
-                    { new Guid("aba453a0-2819-4794-b13a-e2bf8a3712bd"), new Guid("be87443f-bc63-4479-836b-e0bd5bf3af71"), "product_05.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 13m },
-                    { new Guid("f2bb30ec-0133-4963-a596-74626552d5ef"), new Guid("7153d563-8bb7-47ac-934f-fbfb353bf8ab"), "product_01.jpg", "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m }
+                    { new Guid("0c7b99f7-736c-4791-bbdb-9782ccc1adb3"), new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"), "product_04.jpg", null, "England", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Bird Food", 10000m, 10, 12m },
+                    { new Guid("2886a828-3d20-40b6-95b5-d29c362c5f8d"), new Guid("b474fdbe-7aa2-4ea8-890e-3857aca0bd8d"), "product_03.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Cat Food", 10000m, 0, 0.76m },
+                    { new Guid("2c83af7c-29d1-4936-ac6b-b74aad9c2397"), new Guid("e606e2c3-f649-4559-8b06-98366b6f5533"), "product_02.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
+                    { new Guid("9ac6a02b-5646-426d-ad97-1fc2995186fc"), new Guid("b474fdbe-7aa2-4ea8-890e-3857aca0bd8d"), "product_05.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 13m },
+                    { new Guid("e069ff54-2d57-49d3-a209-a7724a6eace1"), new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"), "product_01.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
+                    { new Guid("fb970628-a172-4988-a221-430a0f005af1"), new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"), "product_06.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m }
                 });
 
             migrationBuilder.CreateIndex(

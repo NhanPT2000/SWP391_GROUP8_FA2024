@@ -25,7 +25,7 @@ namespace DataObject
         public float CostPerUnit {  get; set; }
         [Column(TypeName = "decimal(10,2)")]
         public float Price { get; set; }
-        [Column(TypeName = "nvarchar(255)")]
+        [Column(TypeName = "nvarchar(MAX)")]
         public string? Notes { get; set; }
         public ICollection<Voucher>? _Vouchers { get; set; }
         public User? _Member { get; set; }

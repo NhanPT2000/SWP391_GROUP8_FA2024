@@ -10,7 +10,7 @@ namespace DataAccess.Repository
     public interface IPlannedServiceService
     {
         Task<IEnumerable<PlannedService>> GetPlannedServicesAsync();
-        Task<Category?> GetPlannedServiceByIdAsync(Guid id);
+        Task<PlannedService?> GetPlannedServiceByIdAsync(Guid id);
         Task<bool> UpdatePlannedServiceAsync(PlannedService plannedService, Guid id);
         Task<bool> DeletePlannedServiceAsync(Guid id);
         Task CreatePlannedServiceAsync(PlannedService plannedService);
