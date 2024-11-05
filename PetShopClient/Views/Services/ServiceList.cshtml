@@ -20,25 +20,34 @@
 
     <div id="services-container" class="products-container">
         <!-- Services will be displayed here -->
-        @if(Model != null && Model.Any()){
-         foreach (var service in Model)
-
+        @if (Model != null && Model.Any())
         {
-            <div class="service-box" data-category="@service.ServiceId">
-                <form asp-action="AddToCart" method="post" asp-controller="Cart">
-                    <input type="hidden" name="serviceId" value="@service.ServiceId" />
-                    <input type="hidden" name="quantity" value="1" />
-                    <input type="hidden" name="serviceName" value="@service.ServiceName" />
-                    <input type="hidden" name="unitPrice" value="@service.CostPerUnity" />
-                    <img src="@Url.Action("GetServiceImage", "Admin", new { fileName = service.Image })" alt="Service Image">
-                    <h3>@service.ServiceName</h3>
-                    <div class="description">@service.ServiceDescription</div>
-                    <div class="price">@service.CostPerUnity vnd</div>
-                    <button type="submit" class="btn">Planned your pet right now!</button>
-                    <a href="/PetServices/Details/@service.ServiceId" class="btn secondary">View Detail</a>
-                </form>
-            </div>
-        }
+            foreach (var service in Model)
+
+            {
+                <div class="service-box" data-category="@service.ServiceId">
+                    <form asp-action="AddToCart" method="post" asp-controller="Cart" class="service-form">
+                        <input type="hidden" name="serviceId" value="@service.ServiceId" />
+                        <input type="hidden" name="quantity" value="1" />
+                        <input type="hidden" name="serviceName" value="@service.ServiceName" />
+                        <input type="hidden" name="unitPrice" value="@service.CostPerUnity" />
+
+                        <div class="service-image-container">
+                            <img src="@Url.Action("GetServiceImage", "Admin", new { fileName = service.Image })" alt="Service Image" class="service-image">
+                        </div>
+
+                        <h3 class="service-title">@service.ServiceName</h3>
+                        <div class="description">@service.ServiceDescription</div>
+                        <div class="price">@service.CostPerUnity VND</div>
+
+                        <div class="button-group">
+                            <button type="submit" class="btn primary">Plan Your Pet Right Now!</button>
+                            <a href="/PetServices/Details/@service.ServiceId" class="btn secondary">View Detail</a>
+                        </div>
+                    </form>
+
+                </div>
+            }
         }
     </div>
 </section>

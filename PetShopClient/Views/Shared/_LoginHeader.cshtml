@@ -5,26 +5,26 @@
 
 }
 
-    <section class="flex">
+<section class="flex">
 
-        <a href="#" class="logo"> <i class="fas fa-paw"></i> shop </a>
+    <a href="#" class="logo"> <i class="fas fa-paw"></i> shop </a>
 
-        <nav class="navbar">
-            <a asp-action="Index" asp-controller="Home">home</a>
-            <a href="#about">about</a>
-            <a asp-action="Main" asp-controller="Products">shop</a>
-            <a href="#services">services</a>
-            <a href="#contact">contact</a>
-        </nav>
+    <nav class="navbar">
+        <a asp-action="Index" asp-controller="Home">home</a>
+        <a href="#about">about</a>
+        <a asp-action="Main" asp-controller="Products">shop</a>
+        <a asp-action="Main" asp-controller="Services">services</a>
+        <a href="#contact">contact</a>
+    </nav>
 
-        <div class="icons">
-            <div class="fas fa-bars" id="menu-btn"></div>
-            <a href="/Cart/Index" class="fas fa-shopping-cart"></a>
-            <div class="fas fa-user" id="login-btn"></div>
-        </div>
-        @{
-            @if (ViewBag.UserId == null)
-            {
+    <div class="icons">
+        <div class="fas fa-bars" id="menu-btn"></div>
+        <a href="/Cart/Index" class="fas fa-shopping-cart"></a>
+        <div class="fas fa-user" id="login-btn"></div>
+    </div>
+    @{
+        @if (ViewBag.UserId == null)
+        {
             @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "login-form" }))
             {
                 <h3>Sign In</h3>
@@ -47,23 +47,23 @@
                     <a asp-controller="Access" asp-action="Register">Sign Up</a>
                 </div>
             }
-            }
-            else
-            {
-                <form asp-action="Index" method="get" class="login-form">
-                    <h3>Welcome @ViewBag.UserName</h3>
-                    <div class="links">                  
-                    <a asp-controller="User" asp-action="Profile" asp-route-id="@ViewBag.UserId">Profile</a><br />                  
-                     <a asp-controller="Access" asp-action="Logout" method="get">Log out</a>
+        }
+        else
+        {
+            <form asp-action="Index" method="get" class="login-form">
+                <h3>Welcome @ViewBag.UserName</h3>
+                <div class="links">
+                    <a asp-controller="User" asp-action="Profile" asp-route-id="@ViewBag.UserId">Profile</a><br />
+                    <a asp-controller="Access" asp-action="Logout" method="get">Log out</a>
                     @if (ViewBag.Role == "Admin")
                     {
                         <a asp-controller="Admin" asp-action="Main">Dashboard</a>
 
                         <br />
                     }
-                    </div>
-                </form>
-            }
+                </div>
+            </form>
         }
+    }
 
-    </section>
+</section>
