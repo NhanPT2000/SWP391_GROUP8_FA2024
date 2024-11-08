@@ -34,7 +34,11 @@ namespace DataAccess.Service
                     Discount = invoice.Discount,
                     TimeCharge = invoice.TimeCharge,
                     AmountCharge = invoice.AmountCharge,
-                    Notes = invoice.Notes
+                    Notes = invoice.Notes,
+                    Status = invoice.Status,
+                    PayerId = invoice.PayerId,
+                    PaymentId = invoice.PaymentId,
+                    OrderId = invoice.OrderId
                 };
 
                 await _serviceContext.Invoices.AddAsync(newInvoice);
@@ -51,9 +55,14 @@ namespace DataAccess.Service
         public async Task<IEnumerable<Invoice>> GetInvoicesAsync()
         {
             return await _serviceContext.Invoices
-                .Include(i => i.Case)
-                .Include(i => i.Service)
-                .ToListAsync();
+    .Include(i => i.Case)
+    .Include(i => i.Service)
+    .Include(i => i.Order)
+        .ThenInclude(o => o.OrderDetails)
+            .ThenInclude(od => od.Product)
+    .Include(i => i.Order)
+        .ThenInclude(o => o.Member)
+    .ToListAsync();
         }
 
         public async Task<Invoice?> GetInvoiceByIdAsync(Guid id)
@@ -61,6 +70,11 @@ namespace DataAccess.Service
             return await _serviceContext.Invoices
                 .Include(i => i.Case)
                 .Include(i => i.Service)
+                .Include(i => i.Order)
+                .ThenInclude(o => o.OrderDetails)
+                .ThenInclude(od => od.Product)
+                .Include(i => i.Order)
+        .ThenInclude(o => o.Member)
                 .FirstOrDefaultAsync(i => i.InvoiceId == id);
         }
 
@@ -82,7 +96,10 @@ namespace DataAccess.Service
             invoiceToUpdate.TimeCharge = invoice.TimeCharge;
             invoiceToUpdate.AmountCharge = invoice.AmountCharge;
             invoiceToUpdate.Notes = invoice.Notes;
-
+            invoiceToUpdate.Status = invoice.Status;
+            invoiceToUpdate.PayerId = invoice.PayerId;
+            invoiceToUpdate.PaymentId = invoice.PaymentId;
+            invoiceToUpdate.OrderId = invoice.OrderId;
             _serviceContext.Invoices.Update(invoiceToUpdate);
             return await _serviceContext.SaveChangesAsync() > 0;
         }
@@ -94,6 +111,17 @@ namespace DataAccess.Service
 
             _serviceContext.Invoices.Remove(invoiceToDelete);
             return await _serviceContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<Invoice?> GetInvoiceByOrderIdAsync(Guid id)
+        {
+            return await _serviceContext.Invoices
+                .Include(i => i.Case)
+                .Include(i => i.Service)
+                .Include(i => i.Order)
+                .ThenInclude(o => o.OrderDetails)
+                .ThenInclude(od => od.Product)
+                .FirstOrDefaultAsync(i => i.OrderId == id);
         }
     }
 }

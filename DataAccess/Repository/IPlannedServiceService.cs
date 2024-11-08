@@ -14,5 +14,6 @@ namespace DataAccess.Repository
         Task<bool> UpdatePlannedServiceAsync(PlannedService plannedService, Guid id);
         Task<bool> DeletePlannedServiceAsync(Guid id);
         Task CreatePlannedServiceAsync(PlannedService plannedService);
+        Task<IEnumerable<PlannedService>?> GetPlannedServicesByIdAsync(Guid id);
     }
 }

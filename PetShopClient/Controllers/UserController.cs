@@ -16,18 +16,21 @@ namespace PetShopClient.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IPetService _petService;
         private readonly ISpeciesService _speciesService;
+        private readonly IPlannedServiceService _plannedService;
         public UserController(
             ILogger<UserController> logger, 
             IMemberService memberService, 
             IWebHostEnvironment webHostEnvironment, 
             IPetService petService,
-            ISpeciesService speciesService)
+            ISpeciesService speciesService,
+            IPlannedServiceService plannedServiceService)
         {
             _logger = logger;
             _memberService = memberService;
             _webHostEnvironment = webHostEnvironment;
             _petService = petService;
             _speciesService = speciesService;
+            _plannedService = plannedServiceService;
         }
         [HttpGet("Profile/{id}")]
         public async Task<IActionResult> Profile(Guid? id)
@@ -150,6 +153,19 @@ namespace PetShopClient.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> PlannedServiceList()
+        {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var services = await _plannedService.GetPlannedServicesByIdAsync(Guid.Parse(id));
+            return PartialView("PlannedServiceList", services);
+
+        }
+
+        [HttpGet]
         public IActionResult GetPetImage(string fileName)
         {
             string imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Image", "Pets");
@@ -177,6 +193,48 @@ namespace PetShopClient.Controllers
         {
             ViewData["SpeciesId"] = new SelectList(await _speciesService.GetAll(), "SpeciesId", "SpeciesName");
             return PartialView("PetForm");
+        }
+
+        [HttpDelete("User/CancelService/{id}")]
+        public async Task<IActionResult> CancelService(Guid id)
+        {
+            try
+            {
+                var ps = await _plannedService.GetPlannedServiceByIdAsync(id);
+                if (ps == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Service not found."
+                    });
+                }
+
+                var isDeleted = await _plannedService.DeletePlannedServiceAsync(id);
+                if (!isDeleted)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Planned Service is not found or could not be deleted."
+                    });
+                }
+                return Json(new
+                {
+                    success = true,
+                    message = "Planned Service deleted successfully."
+                });
+            }
+            catch (Exception ex)
+            {
+                throw;
+                return Json(new
+                {
+                    success = false,
+                    message = "An error occurred while deleting your planned service.",
+                    error = ex.Message
+                });
+            }
         }
         [HttpPost]
         public async Task<IActionResult> PetForm([Bind("PetName,SpeciesId,Birthdate,Notes,Image")] Pet pet, IFormFile file)

@@ -81,19 +81,19 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            CategoryId = new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"),
+                            CategoryId = new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"),
                             CategoryName = "Dog Food",
                             Status = "None"
                         },
                         new
                         {
-                            CategoryId = new Guid("e606e2c3-f649-4559-8b06-98366b6f5533"),
+                            CategoryId = new Guid("2e1b4c3f-2be3-4947-b320-a085cc7b47bf"),
                             CategoryName = "Cat Food",
                             Status = "None"
                         },
                         new
                         {
-                            CategoryId = new Guid("b474fdbe-7aa2-4ea8-890e-3857aca0bd8d"),
+                            CategoryId = new Guid("e031d5e4-76cb-4443-9c4b-41834e1abbba"),
                             CategoryName = "Bird Food",
                             Status = "None"
                         });
@@ -161,6 +161,18 @@ namespace DataAccess.Migrations
                     b.HasKey("FacilityId");
 
                     b.ToTable("Facilities");
+
+                    b.HasData(
+                        new
+                        {
+                            FacilityId = new Guid("84f782b1-c3b8-42f8-9d19-c075edcd567b"),
+                            Address = "Floor 3, Room 201",
+                            ContractPer = "Doctor Joe",
+                            FacilityName = "Room Vet A1",
+                            Image = "1.jpg",
+                            IsDeleted = false,
+                            PhoneNumber = "0342231123"
+                        });
                 });
 
             modelBuilder.Entity("DataObject.Feedback", b =>
@@ -198,6 +210,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataObject.Invoice", b =>
                 {
                     b.Property<Guid>("InvoiceId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal?>("AmountCharge")
@@ -219,8 +232,20 @@ namespace DataAccess.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PayerId")
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("PaymentId")
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<Guid?>("ServiceId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("TimeCharge")
                         .HasColumnType("datetime2");
@@ -229,6 +254,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("InvoiceId");
+
+                    b.HasIndex("CaseId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ServiceId");
 
@@ -245,6 +274,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("real");
 
                     b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsPaid")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("MemberId")
@@ -421,8 +453,8 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("e069ff54-2d57-49d3-a209-a7724a6eace1"),
-                            CategoryId = new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"),
+                            ProductId = new Guid("60fe3de1-e5cd-4631-89e8-f01dc1900bf7"),
+                            CategoryId = new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"),
                             Image = "product_01.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -433,8 +465,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("2c83af7c-29d1-4936-ac6b-b74aad9c2397"),
-                            CategoryId = new Guid("e606e2c3-f649-4559-8b06-98366b6f5533"),
+                            ProductId = new Guid("8f84818e-4519-4ecb-bd9a-05914ba056dc"),
+                            CategoryId = new Guid("2e1b4c3f-2be3-4947-b320-a085cc7b47bf"),
                             Image = "product_02.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -445,8 +477,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("2886a828-3d20-40b6-95b5-d29c362c5f8d"),
-                            CategoryId = new Guid("b474fdbe-7aa2-4ea8-890e-3857aca0bd8d"),
+                            ProductId = new Guid("32e0f124-3c52-4832-87fe-2ba46122dece"),
+                            CategoryId = new Guid("e031d5e4-76cb-4443-9c4b-41834e1abbba"),
                             Image = "product_03.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -457,8 +489,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("0c7b99f7-736c-4791-bbdb-9782ccc1adb3"),
-                            CategoryId = new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"),
+                            ProductId = new Guid("59a6b2d9-4d26-4145-80f1-6e2d6c69ea23"),
+                            CategoryId = new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"),
                             Image = "product_04.jpg",
                             Origin = "England",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -469,8 +501,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("9ac6a02b-5646-426d-ad97-1fc2995186fc"),
-                            CategoryId = new Guid("b474fdbe-7aa2-4ea8-890e-3857aca0bd8d"),
+                            ProductId = new Guid("d92d3171-7364-4fef-b089-a3a96af2ef7c"),
+                            CategoryId = new Guid("e031d5e4-76cb-4443-9c4b-41834e1abbba"),
                             Image = "product_05.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -481,8 +513,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("fb970628-a172-4988-a221-430a0f005af1"),
-                            CategoryId = new Guid("0d46e383-3db1-42aa-ba6c-8380291b088c"),
+                            ProductId = new Guid("7555066d-9a1d-4e88-aa83-1f8e38664f0a"),
+                            CategoryId = new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"),
                             Image = "product_06.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -513,19 +545,19 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("27ac3bb4-8c2e-4c30-915f-5b05c39f175f"),
+                            RoleId = new Guid("b2b46689-a9d5-44f1-9397-ca3b588268db"),
                             RoleName = "Admin",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("65ba74e9-de79-4dbe-83ec-ecb1b8eecd71"),
+                            RoleId = new Guid("f79cd537-47bd-46f3-a79f-cd7999aaa364"),
                             RoleName = "Member",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("2f28dc93-9aa3-4f12-8ed7-a48a27d01f0e"),
+                            RoleId = new Guid("ebc6b7cf-a0be-474b-9477-267ee0f72b9b"),
                             RoleName = "Staff",
                             Status = "None"
                         });
@@ -578,6 +610,28 @@ namespace DataAccess.Migrations
                     b.HasKey("SpeciesId");
 
                     b.ToTable("_Species");
+
+                    b.HasData(
+                        new
+                        {
+                            SpeciesId = new Guid("088482ad-40c1-4523-a8da-bf2ecf07fe6e"),
+                            SpeciesName = "Dog"
+                        },
+                        new
+                        {
+                            SpeciesId = new Guid("c90876f5-c3a4-42c4-ada9-b48142537111"),
+                            SpeciesName = "Cat"
+                        },
+                        new
+                        {
+                            SpeciesId = new Guid("6fb70da5-6704-4344-90ce-6d8412bc7ee1"),
+                            SpeciesName = "Parrot"
+                        },
+                        new
+                        {
+                            SpeciesId = new Guid("dee3c2ff-fab6-42f4-9ed0-afeeb3f53922"),
+                            SpeciesName = "Ferret"
+                        });
                 });
 
             modelBuilder.Entity("DataObject.StaffDetails", b =>
@@ -649,13 +703,13 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("e2c21dd7-65e0-4050-bb07-6fc9911e7741"),
+                            UserId = new Guid("96999c36-824d-43fa-9a63-5d45a33ce255"),
                             Addess = "123 ABc",
                             Email = "manh123@gmail.com",
                             Gender = "Male",
                             Password = "nsZXnLisYMRi5raBLsXJFWnp0G/cOmcXIe5wNwLRrJk=",
                             PhoneNumber = "0123456789",
-                            RoleId = new Guid("27ac3bb4-8c2e-4c30-915f-5b05c39f175f"),
+                            RoleId = new Guid("b2b46689-a9d5-44f1-9397-ca3b588268db"),
                             UserName = "Manh"
                         });
                 });
@@ -760,15 +814,19 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("DataObject.Case", "Case")
                         .WithMany("Invoices")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CaseId");
+
+                    b.HasOne("DataObject.Order", "Order")
+                        .WithMany("Invoices")
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("DataObject.Service", "Service")
                         .WithMany("_Invoices")
                         .HasForeignKey("ServiceId");
 
                     b.Navigation("Case");
+
+                    b.Navigation("Order");
 
                     b.Navigation("Service");
                 });
@@ -916,6 +974,8 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataObject.Order", b =>
                 {
+                    b.Navigation("Invoices");
+
                     b.Navigation("OrderDetails");
 
                     b.Navigation("_Vouchers");

@@ -60,7 +60,10 @@ namespace DataAccess.Service
 
         public async Task<Order?> GetOrderByIdAsync(Guid id)
         {
-            var order = await _serviceContext.Orders.FindAsync(id);
+            var order = await _serviceContext.Orders
+                .Include(o => o.OrderDetails)
+                .ThenInclude(o => o.Product)
+                .FirstOrDefaultAsync(o => o.OrderId == id);
 
             if (order == null)
             {
@@ -79,6 +82,7 @@ namespace DataAccess.Service
                 .Include(o => o.OrderDetails)
                 .ThenInclude(od => od.Product)
                 .Where(o => o.IsDeleted != true)
+                .Where(o => o.IsPaid != true)
                 .ToListAsync();
         }
 
@@ -106,6 +110,35 @@ namespace DataAccess.Service
             }
 
             return order;
+        }
+
+        public async Task<IEnumerable<Order>?> GetOrdersByIdAsync(Guid[] orderIds)
+        {
+            if (orderIds == null || orderIds.Length == 0)
+            {
+                return null;
+            }
+
+            var orders = await _serviceContext.Orders
+                .Where(order => orderIds.Contains(order.OrderId))
+                .Include(order => order.OrderDetails)
+                .ToListAsync();
+
+            return orders;
+        }
+
+        public async Task<bool> PaidOrder(Guid id)
+        {
+           var paid = await _serviceContext.Orders
+                .Include(o => o.OrderDetails)
+                .Where(o => o.MemberId == id)
+                .ToListAsync();
+            foreach ( var o in paid) 
+            {
+               o.IsPaid = true;
+                _serviceContext.Orders.Update(o);
+            }
+            return await _serviceContext.SaveChangesAsync() > 0;
         }
     }
 }

@@ -65,7 +65,11 @@ namespace DataAccess.Service
 
         public async Task<bool> FindMemberAsync(Guid id)
         {
-            var memberToFind = await _memberContext.Members.FindAsync(id);
+            var memberToFind = await _memberContext.Members
+                .Include(m=> m._Role)
+                .Include(m => m._Pets)
+                .Include(m=> m._PlannedServices)
+                .FirstOrDefaultAsync(m => m.UserId == id);
 
             if (memberToFind == null)
             {
@@ -78,6 +82,8 @@ namespace DataAccess.Service
         {
             var member = await _memberContext.Members
                 .Include(m => m._Role)
+                .Include(m => m._Pets)
+                .Include(m=> m._PlannedServices)
                 .FirstOrDefaultAsync(m => m.UserId == id);
 
             if (member == null)

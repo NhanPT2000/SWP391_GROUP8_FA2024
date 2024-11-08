@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
@@ -153,7 +154,11 @@ namespace DataAccess.Database
             modelBuilder.Entity<Invoice>()
                 .HasOne(p => p.Case)
                 .WithMany(m => m.Invoices)
-                .HasForeignKey(p => p.InvoiceId);
+                .HasForeignKey(p => p.CaseId);
+            modelBuilder.Entity<Invoice>()
+                .HasOne(p => p.Order)
+                .WithMany(m => m.Invoices)
+                .HasForeignKey(p => p.OrderId);
             //
             /*User-Staff*/
             //
@@ -325,6 +330,47 @@ namespace DataAccess.Database
                     UnitsInStock = 1,
                     Image = "product_06.jpg",
                     CategoryId = dogFoodCategoryId
+                }
+                );
+            modelBuilder.Entity<Facility>().HasData(
+                new
+                {
+                    FacilityId = Guid.NewGuid(),
+                    FacilityName = "Room Vet A1",
+                    Address = "Floor 3, Room 201",
+                    PhoneNumber = "0342231123",
+                    ContractPer = "Doctor Joe",
+                    Image = "1.jpg",
+                    IsDeleted = false
+                }
+                );
+            modelBuilder.Entity<Species>().HasData(
+                new
+                {
+                    SpeciesId = Guid.NewGuid(),
+                    SpeciesName = "Dog",
+                    IsDeleted = false
+                },
+                new
+                {
+                    SpeciesId = Guid.NewGuid(),
+                    SpeciesName = "Cat",
+                    IsDeleted = false
+
+                },
+                new
+                {
+                    SpeciesId = Guid.NewGuid(),
+                    SpeciesName = "Parrot",
+                    IsDeleted = false
+
+                },
+                new
+                {
+                    SpeciesId = Guid.NewGuid(),
+                    SpeciesName = "Ferret",
+                    IsDeleted = false
+
                 }
                 );
         }

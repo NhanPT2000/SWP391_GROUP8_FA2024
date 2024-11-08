@@ -55,6 +55,9 @@ namespace DataAccess.Service
             return await _serviceContext.PlannedServices
                 .Where(ps => ps.IsDeleted != true)
                 .Include(ps => ps.Case)
+                .ThenInclude(c => c.Pet)
+                .Include(ps => ps.Case)
+                .ThenInclude(c => c.Facility)
                 .Include(ps => ps.Service)
                 .Include(ps => ps._Vouchers)
                 .Include(ps => ps._Member)
@@ -65,10 +68,27 @@ namespace DataAccess.Service
         {
             return await _serviceContext.PlannedServices
                 .Include(ps => ps.Case)
+                .ThenInclude(c => c.Pet)
+                .Include(ps => ps.Case)
+                .ThenInclude(c => c.Facility)
                 .Include(ps => ps.Service)
                 .Include(ps => ps._Vouchers)
                 .Include(ps => ps._Member)
                 .FirstOrDefaultAsync(ps => ps.PlannedServiceId == id && ps.IsDeleted != true);
+        }
+
+        public async Task<IEnumerable<PlannedService>?> GetPlannedServicesByIdAsync(Guid id)
+        {
+            return await _serviceContext.PlannedServices
+                .Include(ps => ps.Case)
+                .ThenInclude(c => c.Pet)
+                .Include(ps => ps.Case)
+                .ThenInclude(c => c.Facility)
+                .Include(ps => ps.Service)
+                .Include(ps => ps._Vouchers)
+                .Include(ps => ps._Member)
+                .Where(ps => ps.MemberId == id && ps.IsDeleted != true)
+                .ToListAsync();
         }
 
         public async Task<bool> UpdatePlannedServiceAsync(PlannedService plannedService, Guid id)
@@ -97,7 +117,7 @@ namespace DataAccess.Service
         public async Task<bool> DeletePlannedServiceAsync(Guid id)
         {
             var plannedServiceToDelete = await _serviceContext.PlannedServices
-                .Include(ps => ps.MemberId)
+                .Include(ps => ps._Member)
                 .FirstOrDefaultAsync(ps => ps.PlannedServiceId == id);
 
             if (plannedServiceToDelete == null) return false;

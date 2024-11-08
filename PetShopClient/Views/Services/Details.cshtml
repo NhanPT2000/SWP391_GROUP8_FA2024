@@ -20,7 +20,7 @@
                 <li>@Model.ServiceDescription</li>
             </ul>
             <p class="price"><del>@Model.CostPerUnity vnd</del></p>
-            @if (Model.HasLimit != true)
+            @if (Model.HasLimit == true)
             {
                 <p class="price"><del>Available right now!</del></p>
             }
@@ -28,7 +28,9 @@
             {
                 <p class="price"><del>Currently unavailable</del></p>
             }
-            <button type="submit" class="btn">Plan your pet</button>
+            <a asp-action="SelectPet" asp-route-serviceId="@Model.ServiceId" class="button">
+                Plan Your Pet Right Now!
+            </a>
         </div>
     </section>
     <section class="reviews">

@@ -122,7 +122,7 @@
                         <span>SubTotal</span>
                         <span id="detail-subtotal"> vnd</span>
                     </div>
-                    <button>Check Out</button>
+                    <a asp-action="Checkout" asp-controller="Cart" class="btn btn-primary">Checkout</a>
                 </div>
 
             </div>
@@ -168,8 +168,27 @@
             $('#detail-total').text(formattedTotal + ' vnd');
             $('#detail-subtotal').text(formattedSubTotal + ' vnd');
         }
+
         $('.input-quantity').on('input', function () {
             updateCartTotal();
+        });
+
+        $('.btn-add').on('click', function () {
+            const input = $(this).siblings('.input-quantity');
+            let quantity = parseInt(input.val());
+            quantity++;
+            input.val(quantity);
+            updateCartTotal();
+        });
+
+        $('.btn-remove').on('click', function () {
+            const input = $(this).siblings('.input-quantity');
+            let quantity = parseInt(input.val());
+            if (quantity > 1) {
+                quantity--;
+                input.val(quantity);
+                updateCartTotal();
+            }
         });
 
         updateCartTotal();

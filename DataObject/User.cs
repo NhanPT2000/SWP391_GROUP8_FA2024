@@ -37,15 +37,15 @@ namespace DataObject
         [Column(TypeName = "nvarchar(255)")]
         public string? Profile {  get; set; }
         public DateTime? OnlineTime { get; set; }
-        public ICollection<Pet>? _Pets { get; set; }
-        public ICollection<Order>? _Orders { get; set; }
+        public IEnumerable<Pet>? _Pets { get; set; }
+        public IEnumerable<Order>? _Orders { get; set; }
         public bool? ConfirmedEmail { get; set; }
         public Role? _Role { get; set; }
         public Guid? RoleId { get; set; }
 
         public StaffDetails? _StaffDetails { get; set; }
-        public ICollection<Event>? _Events { get; set; }
-        public ICollection<PlannedService>?_PlannedServices { get; set; }
+        public IEnumerable<Event>? _Events { get; set; }
+        public IEnumerable<PlannedService>?_PlannedServices { get; set; }
         public ICollection<Feedback>? _Feedbacks { get; set; }
         public ICollection<Voucher>? _Vouchers { get; set; }
     }

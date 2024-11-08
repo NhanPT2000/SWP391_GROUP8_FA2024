@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Mail;
 using PetShopClient.Helper;
+using PetShopClient.Util.Interface;
+using PetShopClient.Util.Implement;
+using DataObject;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +32,10 @@ builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IPlannedServiceService, PlannedServiceService>();
 builder.Services.AddScoped<IFacilityService, FacilityService>();
 builder.Services.AddScoped<ICaseService, CaseService>();
+
+builder.Services.AddScoped<IPayPalService, PayPalService>();
+
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 builder.Services.AddDistributedMemoryCache();
 

@@ -14,5 +14,6 @@ namespace DataAccess.Repository
         Task<bool> UpdateInvoiceAsync(Invoice invoice, Guid id);
         Task<bool> DeleteInvoiceAsync(Guid id);
         Task CreateInvoiceAsync(Invoice invoice);
+        Task<Invoice?> GetInvoiceByOrderIdAsync(Guid id);
     }
 }

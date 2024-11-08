@@ -24,5 +24,7 @@ namespace DataObject
         public ICollection<Voucher>? _Vouchers { get;set; }
 
         public bool? IsDeleted { get; set; }
+        public bool? IsPaid { get; set; }
+        public IEnumerable<Invoice>? Invoices { get; set; }
     }
 }

@@ -346,5 +346,19 @@ namespace PetShopClient.Controllers
             var imageBytes = System.IO.File.ReadAllBytes(imagePath);
             return File(imageBytes, "image/png");
         }
+
+        [HttpGet]
+        public IActionResult GetFacilityImage(string fileName)
+        {
+            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Image", "Facility", fileName);
+
+            if (!System.IO.File.Exists(imagePath))
+            {
+                return NotFound();
+            }
+
+            var imageBytes = System.IO.File.ReadAllBytes(imagePath);
+            return File(imageBytes, "image/png");
+        }
     }
 }

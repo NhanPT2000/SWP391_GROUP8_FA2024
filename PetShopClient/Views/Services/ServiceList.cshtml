@@ -2,6 +2,7 @@
 @{
     Layout = null;
 }
+
 <!-- font awesome cdn link  -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -24,9 +25,6 @@
         {
 
             foreach (var service in Model)
-
-
-
             {
                 <div class="service-box" data-category="@service.ServiceId">
                     <form asp-action="AddToCart" method="post" asp-controller="Cart" class="service-form">
@@ -44,14 +42,15 @@
                         <div class="price">@service.CostPerUnity VND</div>
 
                         <div class="button-group">
-                            <button type="submit" class="btn primary">Plan Your Pet Right Now!</button>
-                            <a href="/PetServices/Details/@service.ServiceId" class="btn secondary">View Detail</a>
+                            <a asp-action="SelectPet" asp-route-serviceId="@service.ServiceId" class="btn primary">
+                                Plan Your Pet Right Now!
+                            </a>
+                            <a href="/Services/Details/@service.ServiceId" class="btn secondary">View Detail</a>
                         </div>
                     </form>
 
                 </div>
             }
-
         }
     </div>
 </section>

@@ -15,5 +15,8 @@ namespace DataAccess.Repository
         Task<bool> DeleteOrderAsync(Guid id);
         Task CreateOrderAsync(Order order);
         Task<Order> GetOrCreateOrderAsync(Guid userId);
+        Task<IEnumerable<Order>?> GetOrdersByIdAsync(Guid[] orderIds);
+
+        Task<bool> PaidOrder(Guid id);
     }
 }

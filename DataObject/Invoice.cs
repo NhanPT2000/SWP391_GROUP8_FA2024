@@ -20,6 +20,8 @@ namespace DataObject
         public Case? Case { get; set; }
         public Guid? ServiceId { get; set; }
         public Service? Service { get; set; }
+        public Order? Order { get; set; }
+        public Guid? OrderId { get; set; }
         public int TimeGenerated {  get; set; }
         [Column(TypeName = "decimal(10,2)")]
         public decimal? InvoiceAmount { get; set; }
@@ -30,5 +32,13 @@ namespace DataObject
         public decimal? AmountCharge { get; set; }
         [Column(TypeName = "nvarchar(255)")]
         public string? Notes { get; set; }
+        [Column(TypeName = "nvarchar(50)")]
+        public string? Status { get; set; } //"Paid", "Pending", "Failed"
+
+        [Column(TypeName = "nvarchar(255)")]
+        public string? PaymentId { get; set; } // Store the PayPal Payment ID
+
+        [Column(TypeName = "nvarchar(255)")]
+        public string? PayerId { get; set; } // Store the PayPal Account ID
     }
 }
