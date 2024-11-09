@@ -1,0 +1,36 @@
+﻿@model IEnumerable<DataObject.Pet>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Pets</title>
+    <link rel="stylesheet" href="~/css/Select.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Your Pets</h1>
+        <div class="pet-grid">
+            @if (Model != null && Model.Any())
+            {
+                foreach(var pet in Model)
+                {
+                    <div class="pet-card">
+                        <img src="@Url.Action("GetPetImage", "User", new { fileName = pet.Image })" alt="@pet.Image" class="pet-image">
+                        <h2 class="pet-name">@pet.PetName</h2>
+                        <a asp-action="SelectFacility" asp-route-petId="@pet.PetId" asp-route-serviceId="@ViewBag.ServiceId" class="select-pet-button">
+                            Select Pet
+                        </a>
+                    </div>
+                }
+                
+            }
+            <!-- Add more pets as needed -->
+        </div>
+    </div>
+</body>
+</html>
+

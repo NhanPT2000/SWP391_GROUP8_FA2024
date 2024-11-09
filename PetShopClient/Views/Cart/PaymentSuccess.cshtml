@@ -1,0 +1,127 @@
+﻿@model IEnumerable<DataObject.Invoice>
+@{
+    ViewBag.Title = "Invoice Details";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .invoice-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .invoice-header,
+        .invoice-details,
+        .payment-info {
+            margin-bottom: 20px;
+        }
+
+            .invoice-header span,
+            .invoice-details span,
+            .payment-info span {
+                font-weight: bold;
+            }
+
+        .invoice-details,
+        .payment-info {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f4f4f4;
+        }
+
+        .status {
+            text-align: right;
+            color: #888;
+        }
+
+        .home-button {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+            .home-button:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="invoice-container">
+        <h2>Invoice Details</h2>
+
+        @if (Model != null && Model.Any())
+        {
+            foreach (var o in Model)
+            {
+                <div class="invoice-header">
+                    <p><span>Invoice Code:</span> @o.InvoiceCode</p>
+                    <p><span>Invoice ID:</span> @o.InvoiceId</p>
+                </div>
+
+                <div class="invoice-details">
+                    <p><span>Case ID:</span> @o.CaseId</p>
+                    <p><span>Service ID:</span> @o.ServiceId</p>
+                    @if(o.Order.OrderDetails!= null && o.Order.OrderDetails.Any()){
+                    foreach (var od in o.Order.OrderDetails)
+                    {
+                        <p><span>Product:</span> @od.Product.ProductName</p>
+                    }
+                    }
+                    <p><span>Time Generated:</span> @o.TimeGenerated</p>
+                </div>
+
+                <div class="payment-info">
+                    <p><span>Invoice Amount:</span> $@o.InvoiceAmount</p>
+                    <p><span>Discount:</span> $@o.Discount</p>
+                    <p><span>Amount Charge:</span> $@o.AmountCharge</p>
+                    <p><span>Time Charge:</span> @o.TimeCharge</p>
+                </div>
+
+                <div class="status">
+                    <p><span>Status:</span> @o.Status</p>
+                </div>
+
+                <div class="additional-info">
+                    <p><span>Notes:</span> @o.Notes</p>
+                    <p><span>Payment ID:</span> @o.PaymentId</p>
+                    <p><span>Payer ID:</span> @o.PayerId</p>
+                    <p><span>Payer Name:</span> @o.Order.Member.UserName</p>
+                </div>
+            }
+        }
+        <!-- Go To Home Button -->
+        <a href="@Url.Action("Index", "Home")" class="home-button">Go To Home</a>
+    </div>
+
+</body>
+</html>

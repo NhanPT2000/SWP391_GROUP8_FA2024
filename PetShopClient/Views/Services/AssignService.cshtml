@@ -1,0 +1,22 @@
+﻿@model DataObject.Case
+@{
+
+}
+<link rel="stylesheet" href="~/css/AssignService.css">
+<form asp-action="AssignService" method="post">
+    <label>Pet you assign: @ViewBag.PetName</label>
+    <div>
+        <img src="@Url.Action("GetPetImage", "User", new { fileName = ViewBag.PetImage })" />
+    </div>
+    <label>Where your pet will be assigned to: @ViewBag.FacilName</label>
+    <div>
+        <img src="@Url.Action("GetFacilityImage", "Admin", new { fileName = ViewBag.FacilImage })" />
+    </div>
+    <input type="hidden" asp-for="FacilityId" value="@ViewBag.FacilId" />
+    <input type="hidden" asp-for="PetId" value="@ViewBag.PetId"/>
+    <label>Begin service date:</label>
+    <input type="date" asp-for="StartTime" min="@DateTime.UtcNow.ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+    <label>Begin service date:</label>
+    <input type="date" asp-for="EndTime" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+    <button type="submit" asp-route-serviceId="@ViewBag.ServiceId" asp-route-petId="@ViewBag.PetId">Plan</button>
+</form>

@@ -1,0 +1,102 @@
+﻿@model DataObject.PlannedService
+@{
+
+}
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f8f9fa;
+    }
+
+    form {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 400px;
+        width: 100%;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #495057;
+    }
+
+    input[type="date"],
+    input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    button {
+        width: 100%;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .cost-label {
+        color: #dc3545; /* Red color */
+        font-weight: bold;
+        margin-top: 8px;
+        display: block;
+    }
+
+    .img-container img {
+        max-width: 100%;
+        height: auto;
+        max-height: 300px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+</style>
+
+<form asp-action="ConfirmService" method="post">
+    <label>You plan your @ViewBag.PetName to @ViewBag.ServiceName</label>
+
+    <div class="img-container">
+        <img src="@Url.Action("GetPetImage", "User", new { fileName = ViewBag.PetImage })" alt="Pet Image" />
+    </div>
+
+    <div class="img-container">
+        <img src="@Url.Action("GetServiceImage", "Admin", new { fileName = ViewBag.ServiceImage })" alt="Service Image" />
+    </div>
+
+    <input type="hidden" asp-for="CaseId" value="@ViewBag.CaseId" />
+    <input type="hidden" asp-for="MemberId" value="@ViewBag.UserId" />
+    <input type="hidden" asp-for="ServiceId" value="@ViewBag.ServiceId" />
+
+    <label>Plan when will it end?</label>
+    <input type="date" asp-for="EndTime" />
+
+    <label>How many times?</label>
+    <input type="number" asp-for="PlannedUnits" />
+
+    <input type="hidden" asp-for="CostPerUnit" value="@ViewBag.ServicePrice" />
+
+    <label class="cost-label">The cost for this service per time you want is @ViewBag.ServicePrice vnd each</label>
+
+    <button type="submit">Plan Service</button>
+</form>

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<DataObject.PlannedService>
+@{
+    Layout = null;
+}
+<div class="container">
+    <h4>Planned Service You Have Booked</h4>
+    <div id="petList" class="row">
+        @if (Model != null && Model.Any())
+
+        {
+
+            foreach (var ps in Model)
+
+            {
+                <div class="card transaction-card">
+                    <div class="card-body">
+                        <img src="@Url.Action("GetPetImage", "User", new { fileName = ps.Case.Pet.Image })" alt="dog1" class="pet-image" />
+                        <h5>@ps.Case.Pet.PetName</h5>
+                        <img src="@Url.Action("GetFacilityImage", "Admin", new { fileName = ps.Case.Facility.Image })" alt="dog1" class="pet-image" />
+                        <h5>@ps.Case.Facility.FacilityName</h5>
+                        <p>Contract Person: @ps.Case.Facility.ContractPer</p>
+                        <p>Phone: @ps.Case.Facility.PhoneNumber</p>
+                        <h5>@ps.Service.ServiceName</h5>
+                        <img src="@Url.Action("GetServiceImage", "Admin", new { fileName = ps.Service.Image })" alt="dog1" class="pet-image" />
+                        <p>Around: @ps.StartTime.ToString("dd-MM-yyyy") til @ps.EndTime.ToString("dd-MM-yyyy")</p>
+                        <button class="btn btn-danger" onclick="deletePlannedService('@ps.PlannedServiceId')">Cancel</button>
+                    </div>
+                </div>
+            }
+
+        }
+
+        else
+
+        {
+            <label style="color:red">There's no services here.</label>
+        }
+        <div id="petFormContainer"></div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#addPetBtn').on('click', function () {
+            $.ajax({
+                url: '/User/PetForm',
+                type: 'GET',
+                success: function (result) {
+                    $('#petFormContainer').html(result);
+                },
+                error: function () {
+                    alert('Failed to load the pet form. Please try again.');
+                }
+            });
+        });
+    });
+
+    function deletePlannedService(plannedServiceId) {
+        if (confirm("Are you sure you want to cancel this pet service?")) {
+            $.ajax({
+                url: '/User/CancelService/' + plannedServiceId,
+                type: 'DELETE',
+                success: function (response) {
+                    if (response.success) {
+                        alert('Planned Service canceled successfully!');
+                        location.reload();
+                    } else {
+                        alert('Failed to cancel service: ' + response.message);
+                    }
+                },
+                error: function () {
+                    alert('An error occurred while trying to cancel.');
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,46 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f8f9fa; /* Light background color */
+  color: #333; /* Dark text color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height */
+  margin: 0; /* Remove default margin */
+  text-align: center; /* Center text */
+}
+
+.container {
+  background-color: white; /* Card background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Padding inside card */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  max-width: 400px; /* Max width for card */
+}
+
+h1 {
+  font-size: 2rem; /* Larger font for the main message */
+  margin-bottom: 10px; /* Space below title */
+}
+
+p {
+  font-size: 1.2rem; /* Medium font size for the message */
+  margin-bottom: 20px; /* Space below paragraph */
+}
+
+.button {
+  padding: 10px 15px;
+  background-color: #007bff; /* Blue background */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; /* Remove underline from link */
+  transition: background-color 0.2s; /* Smooth transition */
+  display: inline-block; /* Align buttons inline */
+  margin: 5px; /* Space between buttons */
+}
+
+.button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}

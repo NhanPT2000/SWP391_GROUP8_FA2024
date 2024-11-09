@@ -1,0 +1,95 @@
+﻿@model IEnumerable<DataObject.Facility>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Facility</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/SelectFacility.css">
+    <style>
+    body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa; /* Light background color */
+    color: #333; /* Dark text color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Stack items vertically */
+    margin: 0; /* Remove default margin */
+    padding: 20px; /* Add padding around body */
+}
+
+h1 {
+    font-size: 2rem; /* Larger font for the title */
+    margin-bottom: 20px; /* Space below title */
+}
+
+.facility-card {
+    background-color: white; /* Card background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding inside card */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    max-width: 300px; /* Max width for card */
+    margin: 10px; /* Space around cards */
+    text-align: center; /* Center text */
+}
+
+    .facility-card img {
+        width: 300px; /* Fixed width for images */
+        height: 300px; /* Fixed height for images */
+        object-fit: cover; /* Maintain aspect ratio */
+        border-radius: 10px; /* Rounded corners for images */
+    }
+
+.button {
+    padding: 10px 15px;
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline from link */
+    transition: background-color 0.2s; /* Smooth transition */
+    display: inline-block; /* Align buttons inline */
+    margin-top: 10px; /* Space above button */
+}
+
+    .button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+.facility-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap */
+    justify-content: center; /* Center align cards */
+    margin-top: 20px; /* Space above facility list */
+}
+
+</style>
+</head>
+<body>
+    <h1>Select a Facility</h1>
+    <div class="facility-list">
+    @if(Model!= null && Model.Any())
+    {
+        foreach(var facility in Model)
+        {
+                <div id="facilityInfo" class="facility-card">
+                <img id="facilityImage" src="@Url.Action("GetFacilityImage", "Admin", new { fileName = facility.Image })" alt="Facility Image">
+                <h2 id="facilityName"> @facility.FacilityName</h2>
+                <p id="facilityAddress">@facility.Address</p>
+                <p id="facilityPhone"> contact: @facility.ContractPer at phone: @facility.PhoneNumber</p>
+                <a asp-action="AssignService" asp-route-petId="@ViewBag.PetId" asp-route-facilityId="@facility.FacilityId" asp-route-serviceId="@ViewBag.ServiceId" class="button">
+                    Select Facility
+                </a>
+            </div>
+        }
+    }
+    </div>
+</body>
+</html>
