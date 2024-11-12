@@ -110,7 +110,7 @@ namespace PetShopClient.Controllers
                 ViewData["ShowRegisterConfirmation"] = true;
                 return View("Login");
             }
-            return RedirectToAction("Register");
+            return RedirectToAction("Index","Home");
         }
     }
 }

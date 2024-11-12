@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Responsive Pet Food Website Design Tutorial</title>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="~/css/ListStyle.css">
+
+</head>
+<body>
+    <!-- Product List Section -->
+    <section class="shop">
+        <div id="events-container">
+            @* @await Html.PartialAsync("ProductList.cshtml"); *@
+        </div>
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+    </section>
+
+    <footer class="footer">
+
+        <img src="~/image/top_wave.png" alt="">
+
+        <div class="share">
+            <a href="#" class="btn"> <i class="fab fa-facebook-f"></i> facebook </a>
+            <a href="#" class="btn"> <i class="fab fa-twitter"></i> twitter </a>
+            <a href="#" class="btn"> <i class="fab fa-instagram"></i> instagram </a>
+            <a href="#" class="btn"> <i class="fab fa-linkedin"></i> linkedin </a>
+            <a href="#" class="btn"> <i class="fab fa-pinterest"></i> pinterest </a>
+        </div>
+
+        <div class="credit"> 2024 created by <span> Group 8 </span> | all rights reserved! </div>
+
+    </footer>
+
+
+    <!-- custom js file link  -->
+    <script src="~/js/ListScript.js"></script>
+
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        loadEventList();
+        $('#refresh-button').on('click', function () {
+            loadEventList();
+        });
+        setInterval(loadEventList, 30000);
+    });
+
+    function loadEventList() {
+        $.ajax({
+            url: '@Url.Action("EventList", "Events")',
+            type: 'GET',
+            success: function (result) {
+                $('#events-container').html(result);
+            },
+            error: function () {
+                alert('Error loading event list.');
+            }
+        });
+    }
+</script>

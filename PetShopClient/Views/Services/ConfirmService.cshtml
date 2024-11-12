@@ -76,10 +76,12 @@
 <form asp-action="ConfirmService" method="post">
     <label>You plan your @ViewBag.PetName to @ViewBag.ServiceName</label>
 
+    <label>Your pet @ViewBag.PetName</label>
     <div class="img-container">
         <img src="@Url.Action("GetPetImage", "User", new { fileName = ViewBag.PetImage })" alt="Pet Image" />
     </div>
 
+    <label>This is the service you picked @ViewBag.ServiceName</label>
     <div class="img-container">
         <img src="@Url.Action("GetServiceImage", "Admin", new { fileName = ViewBag.ServiceImage })" alt="Service Image" />
     </div>

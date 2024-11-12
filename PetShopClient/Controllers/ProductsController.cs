@@ -31,6 +31,7 @@ namespace PetShopClient.Controllers
                 {
                     ViewBag.UserId = userIdClaim;
                     ViewBag.UserName = user.UserName;
+                    ViewBag.Role = user._Role.RoleName;
                 }
             }
             return View();

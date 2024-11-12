@@ -2,23 +2,24 @@
 <div id="eventModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <form asp-action="AddEvent" method="post" id="eventForm" enctype="multipart/form-data">
+        <form asp-action="UpdateEvent" method="post" id="eventForm" enctype="multipart/form-data">
+            <input asp-for="EventId" type="hidden" value="@Model.EventId"/>
             <div class="form-group">
                 <label for="eventName">Event Name</label>
-                <input asp-for="EventTitle" type="text" id="eventName" required>
+                <input asp-for="EventTitle" type="text" value="@Model.EventTitle" id="eventName" required>
             </div>
             <div class="form-group">
                 <label for="eventDescription">Description</label>
-                <input asp-for="Description" type="text" id="eventDescription" required>
+                <input asp-for="Description" type="text" value="@Model.Description" id="eventDescription" required>
             </div>
             <div class="form-group">
                 <label for="eventDate">Date</label>
-                <input asp-for="PostDate" type="date" id="eventDate" required>
+                <input asp-for="PostDate" type="date" id="eventDate" value="@Model.PostDate" required>
             </div>
             <div class="form-group">
                 <label for="eventImage">Image Upload</label>
                 <input type="file" name="eventImage" id="eventImage" accept="image/*" required>
-                <input type="hidden" asp-for="Image" value="none" />
+                <input type="hidden" asp-for="Image" value="@Model.Image" />
             </div>
             <button type="submit">Save</button>
             <button id="closeEventModalBtn">Close</button>

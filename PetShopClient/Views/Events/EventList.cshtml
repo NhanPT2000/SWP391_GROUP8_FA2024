@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DataObject.Event>
+@{
+    Layout = null;
+}
+
+<!-- font awesome cdn link  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- custom css file link  -->
+<link rel="stylesheet" href="~/css/ListStyle.css">
+
+<!-- Pet Service List Section -->
+<section class="shop">
+    <h2 class="heading">Our <span>Pet Services</span></h2>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search for events...">
+        <button onclick="searchServices()">Search</button>
+    </div>
+
+    <div id="services-container" class="products-container">
+        <!-- Services will be displayed here -->
+        @if (Model != null && Model.Any())
+        {
+
+            foreach (var e in Model)
+            {
+                <div class="service-box" data-category="@e.EventId">
+                        <div class="service-image-container">
+                            <img src="@Url.Action("GetEventImage", "Admin", new { fileName = e.Image })" alt="Event Image" class="service-image">
+                        </div>
+
+                        <h3 class="service-title">@e.EventTitle</h3>
+                        <div class="description">@e.Description</div>
+                        <div class="price">Post date : @e.PostDate.ToString("dd-MM-yyyy")</div>
+
+                        <div class="button-group">
+                            <a href="/Events/Details/@e.EventId" class="btn secondary">View Detail</a>
+                        </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<script src="~/js/ListScript.js"></script>

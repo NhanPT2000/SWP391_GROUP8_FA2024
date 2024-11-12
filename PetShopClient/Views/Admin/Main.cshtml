@@ -22,7 +22,9 @@
                 <li><a href="#Products" data-target="Products">Products</a></li>
                 <li><a href="#Events" data-target="Events">Events</a></li>
                 <li><a href="#Invoice" data-target="Invoice">Invoice</a></li>
-                <li><a href="#payments" data-target="payments">Income</a></li>
+                <li><a href="#PlannedServices" data-target="PlannedServices">Planned Services</a></li>
+                <li><a href="#Facility" data-target="Facility">Facilities</a></li>
+                <li><a href="#payments" data-target="Payment">Payments</a></li>
                 <li><a href="#settings" data-target="settings">Profile</a></li>
             </ul>
         </aside>
@@ -34,7 +36,7 @@
                 <div class="navbar-title">Admin Panel</div>
                 <div class="navbar-user">
                     <span>Welcome, Admin</span>
-                    <button class="logout-btn">Logout</button>
+                    <button onclick="window.location.href='@Url.Action("Logout", "Access")'" class="logout-btn">Logout</button>
                 </div>
             </nav>
             <div id="dynamicContent">
@@ -68,3 +70,7 @@
 <script defer src="~/js/AdminScript.js"></script>
 <script defer src="~/js/ProductSectionScript.js"></script>
 <script defer src="~/js/PetServiceSection.js"></script>
+<script defer src="~/js/PlannedServiceSection.js"></script>
+<script defer src="~/js/EventSection.js"></script>
+<script defer src="~/js/FacilitySection.js"></script>
+<script defer src="~/js/SpecieSection.js"></script>

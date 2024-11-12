@@ -1,0 +1,42 @@
+﻿@model DataObject.Facility
+@{
+    Layout = null;
+}
+<div id="facilityModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalFacilityTitle">Add Facility</h2>
+        <form asp-action="AddFacility" method="post" id="facilityForm" class="user-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="FacilityName">Facility Name</label>
+                <input asp-for="FacilityName" type="text" required />
+                <span asp-validation-for="FacilityName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContractPer">Holder</label>
+                <input asp-for="ContractPer" type="text" required />
+                <span asp-validation-for="ContractPer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="facilityImage">Image Upload</label>
+                <input type="file" name="facilityImage" id="facilityImage" accept="image/*" required />
+                <input type="text" asp-for="Image" hidden />
+                <span asp-validation-for="Image" class="text-danger"></span>
+                <img id="facilityImagePreview" src="" alt="Image Preview" style="display:none; margin-top: 10px; max-width: 100%; height: auto;" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Address">Address</label>
+                <input asp-for="Address" type="text" required />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber">Room Phone</label>
+                <input asp-for="PhoneNumber" type="text" required />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" id="saveFacilityBtn">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

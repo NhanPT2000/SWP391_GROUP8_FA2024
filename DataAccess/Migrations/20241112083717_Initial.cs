@@ -389,7 +389,8 @@ namespace DataAccess.Migrations
                     Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
                     MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true),
+                    IsCofirmed = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -448,24 +449,24 @@ namespace DataAccess.Migrations
                 columns: new[] { "CategoryId", "CategoryName", "IsDeleted", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("2e1b4c3f-2be3-4947-b320-a085cc7b47bf"), "Cat Food", null, "None" },
-                    { new Guid("e031d5e4-76cb-4443-9c4b-41834e1abbba"), "Bird Food", null, "None" },
-                    { new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"), "Dog Food", null, "None" }
+                    { new Guid("019a0482-0f12-4114-857a-76cbb24e2818"), "Bird Food", null, "None" },
+                    { new Guid("8afd8cc2-5acb-48e6-a394-07749d5470d3"), "Dog Food", null, "None" },
+                    { new Guid("ec3e268c-46bd-49ab-b161-55651e4475b0"), "Cat Food", null, "None" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Facilities",
                 columns: new[] { "FacilityId", "Address", "ContractPer", "FacilityName", "Image", "IsDeleted", "PhoneNumber" },
-                values: new object[] { new Guid("84f782b1-c3b8-42f8-9d19-c075edcd567b"), "Floor 3, Room 201", "Doctor Joe", "Room Vet A1", "1.jpg", false, "0342231123" });
+                values: new object[] { new Guid("2a831e1f-4fb8-4b55-827b-7ff9b07c83c4"), "Floor 3, Room 201", "Doctor Joe", "Room Vet A1", "1.jpg", false, "0342231123" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "RoleId", "RoleName", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("b2b46689-a9d5-44f1-9397-ca3b588268db"), "Admin", "None" },
-                    { new Guid("ebc6b7cf-a0be-474b-9477-267ee0f72b9b"), "Staff", "None" },
-                    { new Guid("f79cd537-47bd-46f3-a79f-cd7999aaa364"), "Member", "None" }
+                    { new Guid("12d976c3-3591-43f3-a4cf-250185abfdd6"), "Staff", "None" },
+                    { new Guid("7fb2f782-d814-4299-8a89-05dd3848b05a"), "Member", "None" },
+                    { new Guid("f0463cb3-d4fc-4c68-8eca-bce793c8cbc0"), "Admin", "None" }
                 });
 
             migrationBuilder.InsertData(
@@ -473,28 +474,28 @@ namespace DataAccess.Migrations
                 columns: new[] { "SpeciesId", "IsDelete", "SpeciesName" },
                 values: new object[,]
                 {
-                    { new Guid("088482ad-40c1-4523-a8da-bf2ecf07fe6e"), null, "Dog" },
-                    { new Guid("6fb70da5-6704-4344-90ce-6d8412bc7ee1"), null, "Parrot" },
-                    { new Guid("c90876f5-c3a4-42c4-ada9-b48142537111"), null, "Cat" },
-                    { new Guid("dee3c2ff-fab6-42f4-9ed0-afeeb3f53922"), null, "Ferret" }
+                    { new Guid("10d7d48c-d817-49a4-a2b9-9ad4b36e7713"), null, "Ferret" },
+                    { new Guid("3068c789-140c-4b25-94fb-602efd40eec2"), null, "Parrot" },
+                    { new Guid("7595f6d0-d560-49d1-8857-dfcb7104e58f"), null, "Cat" },
+                    { new Guid("f1393ebe-6458-446e-b216-d53cd02eea02"), null, "Dog" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Members",
                 columns: new[] { "UserId", "Addess", "ConfirmedEmail", "Email", "Gender", "OnlineTime", "Password", "PhoneNumber", "PhoneNumber2", "Profile", "RoleId", "UserName" },
-                values: new object[] { new Guid("96999c36-824d-43fa-9a63-5d45a33ce255"), "123 ABc", null, "manh123@gmail.com", "Male", null, "nsZXnLisYMRi5raBLsXJFWnp0G/cOmcXIe5wNwLRrJk=", "0123456789", null, null, new Guid("b2b46689-a9d5-44f1-9397-ca3b588268db"), "Manh" });
+                values: new object[] { new Guid("116483a4-a64c-483c-9c76-489a872fdec4"), "123 ABc", null, "manh123@gmail.com", "Male", null, "nsZXnLisYMRi5raBLsXJFWnp0G/cOmcXIe5wNwLRrJk=", "0123456789", null, null, new Guid("f0463cb3-d4fc-4c68-8eca-bce793c8cbc0"), "Manh" });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "ProductId", "CategoryId", "Image", "IsDeleted", "Origin", "ProductDescription", "ProductName", "UnitPrice", "UnitsInStock", "Weight" },
                 values: new object[,]
                 {
-                    { new Guid("32e0f124-3c52-4832-87fe-2ba46122dece"), new Guid("e031d5e4-76cb-4443-9c4b-41834e1abbba"), "product_03.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Cat Food", 10000m, 0, 0.76m },
-                    { new Guid("59a6b2d9-4d26-4145-80f1-6e2d6c69ea23"), new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"), "product_04.jpg", null, "England", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Bird Food", 10000m, 10, 12m },
-                    { new Guid("60fe3de1-e5cd-4631-89e8-f01dc1900bf7"), new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"), "product_01.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
-                    { new Guid("7555066d-9a1d-4e88-aa83-1f8e38664f0a"), new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"), "product_06.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
-                    { new Guid("8f84818e-4519-4ecb-bd9a-05914ba056dc"), new Guid("2e1b4c3f-2be3-4947-b320-a085cc7b47bf"), "product_02.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
-                    { new Guid("d92d3171-7364-4fef-b089-a3a96af2ef7c"), new Guid("e031d5e4-76cb-4443-9c4b-41834e1abbba"), "product_05.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 13m }
+                    { new Guid("1441651e-06eb-4c78-b4a4-8f9fc91e8a95"), new Guid("019a0482-0f12-4114-857a-76cbb24e2818"), "product_03.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Cat Food", 10000m, 0, 0.76m },
+                    { new Guid("50ab2adf-ac46-4490-8b94-9e9dc7af08f9"), new Guid("ec3e268c-46bd-49ab-b161-55651e4475b0"), "product_02.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
+                    { new Guid("539133a7-d2df-4748-8058-c289cf8dcc4c"), new Guid("8afd8cc2-5acb-48e6-a394-07749d5470d3"), "product_04.jpg", null, "England", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Bird Food", 10000m, 10, 12m },
+                    { new Guid("77228607-c331-45f9-8ca3-d6a61da48523"), new Guid("019a0482-0f12-4114-857a-76cbb24e2818"), "product_05.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 13m },
+                    { new Guid("ae7e1aeb-c278-46b5-bd7d-c70534a6d223"), new Guid("8afd8cc2-5acb-48e6-a394-07749d5470d3"), "product_06.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m },
+                    { new Guid("f7ea46c9-f5e5-40ab-b0c5-49af957899e0"), new Guid("8afd8cc2-5acb-48e6-a394-07749d5470d3"), "product_01.jpg", null, "Viet Nam", "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds", "Premium Dog Food", 10000m, 1, 12m }
                 });
 
             migrationBuilder.CreateIndex(

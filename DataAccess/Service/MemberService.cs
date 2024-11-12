@@ -114,6 +114,7 @@ namespace DataAccess.Service
             memberToUpdate.Email = member.Email;
             memberToUpdate.Password = member.Password;
             memberToUpdate.Gender = member.Gender;
+            memberToUpdate.ConfirmedEmail = member.ConfirmedEmail;
             _memberContext.Update(memberToUpdate);
             return await _memberContext.SaveChangesAsync() > 0;
         }

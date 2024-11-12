@@ -37,8 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
         Products: "ProductSection",
         Events: "EventSection",
         Invoice: "InvoiceSection",
-        payments: "IncomeSection",
-        settings: "ProfileSection"
+        PlannedServices: "PlannedServiceSection",
+        Payment: "IncomeSection",
+        settings: "ProfileSection",
+        Facility : "FacilitySection"
     };
 
     // Event listeners for sidebar items

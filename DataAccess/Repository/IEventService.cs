@@ -14,5 +14,6 @@ namespace DataAccess.Repository
         Task<bool> UpdateEventAsync(Event _event, Guid id);
         Task<bool> DeleteEventAsync(Guid id);
         Task CreateEventAsync(Event _event);
+        Task<IEnumerable<Event>> GetAllEventsAsync();
     }
 }

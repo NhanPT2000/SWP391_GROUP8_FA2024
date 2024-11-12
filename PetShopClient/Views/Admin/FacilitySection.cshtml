@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DataObject.Facility>
+@{
+    Layout = null;
+}
+<section id="Facility" class="dashboard-section" style="display: none;">
+    <h2>Facility</h2>
+    <button id="addFacilityBtn" class="add-btn">Add Facility</button>
+    <div id="facilityFormContainer"></div>
+    <table id="facilityTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Room Holder</th>
+                <th>Contact Phone</th>
+                <th>Address</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example row -->
+            @if (Model != null && Model.Any())
+            {
+                foreach (var fac in Model)
+                {
+                    <tr>
+                        <td>@fac.FacilityName</td>
+                        <td>@fac.ContractPer</td>
+                        <td>@fac.PhoneNumber</td>
+                        <td>@fac.Address</td>
+                        <td><img src="@Url.Action("GetFacilityImage", "Admin", new { fileName = fac.Image })" alt="Service Image" width="50"></td>
+                        <td>
+                            <button id="editFacilitybtn" data-id="@fac.FacilityId">Edit</button>
+                            <button id="deleteFacilitybtn" data-id="@fac.FacilityId">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>
+

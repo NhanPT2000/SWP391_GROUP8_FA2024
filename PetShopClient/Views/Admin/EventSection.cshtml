@@ -5,6 +5,7 @@
 <section id="Events" class="dashboard-section" style="display: none;">
     <h2>Events</h2>
     <button id="addEventBtn" class="add-btn">Add Event</button>
+    <div id="eventFormContainer"></div>
     <table id="eventsTable">
         <thead>
             <tr>
@@ -16,16 +17,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Event 1</td>
-                <td>Event Description</td>
-                <td><img src="~/image/dog_food.png" alt="Event Image" width="50"></td>
-                <td>2024-10-15</td>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var e in Model)
+                {
+                    <tr>
+                        <td>@e.EventTitle</td>
+                <td>@e.Description</td>
+                        <td><img src="@Url.Action("GetEventImage", "Admin", new { fileName = e.Image })" alt="Product Image" width="50"></td>
+                <td>@e.PostDate</td>
                 <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
+                            <button class="editEventBtn" data-id="@e.EventId">Edit</button>
+                            <button class="deleteEventBtn" data-id="@e.EventId">Delete</button>
                 </td>
             </tr>
+                }
+            }
         </tbody>
     </table>
 </section>

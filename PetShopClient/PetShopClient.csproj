@@ -43,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Image\Event\" />
     <Folder Include="Image\Service\" />
     <Folder Include="Image\Pets\" />
     <Folder Include="Views\Payment\" />

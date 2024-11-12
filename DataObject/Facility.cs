@@ -18,7 +18,6 @@ namespace DataObject
         public string? FacilityName {  get; set; }
         [Column(TypeName = "nvarchar(MAX)")]
         [Required(ErrorMessage = "This field is required.")]
-        [EmailAddress]
         public string? Address { get; set; }
         [Column(TypeName = "nvarchar(MAX)")]
         [Required(ErrorMessage = "This field is required.")]

@@ -23,7 +23,18 @@
                         <h5>@ps.Service.ServiceName</h5>
                         <img src="@Url.Action("GetServiceImage", "Admin", new { fileName = ps.Service.Image })" alt="dog1" class="pet-image" />
                         <p>Around: @ps.StartTime.ToString("dd-MM-yyyy") til @ps.EndTime.ToString("dd-MM-yyyy")</p>
-                        <button class="btn btn-danger" onclick="deletePlannedService('@ps.PlannedServiceId')">Cancel</button>
+                        @if (ps.IsCofirmed != true)
+                        {
+
+                            <button class="btn btn-danger" onclick="deletePlannedService('@ps.PlannedServiceId')">Cancel</button>
+
+                        }
+                        else
+                        {
+                            <p style="color: green;">
+                                Your planned service is scheduled. See you around !
+                                </p>
+                        }
                     </div>
                 </div>
             }

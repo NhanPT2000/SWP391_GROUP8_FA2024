@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PetShopContext))]
-    [Migration("20241108062707_Initial")]
+    [Migration("20241112083717_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -84,19 +84,19 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            CategoryId = new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"),
+                            CategoryId = new Guid("8afd8cc2-5acb-48e6-a394-07749d5470d3"),
                             CategoryName = "Dog Food",
                             Status = "None"
                         },
                         new
                         {
-                            CategoryId = new Guid("2e1b4c3f-2be3-4947-b320-a085cc7b47bf"),
+                            CategoryId = new Guid("ec3e268c-46bd-49ab-b161-55651e4475b0"),
                             CategoryName = "Cat Food",
                             Status = "None"
                         },
                         new
                         {
-                            CategoryId = new Guid("e031d5e4-76cb-4443-9c4b-41834e1abbba"),
+                            CategoryId = new Guid("019a0482-0f12-4114-857a-76cbb24e2818"),
                             CategoryName = "Bird Food",
                             Status = "None"
                         });
@@ -168,7 +168,7 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            FacilityId = new Guid("84f782b1-c3b8-42f8-9d19-c075edcd567b"),
+                            FacilityId = new Guid("2a831e1f-4fb8-4b55-827b-7ff9b07c83c4"),
                             Address = "Floor 3, Room 201",
                             ContractPer = "Doctor Joe",
                             FacilityName = "Room Vet A1",
@@ -380,6 +380,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsCofirmed")
+                        .HasColumnType("bit");
+
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -456,8 +459,8 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("60fe3de1-e5cd-4631-89e8-f01dc1900bf7"),
-                            CategoryId = new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"),
+                            ProductId = new Guid("f7ea46c9-f5e5-40ab-b0c5-49af957899e0"),
+                            CategoryId = new Guid("8afd8cc2-5acb-48e6-a394-07749d5470d3"),
                             Image = "product_01.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -468,8 +471,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("8f84818e-4519-4ecb-bd9a-05914ba056dc"),
-                            CategoryId = new Guid("2e1b4c3f-2be3-4947-b320-a085cc7b47bf"),
+                            ProductId = new Guid("50ab2adf-ac46-4490-8b94-9e9dc7af08f9"),
+                            CategoryId = new Guid("ec3e268c-46bd-49ab-b161-55651e4475b0"),
                             Image = "product_02.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -480,8 +483,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("32e0f124-3c52-4832-87fe-2ba46122dece"),
-                            CategoryId = new Guid("e031d5e4-76cb-4443-9c4b-41834e1abbba"),
+                            ProductId = new Guid("1441651e-06eb-4c78-b4a4-8f9fc91e8a95"),
+                            CategoryId = new Guid("019a0482-0f12-4114-857a-76cbb24e2818"),
                             Image = "product_03.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -492,8 +495,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("59a6b2d9-4d26-4145-80f1-6e2d6c69ea23"),
-                            CategoryId = new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"),
+                            ProductId = new Guid("539133a7-d2df-4748-8058-c289cf8dcc4c"),
+                            CategoryId = new Guid("8afd8cc2-5acb-48e6-a394-07749d5470d3"),
                             Image = "product_04.jpg",
                             Origin = "England",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -504,8 +507,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("d92d3171-7364-4fef-b089-a3a96af2ef7c"),
-                            CategoryId = new Guid("e031d5e4-76cb-4443-9c4b-41834e1abbba"),
+                            ProductId = new Guid("77228607-c331-45f9-8ca3-d6a61da48523"),
+                            CategoryId = new Guid("019a0482-0f12-4114-857a-76cbb24e2818"),
                             Image = "product_05.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -516,8 +519,8 @@ namespace DataAccess.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("7555066d-9a1d-4e88-aa83-1f8e38664f0a"),
-                            CategoryId = new Guid("f90ecec0-f3fc-4bf0-8e6f-57caa29e857a"),
+                            ProductId = new Guid("ae7e1aeb-c278-46b5-bd7d-c70534a6d223"),
+                            CategoryId = new Guid("8afd8cc2-5acb-48e6-a394-07749d5470d3"),
                             Image = "product_06.jpg",
                             Origin = "Viet Nam",
                             ProductDescription = "High-quality ingredients, Rich in vitamins and minerals, Supports healthy growth, Suitable for all breeds",
@@ -548,19 +551,19 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("b2b46689-a9d5-44f1-9397-ca3b588268db"),
+                            RoleId = new Guid("f0463cb3-d4fc-4c68-8eca-bce793c8cbc0"),
                             RoleName = "Admin",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("f79cd537-47bd-46f3-a79f-cd7999aaa364"),
+                            RoleId = new Guid("7fb2f782-d814-4299-8a89-05dd3848b05a"),
                             RoleName = "Member",
                             Status = "None"
                         },
                         new
                         {
-                            RoleId = new Guid("ebc6b7cf-a0be-474b-9477-267ee0f72b9b"),
+                            RoleId = new Guid("12d976c3-3591-43f3-a4cf-250185abfdd6"),
                             RoleName = "Staff",
                             Status = "None"
                         });
@@ -617,22 +620,22 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            SpeciesId = new Guid("088482ad-40c1-4523-a8da-bf2ecf07fe6e"),
+                            SpeciesId = new Guid("f1393ebe-6458-446e-b216-d53cd02eea02"),
                             SpeciesName = "Dog"
                         },
                         new
                         {
-                            SpeciesId = new Guid("c90876f5-c3a4-42c4-ada9-b48142537111"),
+                            SpeciesId = new Guid("7595f6d0-d560-49d1-8857-dfcb7104e58f"),
                             SpeciesName = "Cat"
                         },
                         new
                         {
-                            SpeciesId = new Guid("6fb70da5-6704-4344-90ce-6d8412bc7ee1"),
+                            SpeciesId = new Guid("3068c789-140c-4b25-94fb-602efd40eec2"),
                             SpeciesName = "Parrot"
                         },
                         new
                         {
-                            SpeciesId = new Guid("dee3c2ff-fab6-42f4-9ed0-afeeb3f53922"),
+                            SpeciesId = new Guid("10d7d48c-d817-49a4-a2b9-9ad4b36e7713"),
                             SpeciesName = "Ferret"
                         });
                 });
@@ -706,13 +709,13 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("96999c36-824d-43fa-9a63-5d45a33ce255"),
+                            UserId = new Guid("116483a4-a64c-483c-9c76-489a872fdec4"),
                             Addess = "123 ABc",
                             Email = "manh123@gmail.com",
                             Gender = "Male",
                             Password = "nsZXnLisYMRi5raBLsXJFWnp0G/cOmcXIe5wNwLRrJk=",
                             PhoneNumber = "0123456789",
-                            RoleId = new Guid("b2b46689-a9d5-44f1-9397-ca3b588268db"),
+                            RoleId = new Guid("f0463cb3-d4fc-4c68-8eca-bce793c8cbc0"),
                             UserName = "Manh"
                         });
                 });

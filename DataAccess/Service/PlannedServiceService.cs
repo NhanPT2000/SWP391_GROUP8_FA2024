@@ -36,7 +36,8 @@ namespace DataAccess.Service
                     Price = plannedService.Price,
                     Notes = plannedService.Notes,
                     MemberId = plannedService.MemberId,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsCofirmed = false
                 };
 
                 await _serviceContext.PlannedServices.AddAsync(newPlannedService);
@@ -61,6 +62,7 @@ namespace DataAccess.Service
                 .Include(ps => ps.Service)
                 .Include(ps => ps._Vouchers)
                 .Include(ps => ps._Member)
+                .Where(ps => ps.IsDeleted != true)
                 .ToListAsync();
         }
 
@@ -109,6 +111,8 @@ namespace DataAccess.Service
             plannedServiceToUpdate.Price = plannedService.Price;
             plannedServiceToUpdate.Notes = plannedService.Notes;
             plannedServiceToUpdate.MemberId = plannedService.MemberId;
+            plannedService.IsDeleted = plannedServiceToUpdate.IsDeleted;
+            plannedServiceToUpdate.IsCofirmed = plannedService.IsCofirmed;
 
             _serviceContext.PlannedServices.Update(plannedServiceToUpdate);
             return await _serviceContext.SaveChangesAsync() > 0;

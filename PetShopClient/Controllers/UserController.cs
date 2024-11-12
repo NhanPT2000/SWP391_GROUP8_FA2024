@@ -227,7 +227,6 @@ namespace PetShopClient.Controllers
             }
             catch (Exception ex)
             {
-                throw;
                 return Json(new
                 {
                     success = false,

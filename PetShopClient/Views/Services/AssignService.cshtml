@@ -16,7 +16,7 @@
     <input type="hidden" asp-for="PetId" value="@ViewBag.PetId"/>
     <label>Begin service date:</label>
     <input type="date" asp-for="StartTime" min="@DateTime.UtcNow.ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
-    <label>Begin service date:</label>
+    <label>End service date:</label>
     <input type="date" asp-for="EndTime" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
     <button type="submit" asp-route-serviceId="@ViewBag.ServiceId" asp-route-petId="@ViewBag.PetId">Plan</button>
 </form>

@@ -67,6 +67,13 @@ namespace DataAccess.Service
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Event>> GetAllEventsAsync()
+        {
+            return await (from _event in _context.Events select _event)
+                .Include(p => p.Admin)
+                .ToListAsync();
+        }
+
         public async Task<bool> UpdateEventAsync(Event _event, Guid id)
         {
             var eventToUpdate = await _context.Events.FirstOrDefaultAsync(p => p.EventId == id);

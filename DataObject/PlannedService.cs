@@ -31,5 +31,6 @@ namespace DataObject
         public User? _Member { get; set; }
         public Guid? MemberId { get; set; }
         public bool? IsDeleted { get; set; }
+        public bool? IsCofirmed { get; set; }
     }
 }
