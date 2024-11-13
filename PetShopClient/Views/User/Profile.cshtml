@@ -151,5 +151,28 @@
                 }
             });
         });
+        $('#profileForm').submit(function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('action'),
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.redirectUrl) {
+                        window.location.href = response.redirectUrl;
+                    } else {
+                        $('#profile-partial').html(response);
+                    }
+                },
+                error: function () {
+                    alert("Error occurred while saving data.");
+                }
+            });
+        });
     });
 </script>

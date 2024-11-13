@@ -116,7 +116,7 @@ namespace PetShopClient.Controllers
             }
 
             var orders = await _orderService.GetOrdersAsync(Guid.Parse(userIdClaim));
-            var amount = 10000.00M;
+            var amount = 10000.00M; //fixed shipping amount
             foreach (var order in orders)
             {
                 foreach(var od in order.OrderDetails)
@@ -154,17 +154,17 @@ namespace PetShopClient.Controllers
             try
             {
                 List<Invoice> invoices = new List<Invoice>();
-                // Capture the payment with PayPal
+
                 var paymentResult = await _payPalService.ExecutePaymentAsync(paymentId, PayerID);
 
                 if (paymentResult)
                 {
                     var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                    // Payment succeeded
+
                     var ordersId = await _orderService.GetOrdersAsync(Guid.Parse(userIdClaim));
 
                     foreach (var o in ordersId) {
-                        // Retrieve the order to calculate invoice details
+
                         if (o == null)
                         {
                             ViewData["ErrorMessage"] = "Order not found.";
@@ -174,8 +174,9 @@ namespace PetShopClient.Controllers
                         decimal invoiceAmount = (decimal)(o.OrderDetails?.Sum(d => d.UnitPrice * d.Quantity) ?? 0);
                         decimal discount = 0;
                         decimal amountCharge = invoiceAmount - discount;
+                        /*order.IsPaid = true;
+                        var update = await _orderService.UpdateOrderAsync(order, order.OrderId);*/
 
-                        // Create an Invoice
                         var invoice = new Invoice
                         {
                             CaseId = null,
@@ -192,12 +193,12 @@ namespace PetShopClient.Controllers
                             PayerId = PayerID,
                             Notes = "Payment successfully completed via PayPal"
                         };
-                        // Save the invoice in the database
+
                         await _invoiceService.CreateInvoiceAsync(invoice);
                         invoices.Add(await _invoiceService.GetInvoiceByIdAsync(invoice.InvoiceId));
                     }
                     var removeOrder = _orderService.PaidOrder(Guid.Parse(userIdClaim));
-                    // Return success view with success message
+
                     ViewData["SuccessMessage"] = "Payment was successful, and invoice has been generated!";
                     return View("PaymentSuccess", invoices);
                 }
@@ -218,7 +219,7 @@ namespace PetShopClient.Controllers
         public IActionResult PaymentCancelled()
         {
             ViewData["ErrorMessage"] = "Payment was cancelled.";
-            return View("PaymentCancelled"); // Create a view for cancelled payment
+            return View("PaymentCancelled");
         }
     }
 }

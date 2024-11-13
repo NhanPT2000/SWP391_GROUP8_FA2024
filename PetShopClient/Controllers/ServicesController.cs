@@ -98,7 +98,7 @@ namespace PetShopClient.Controllers
             var facilities = await _facilityService.GetFacilitiesAsync();
             if (facilities == null || !facilities.Any())
             {
-                // Log or print error to debug why facilities are not loading
+
                 Console.WriteLine("No facilities found.");
                 return View("SelectFacility", Enumerable.Empty<Facility>());
             }

@@ -7,6 +7,8 @@ using PetShopClient.Models;
 using System.Security.Claims;
 using PetShopClient.Helper;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
+using System.Net;
 
 namespace PetShopClient.Controllers
 {
@@ -89,7 +91,7 @@ namespace PetShopClient.Controllers
                 /*if(_memberService.GetMemberByEmailOnlyAsync(member.Email)!=null) return View();*/
                 member.UserId = new Guid();
                 await _memberService.CreateMemberAsync(member);
-                await _sendEmail.SendConfirmationEmail(member.Email, member.UserId);
+                await _sendEmail.SendConfirmationEmail(member.Email, member.UserId, Request.Scheme, Request.Host.ToString());
                 return RedirectToAction("Login", "Access");
             }
             var errors = ModelState.Values.SelectMany(v => v.Errors);
@@ -111,6 +113,25 @@ namespace PetShopClient.Controllers
                 return View("Login");
             }
             return RedirectToAction("Index","Home");
+        }
+
+        private async Task SendEmail(string email, string subject, string body)
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("phamnhan.27122000@gmail.com");
+                mail.To.Add(email);
+                mail.Subject = subject;
+                mail.Body = body;
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential("phamnhan.27122000@gmail.com", "kqnw txys wkuo kdts");
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(mail);
+                }
+            }
         }
     }
 }

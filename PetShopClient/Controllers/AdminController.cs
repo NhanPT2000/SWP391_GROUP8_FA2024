@@ -16,6 +16,7 @@ namespace PetShopClient.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IPlannedServiceService _plannedService;
         private readonly IFacilityService _facilityService;
+        private readonly IInvoiceService _invoiceService;
         public AdminController(
             IProductService productService,
             IPetServiceService petServiceService,
@@ -23,7 +24,8 @@ namespace PetShopClient.Controllers
             IEventService eventService,
             ICategoryService categoryService,
             IPlannedServiceService plannedServiceService,
-            IFacilityService facilityService) 
+            IFacilityService facilityService,
+            IInvoiceService invoiceService) 
         {
             _productService = productService;
             _petServiceService = petServiceService;
@@ -32,6 +34,7 @@ namespace PetShopClient.Controllers
             _categoryService = categoryService;
             _plannedService = plannedServiceService;
             _facilityService = facilityService;
+            _invoiceService = invoiceService;
         }
         public async Task<IActionResult> Main()
         {
@@ -78,6 +81,14 @@ namespace PetShopClient.Controllers
         {
             var petServices = await _petServiceService.GetPetServicesAsync();
             return PartialView("PetServiceSection", petServices);
+        }
+
+        [Route("Admin/InvoiceSection")]
+        [HttpGet]
+        public async Task<IActionResult> InvoiceSection()
+        {
+            var invoices = await _invoiceService.GetInvoicesAsync();
+            return PartialView("InvoiceSection", invoices);
         }
 
         [Route("Admin/FacilitySection")]

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -97,6 +98,14 @@ namespace DataAccess.Service
             productToUpdate.CategoryId = product.CategoryId;
             _productContext.Update(productToUpdate);
             return await _productContext.SaveChangesAsync() > 0;
+        }
+        public async Task<IEnumerable<Product>> SearchProduct(Expression<Func<Product, bool>> filter)
+        {
+            return await _productContext.
+                Products
+                .Include(p => p.Category)
+                .Where(filter)
+                .ToListAsync();
         }
     }
 }

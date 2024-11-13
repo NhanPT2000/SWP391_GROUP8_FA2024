@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<DataObject.User>
 @{
-    Layout = "_Layout";
+    Layout = null;
 }
 <section id="users" class="dashboard-section" style="display: none;">
     <h2>Users</h2>
@@ -10,8 +10,10 @@
             <tr>
                 <th>Name</th>
                 <th>Role</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th>Phone Number</th>
+                <th>Phone numer 2</th>
+                <th>Address</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -32,7 +34,7 @@
                         {
                             <td>None</td>
                         }
-                        <td>@user.</td>
+                        <td>@user.Addess</td>
                         <td>
                             <button class="edit-btn">Edit</button>
                             <button class="delete-btn">Delete</button>

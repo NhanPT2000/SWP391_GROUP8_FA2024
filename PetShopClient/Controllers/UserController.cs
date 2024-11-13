@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetShopClient.Helper;
 using PetShopClient.Models;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Claims;
 
 namespace PetShopClient.Controllers
@@ -64,38 +66,37 @@ namespace PetShopClient.Controllers
                 return NotFound();
             }
 
+            ViewBag.GenderOptions = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "Male", Text = "Male" },
+        new SelectListItem { Value = "Female", Text = "Female" },
+        new SelectListItem { Value = "Other", Text = "Other" }
+    };
+
             return PartialView("Main", member);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Profile
-            (Guid id, [Bind("UserId,UserName,Email,Gender,Address,PhoneNumber,PhoneNumber2")] User member, IFormFile file)
+        public async Task<IActionResult> Profile(User member, IFormFile? file)
         {
-            if (id != member.UserId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "Image");
-                    string existingFileName = member.UserName + ".jpg";
-                    string? newFileName = SaveImage.SaveUploadedFile(file, uploadPath, existingFileName);
+                    if (file != null && file.Length > 0)
+                    {
+                        var fileName = $"{member.UserId}{Path.GetExtension(file.FileName)}";
+                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Image", "Users", fileName);
 
-                    if (!string.IsNullOrEmpty(newFileName))
-                    {
-                        member.Profile = newFileName;
-                        ViewBag.Message = "Image uploaded successfully!";
-                    }
-                    else
-                    {
-                        ViewBag.Message = "Failed to upload image.";
+                        using (var stream = new FileStream(imagePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                        member.Profile = fileName;
                     }
 
-                    var memberChanged = await _memberService.UpdateMemberAsync(id, member);
+                    var memberChanged = await _memberService.UpdateMemberAsync(member.UserId, member);
                     if (!memberChanged) { throw new DbUpdateConcurrencyException(); }
                 }
                 catch (DbUpdateConcurrencyException)
@@ -103,10 +104,15 @@ namespace PetShopClient.Controllers
                     return NotFound();
                 }
 
-                return RedirectToAction("Index", "Home");
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { redirectUrl = Url.Action("Profile", "User", new { id = member.UserId }) });
+                }
+
+                return RedirectToAction("Profile", "User", new { id = member.UserId });
             }
 
-            return PartialView("Main", member);
+            return BadRequest(ModelState);
         }
         [HttpGet]
         public PartialViewResult ChangePassword()
@@ -169,6 +175,21 @@ namespace PetShopClient.Controllers
         public IActionResult GetPetImage(string fileName)
         {
             string imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Image", "Pets");
+            string imagePath = Path.Combine(imageFolderPath, fileName);
+
+            if (!System.IO.File.Exists(imagePath))
+            {
+                return NotFound();
+            }
+
+            var imageBytes = System.IO.File.ReadAllBytes(imagePath);
+            return File(imageBytes, "image/png");
+        }
+
+        [HttpGet]
+        public IActionResult GetUserImage(string fileName)
+        {
+            string imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Image", "Users");
             string imagePath = Path.Combine(imageFolderPath, fileName);
 
             if (!System.IO.File.Exists(imagePath))
@@ -298,5 +319,24 @@ namespace PetShopClient.Controllers
                 return Json(new { success = false, message = "An error occurred while adding the pet.", error = ex.Message });
             }
         }
+        private async Task SendEmail(string email, string subject, string body)
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("phamnhan.27122000@gmail.com");
+                mail.To.Add(email);
+                mail.Subject = subject;
+                mail.Body = body;
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential("phamnhan.27122000@gmail.com", "kqnw txys wkuo kdts"); 
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(mail);
+                }
+            }
+        }
+
     }
 }

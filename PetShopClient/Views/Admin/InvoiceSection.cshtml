@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DataObject.Invoice>
+@{
+    Layout = null;
+}
+<section id="Invoice" class="dashboard-section" style="display: none;">
+    <h2>Invoice</h2>
+    <table id="invoiceTable">
+        <thead>
+            <tr>
+                <th>Invoice Code</th>
+                <th>Paid Service</th>
+                <th>Paid Order</th>
+                <th>Buyer</th>
+                <th>Invoice Amount</th>
+                <th>Generated Times</th>
+                <th>Time Charge</th>
+                <th>Amount Charge</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example row -->
+            @if (Model != null && Model.Any())
+            {
+                foreach (var inc in Model)
+                {
+                    <tr>
+                        <td>@inc.InvoiceCode</td>
+                        @if(inc.Service != null){
+                            <td>
+                                @inc.Service.ServiceName
+                            </td>
+                        }
+                        else
+                        {
+                            <td>none</td>
+                        }
+                        @if (inc.Order != null)
+                        {
+                            <td>
+                                @inc.Order.OrderId
+                            </td>
+                        }
+                        else
+                        {
+                            <td>none</td>
+                        }
+                        @if(inc.Order!= null){
+                            <td>@inc.Order.Member.UserName
+                            </td>
+                        }
+                        else{
+
+                            <td>none</td>
+                            }
+                            <td>@inc.InvoiceAmount</td>
+                            <td>@inc.TimeGenerated</td>
+                            <td>@inc.TimeCharge.ToString("dd-MM-yyyy")</td>
+                            <td>@inc.AmountCharge</td>
+                            <td>@inc.Status</td>
+                        <td>
+                            <button id="viewInvoiceDetails" data-id="@inc.InvoiceId">Details</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>
